@@ -1,5 +1,6 @@
-package `in`.catat
+package `in`.catat.presentation
 
+import `in`.catat.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
