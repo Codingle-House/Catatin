@@ -33,4 +33,6 @@ class SliderPagerAdapter(
             }
         }
     }
+
+    fun getPosition() = currentPosition
 }

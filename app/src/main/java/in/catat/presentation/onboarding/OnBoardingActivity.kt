@@ -49,7 +49,26 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupAction()
         setupViewPager()
+    }
+
+    private fun setupAction() {
+        onboarding_textview_skip.setOnClickListener {
+
+        }
+
+        onboarding_button_next.setOnClickListener {
+            with(onboarding_viewpager_content) {
+                setCurrentItem(currentItem + 1, true)
+            }
+        }
+
+        onboarding_button_previous.setOnClickListener {
+            with(onboarding_viewpager_content) {
+                setCurrentItem(currentItem - 1, true)
+            }
+        }
     }
 
     private fun setupViewPager() {
@@ -58,6 +77,7 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
             addOnPageChangeListener(this@OnBoardingActivity)
             setPageTransformer(true, ZoomOutPageTransformer())
         }
+        onboarding_indicator_dot.setViewPager(onboarding_viewpager_content)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
