@@ -22,7 +22,8 @@
         android:id="@+id/onboarding_viewpager_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/onboarding_button_next"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/onboarding_textview_skip" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -33,6 +34,7 @@
         android:background="@color/colorFab"
         android:backgroundTint="@color/colorFab"
         android:src="@drawable/ic_arrow_left_black"
+        android:visibility="gone"
         app:borderWidth="0dp"
         app:elevation="10dp"
         app:fabCustomSize="40dp"
