@@ -8,12 +8,46 @@
     tools:context=".presentation.MainActivity">
 
     <TextView
+        android:id="@+id/home_textview_greeting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/home_imageview_search"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Halo, Selamat Pagi" />
+
+    <ImageView
+        android:id="@+id/home_imageview_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginRight="20dp"
+        android:src="@drawable/home_ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/home_textview_greeting"
+        app:layout_constraintRight_toLeftOf="@id/home_imageview_more"
+        app:layout_constraintTop_toTopOf="@id/home_textview_greeting" />
 
+    <ImageView
+        android:id="@+id/home_imageview_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@drawable/home_ic_more"
+        app:layout_constraintBottom_toBottomOf="@id/home_textview_greeting"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/home_textview_greeting" />
+
+    <TextView
+        android:id="@+id/home_textview_total_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/home_textview_greeting"
+        tools:text="Kamu memiliki 10 pesan" />
 </androidx.constraintlayout.widget.ConstraintLayout>

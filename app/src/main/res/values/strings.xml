@@ -18,6 +18,16 @@
     <string name="onboarding_text_dialogskip">Pilih iya jika kamu sudah paham, dan kamu akan melewati halaman ini</string>
 
     <!--    General Screen Text-->
+    <string name="home_text_total_note">Kamu memiliki %s catatan</string>
+
+    <!--    General Screen Text-->
     <string name="general_text_no">Tidak</string>
     <string name="general_text_yes">Iya</string>
+
+    <string name="general_text_hallo">Halo, %s</string>
+
+    <string name="general_text_good_morning">Selamat Pagi</string>
+    <string name="general_text_good_afternoon">Selamat Siang</string>
+    <string name="general_text_good_evening">Selamat Sore</string>
+    <string name="general_text_good_night">Selamat Malam></string>
 </resources>
