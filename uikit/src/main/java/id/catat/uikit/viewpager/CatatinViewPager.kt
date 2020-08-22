@@ -1,4 +1,4 @@
-package id.catat.uikit
+package id.catat.uikit.viewpager
 
 import android.content.Context
 import android.util.AttributeSet
@@ -34,7 +34,9 @@ class CatatinViewPager(context: Context, attrs: AttributeSet?) :
             dy: Int,
             duration: Int
         ) {
-            super.startScroll(startX, startY, dx, dy, ANIMATE_SCROLL_DURATION)
+            super.startScroll(startX, startY, dx, dy,
+                ANIMATE_SCROLL_DURATION
+            )
         }
     }
 

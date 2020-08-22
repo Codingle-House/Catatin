@@ -18,7 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <id.catat.uikit.CatatinViewPager
+    <id.catat.uikit.viewpager.CatatinViewPager
         android:id="@+id/onboarding_viewpager_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
