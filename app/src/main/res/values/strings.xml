@@ -3,4 +3,14 @@
 
     <!--    Splash Screen Text-->
     <string name="splashscreen_text_description">Your personal notes</string>
+
+    <!--    Onboarding Screen Text-->
+    <string name="onboarding_text_skip">Lewati</string>
+    <string name="onboarding_title_content1">Akses Dimana Saja</string>
+    <string name="onboarding_title_content2">Pencadangan Otomatis</string>
+    <string name="onboarding_title_content3">Amankan Catatanmu</string>
+
+    <string name="onboarding_text_content1">“Dengan catat.in, buat catatanmu dengan mudah dari mana saja” </string>
+    <string name="onboarding_text_content2">“Catatanmu akan dicadangkan secara otomatis setiap harinya”</string>
+    <string name="onboarding_text_content3">“Lingkungi catatan pribadimu dengan menggunakan pin”</string>
 </resources>
