@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.catat.uikit.R
@@ -21,7 +22,8 @@ import kotlinx.android.synthetic.main.dialog_menu_catatin.*
 class CatatinMenuDialog(
     context: Context,
     private val title: String,
-    private val dataMenu: List<CatatanMenuModel> = listOf()
+    private val dataMenu: List<CatatanMenuModel> = listOf(),
+    private val onMenuClick: (Int, CatatanMenuModel) -> Unit
 ) : Dialog(context, R.style.DialogSlideAnim) {
 
     private val diffCallback by lazy {
@@ -32,10 +34,17 @@ class CatatinMenuDialog(
         GenericRecyclerViewAdapter<CatatanMenuModel>(
             diffCallback = diffCallback,
             holderResId = R.layout.dialog_item_menu_catatin,
-            onBind = { data, _, view ->
+            onBind = { data, pos, view ->
                 view.dialog_textview_menu_item_title.text = data.title
-                view.dialog_textview_menu_item_description.text = data.description
+                with(view.dialog_textview_menu_item_description) {
+                    isGone = data.description.isEmpty()
+                    text = data.description
+                }
                 view.dialog_imageview_lock.isVisible = data.isPremiumContent
+                view.dialog_view_line.isGone = pos == dataMenu.size - 1
+            },
+            itemListener = { data, pos, _ ->
+                onMenuClick.invoke(pos, data)
             }
         )
     }

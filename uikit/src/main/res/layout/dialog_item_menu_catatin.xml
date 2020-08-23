@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             tools:text="Catatan" />
 
         <TextView
@@ -30,7 +29,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:textColor="@color/uiKitColorAccent"
-            android:textSize="12sp"
+            android:textSize="10sp"
+            tools:ignore="SmallSp"
             tools:text="(akses premium)" />
     </LinearLayout>
 
@@ -47,6 +47,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:id="@+id/dialog_view_line"
         android:layout_below="@id/dialog_linearlayout_item_menu"
         android:layout_marginTop="20dp"
         android:background="@color/uiKitColorLine" />

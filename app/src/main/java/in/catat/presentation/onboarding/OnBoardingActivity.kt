@@ -2,7 +2,7 @@ package `in`.catat.presentation.onboarding
 
 import `in`.catat.R
 import `in`.catat.data.model.OnBoardingDataModel
-import `in`.catat.presentation.MainActivity
+import `in`.catat.presentation.home.MainActivity
 import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
 import `in`.catat.util.ZoomOutPageTransformer
 import android.animation.Animator

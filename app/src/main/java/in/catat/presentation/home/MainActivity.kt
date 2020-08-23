@@ -1,6 +1,8 @@
-package `in`.catat.presentation
+package `in`.catat.presentation.home
 
 import `in`.catat.R
+import `in`.catat.presentation.note.NoteActivity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import id.catat.uikit.data.CatatanMenuModel
@@ -36,7 +38,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             CatatinMenuDialog(
                 context = this@MainActivity,
                 title = getString(R.string.dialog_title_menu_add),
-                dataMenu = catatanMenu
+                dataMenu = catatanMenu,
+                onMenuClick = { pos, data ->
+                    startActivity(Intent(this, NoteActivity::class.java))
+                }
             ).show()
         }
     }
