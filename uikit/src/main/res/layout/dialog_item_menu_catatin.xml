@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/uiKitColorPrimary"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/dialog_linearlayout_item_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/dialog_imageview_lock"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dialog_textview_menu_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Catatan" />
+
+        <TextView
+            android:id="@+id/dialog_textview_menu_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/uiKitColorAccent"
+            android:textSize="12sp"
+            tools:text="(akses premium)" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dialog_imageview_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/dialog_linearlayout_item_menu"
+        android:layout_alignBottom="@id/dialog_linearlayout_item_menu"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_general_ic_lock" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/dialog_linearlayout_item_menu"
+        android:layout_marginTop="20dp"
+        android:background="@color/uiKitColorLine" />
+</RelativeLayout>

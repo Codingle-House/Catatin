@@ -17,8 +17,16 @@
     <string name="onboarding_title_dialogskip">Lewati Halaman Ini</string>
     <string name="onboarding_text_dialogskip">Pilih iya jika kamu sudah paham, dan kamu akan melewati halaman ini</string>
 
-    <!--    General Screen Text-->
+    <!--    Home Screen Text-->
     <string name="home_text_total_note">Kamu memiliki %s catatan</string>
+
+    <!--    Catatin Menu Dialog Screen Text-->
+    <string name="dialog_title_menu_add">Tambah Catatan</string>
+    <string name="dialog_title_menu_notes">Catatan Biasa</string>
+    <string name="dialog_title_menu_todo">Daftar Pekerjaan</string>
+    <string name="dialog_title_menu_draw">Coretan</string>
+
+    <string name="dialog_text_menu_premium">(akses premium)</string>
 
     <!--    General Screen Text-->
     <string name="general_text_no">Tidak</string>

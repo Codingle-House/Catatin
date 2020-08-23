@@ -50,4 +50,19 @@
         android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/home_textview_greeting"
         tools:text="Kamu memiliki 10 pesan" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_general_ic_add_black"
+        app:borderWidth="0dp"
+        app:elevation="10dp"
+        app:fabCustomSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:maxImageSize="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="uiKitColorPrimary">#161616</color>
-    <color name="uiKitColorLine">#4D4D4D</color>
+    <color name="uiKitColorPrimary">#1d1d1d</color>
+    <color name="uiKitColorLine">#292929</color>
+    <color name="uiKitColorAccent">#52FFCD</color>
 </resources>
