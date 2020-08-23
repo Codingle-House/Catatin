@@ -2,6 +2,7 @@ package `in`.catat.presentation.home
 
 import `in`.catat.R
 import `in`.catat.presentation.note.NoteActivity
+import `in`.catat.presentation.search.SearchActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupListener() {
+        home_imageview_search.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
+
         home_button_add.setOnClickListener {
             CatatinMenuDialog(
                 context = this@MainActivity,
