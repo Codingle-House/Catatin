@@ -38,4 +38,8 @@
     <string name="general_text_good_afternoon">Selamat Siang</string>
     <string name="general_text_good_evening">Selamat Sore</string>
     <string name="general_text_good_night">Selamat Malam</string>
+
+    <!--    Note Screen Text-->
+    <string name="note_title_add">Tambah Catatan</string>
+    <string name="note_title_placeholder">Masukkan Judul Disini...</string>
 </resources>
