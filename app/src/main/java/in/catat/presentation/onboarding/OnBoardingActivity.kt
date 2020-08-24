@@ -13,7 +13,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
-import id.catat.uikit.dialog.CatatinDialog
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
 
@@ -61,7 +61,7 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
             if (onboarding_viewpager_content.currentItem == fragmentList.size - 1) {
                 goToMainActivity()
             } else {
-                CatatinDialog(
+                GeneralCatatinDialog(
                     context = this,
                     image = R.drawable.dialog_ic_confirmation,
                     title = getString(R.string.onboarding_title_dialogskip),

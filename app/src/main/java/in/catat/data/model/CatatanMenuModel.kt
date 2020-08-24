@@ -1,4 +1,4 @@
-package id.catat.uikit.data
+package `in`.catat.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

@@ -6,8 +6,8 @@ import `in`.catat.presentation.search.SearchActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import id.catat.uikit.data.CatatanMenuModel
-import id.catat.uikit.dialog.CatatinMenuDialog
+import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         home_button_add.setOnClickListener {
-            CatatinMenuDialog(
+            GeneralCatatinMenuDialog(
                 context = this@MainActivity,
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,

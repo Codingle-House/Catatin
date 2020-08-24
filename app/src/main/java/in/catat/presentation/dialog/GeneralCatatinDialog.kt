@@ -1,20 +1,17 @@
-package id.catat.uikit.dialog
+package `in`.catat.presentation.dialog
 
-import android.app.Dialog
+import `in`.catat.R
 import android.content.Context
-import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import id.catat.uikit.R
+import id.catat.uikit.dialog.BaseCatatanDialog
 import kotlinx.android.synthetic.main.dialog_catatin.*
 
 /**
  * Created by pertadima on 23,August,2020
  */
 
-class CatatinDialog(
+class GeneralCatatinDialog(
     context: Context,
     @DrawableRes private val image: Int,
     private val title: String,
@@ -23,23 +20,14 @@ class CatatinDialog(
     private val yesClickListener: () -> Unit,
     private val noTextButton: String,
     private val noClickListener: () -> Unit = {}
-) : Dialog(context, R.style.DialogSlideAnim) {
+) : BaseCatatanDialog(context) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupDialog()
+    override fun setupLayout() {
         setContentView(R.layout.dialog_catatin)
-        setupView()
     }
 
-    private fun setupDialog() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawableResource(android.R.color.transparent);
-        window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        setCancelable(false)
+    override fun onCreateDialog() {
+        setupView()
     }
 
     private fun setupView() {

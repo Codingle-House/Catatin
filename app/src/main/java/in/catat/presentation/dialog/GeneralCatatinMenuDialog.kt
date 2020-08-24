@@ -1,16 +1,13 @@
-package id.catat.uikit.dialog
+package `in`.catat.presentation.dialog
 
-import android.app.Dialog
+import `in`.catat.R
+import `in`.catat.data.model.CatatanMenuModel
 import android.content.Context
-import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.catat.uikit.R
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
-import id.catat.uikit.data.CatatanMenuModel
+import id.catat.uikit.dialog.BaseCatatanDialog
 import id.catat.uikit.util.DiffCallback
 import kotlinx.android.synthetic.main.dialog_item_menu_catatin.view.*
 import kotlinx.android.synthetic.main.dialog_menu_catatin.*
@@ -19,12 +16,12 @@ import kotlinx.android.synthetic.main.dialog_menu_catatin.*
  * Created by pertadima on 23,August,2020
  */
 
-class CatatinMenuDialog(
+class GeneralCatatinMenuDialog(
     context: Context,
     private val title: String,
     private val dataMenu: List<CatatanMenuModel> = listOf(),
     private val onMenuClick: (Int, CatatanMenuModel) -> Unit
-) : Dialog(context, R.style.DialogSlideAnim) {
+) : BaseCatatanDialog(context) {
 
     private val diffCallback by lazy {
         DiffCallback()
@@ -49,10 +46,11 @@ class CatatinMenuDialog(
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupDialog()
+    override fun setupLayout() {
         setContentView(R.layout.dialog_menu_catatin)
+    }
+
+    override fun onCreateDialog() {
         setupView()
         setupRecyclerView()
     }
@@ -70,12 +68,4 @@ class CatatinMenuDialog(
         }
     }
 
-    private fun setupDialog() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawableResource(android.R.color.transparent);
-        window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-    }
 }
