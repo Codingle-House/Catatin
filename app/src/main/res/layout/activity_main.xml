@@ -40,16 +40,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/home_textview_greeting" />
 
-    <TextView
-        android:id="@+id/home_textview_total_notes"
+
+    <ViewFlipper
+        android:id="@+id/home_viewflipper_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/home_textview_greeting"
-        tools:text="Kamu memiliki 10 pesan" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_textview_greeting">
+
+    </ViewFlipper>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/home_button_add"

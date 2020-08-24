@@ -6,13 +6,13 @@
 
     <!--    Onboarding Screen Text-->
     <string name="onboarding_text_skip">Lewati</string>
-    <string name="onboarding_title_content1">Akses Dimana Saja</string>
+    <string name="onboarding_title_content1">Akses Mudah</string>
     <string name="onboarding_title_content2">Pencadangan Otomatis</string>
     <string name="onboarding_title_content3">Amankan Catatanmu</string>
 
-    <string name="onboarding_text_content1">“Dengan catat.in, buat catatanmu dengan mudah dari mana saja” </string>
-    <string name="onboarding_text_content2">“Catatanmu akan dicadangkan secara otomatis setiap harinya”</string>
-    <string name="onboarding_text_content3">“Lingkungi catatan pribadimu dengan menggunakan pin”</string>
+    <string name="onboarding_text_content1">“Catatin membantumu membuat catatan dengan mudah dimanapun dan kapanpun”</string>
+    <string name="onboarding_text_content2">“Catatin memastikan catatan yang kamu buat tersinkronisasi sehingga kamu tidak perlu khawatir akan kehilangan data ”</string>
+    <string name="onboarding_text_content3">“Catatin memastikan bahwa catatanmu yang bersifat pribadi aman hanya dengan memgatur nomor pin untuk membukanya”</string>
 
     <string name="onboarding_title_dialogskip">Lewati Halaman Ini</string>
     <string name="onboarding_text_dialogskip">Pilih iya jika kamu sudah paham, dan kamu akan melewati halaman ini</string>
@@ -34,10 +34,10 @@
 
     <string name="general_text_hallo">Halo, %s</string>
 
-    <string name="general_text_good_morning">Selamat Pagi</string>
-    <string name="general_text_good_afternoon">Selamat Siang</string>
-    <string name="general_text_good_evening">Selamat Sore</string>
-    <string name="general_text_good_night">Selamat Malam</string>
+    <string name="general_text_good_morning">Selamat Pagi !</string>
+    <string name="general_text_good_afternoon">Selamat Siang !</string>
+    <string name="general_text_good_evening">Selamat Sore !</string>
+    <string name="general_text_good_night">Selamat Malam !</string>
 
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
