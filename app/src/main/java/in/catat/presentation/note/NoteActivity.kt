@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
@@ -202,10 +203,10 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         note_appbar.isGone = true
         note_edittext_title.isGone = true
         isFullScren = true
-        Snackbar.make(
-            note_coordinatorlayout_parent,
+        Toast.makeText(
+            this,
             getString(R.string.general_text_fullscreen_close),
-            Snackbar.LENGTH_LONG
+            Toast.LENGTH_LONG
         ).show()
     }
 
