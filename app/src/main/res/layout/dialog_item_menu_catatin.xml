@@ -42,7 +42,7 @@
         android:layout_alignBottom="@id/dialog_linearlayout_item_menu"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:src="@drawable/ic_general_ic_lock" />
+        android:src="@drawable/general_ic_lock" />
 
     <View
         android:layout_width="match_parent"

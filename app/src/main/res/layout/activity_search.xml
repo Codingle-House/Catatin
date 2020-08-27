@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_general_ic_back_white">
+            app:navigationIcon="@drawable/general_ic_back_white">
 
             <EditText
                 android:layout_width="match_parent"

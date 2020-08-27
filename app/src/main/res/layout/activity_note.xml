@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
     tools:context=".presentation.note.NoteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -16,7 +17,8 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_general_ic_back_white">
+            android:id="@+id/note_toolbar"
+            app:navigationIcon="@drawable/general_ic_back_white">
 
             <TextView
                 android:layout_width="match_parent"
@@ -34,22 +36,54 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:textSize="12sp"
                 android:background="@drawable/general_bg_form"
                 android:hint="@string/note_title_placeholder"
                 android:padding="15dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/note_textview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/colorTextHint"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="26 Agustus 2020 | 5 Karakter" />
+
+            <com.chinalwb.are.AREditText
+                android:id="@+id/note_richtext_form"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:hint="@string/note_hint_placeholder"
+                android:padding="20dp"
+                android:textColor="@android:color/white"
+                android:textSize="50sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+        android:id="@+id/note_richtext_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorRichTextEditor"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

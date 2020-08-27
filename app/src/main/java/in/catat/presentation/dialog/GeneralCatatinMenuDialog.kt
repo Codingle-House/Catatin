@@ -42,6 +42,7 @@ class GeneralCatatinMenuDialog(
             },
             itemListener = { data, pos, _ ->
                 onMenuClick.invoke(pos, data)
+                dismiss()
             }
         )
     }

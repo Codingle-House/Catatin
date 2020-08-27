@@ -44,4 +44,6 @@
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>
+    <string name="note_text_description">%s | %s karakter</string>
+    <string name="note_hint_placeholder">Silahkan ketikkan catatan kamu disini...</string>
 </resources>

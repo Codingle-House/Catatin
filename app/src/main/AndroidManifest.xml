@@ -16,7 +16,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".presentation.note.NoteActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
