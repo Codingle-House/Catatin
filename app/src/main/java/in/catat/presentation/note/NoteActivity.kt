@@ -4,13 +4,17 @@ import `in`.catat.R
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
+import `in`.catat.util.ShareUtil
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+import com.google.android.material.snackbar.Snackbar
 import id.catat.uikit.richtext_item.*
 import kotlinx.android.synthetic.main.activity_note.*
 
@@ -44,6 +48,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     }
 
     private var scrollerAtEnd = false
+    private var isFullScren = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +72,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
                             title = getString(R.string.general_text_setting),
                             dataMenu = settingsMenu,
                             onMenuClick = { _, data ->
-
+                                handleMenuDialogClick(data)
                             }
                         ).show()
                         true
@@ -169,6 +174,59 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
                 note_richtext_toolbar.smoothScrollBy(fullWidth, 0);
             }
         }
+    }
+
+    private fun handleMenuDialogClick(data: CatatanMenuModel) {
+        when (data.title) {
+            getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
+            getString(R.string.dialog_title_menu_alarm) -> {
+
+            }
+            getString(R.string.dialog_title_menu_share) -> shareActionSetting()
+            getString(R.string.dialog_title_menu_lock) -> {
+
+            }
+            getString(R.string.dialog_title_menu_open) -> {
+
+            }
+            getString(R.string.dialog_title_menu_focus) -> {
+
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun handleFullScreen() {
+        note_appbar.isGone = true
+        note_edittext_title.isGone = true
+        isFullScren = true
+        Snackbar.make(
+            note_coordinatorlayout_parent,
+            getString(R.string.general_text_fullscreen_close),
+            Snackbar.LENGTH_LONG
+        ).show()
+    }
+
+    override fun onBackPressed() {
+        if (isFullScren) {
+            isFullScren = false
+            note_appbar.isGone = false
+            note_edittext_title.isGone = false
+        } else {
+            finish()
+        }
+    }
+
+    private fun shareActionSetting() {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = ShareUtil.PLAIN_TYPE
+            intent.putExtra(Intent.EXTRA_SUBJECT, note_edittext_title.text.toString())
+            intent.putExtra(Intent.EXTRA_TEXT, note_richtext_form.text.toString())
+        }
+
+        startActivity(Intent.createChooser(intent, ShareUtil.CHOOSER))
     }
 
     private fun View.rotateAnimation(isNextPage: Boolean) {

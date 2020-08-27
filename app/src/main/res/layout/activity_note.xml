@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
+    android:id="@+id/note_coordinatorlayout_parent"
     tools:context=".presentation.note.NoteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/note_appbar"
         android:background="@color/colorPrimary"
         app:elevation="0dp">
 
@@ -52,6 +54,7 @@
                 android:background="@drawable/general_bg_form"
                 android:hint="@string/note_title_placeholder"
                 android:padding="15dp"
+                android:id="@+id/note_edittext_title"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="12sp" />
