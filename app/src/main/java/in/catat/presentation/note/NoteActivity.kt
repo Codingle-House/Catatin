@@ -5,8 +5,10 @@ import `in`.catat.util.DateUtil
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import id.catat.uikit.richtext_item.*
 import kotlinx.android.synthetic.main.activity_note.*
 
@@ -16,10 +18,13 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         DateUtil.getCurrentDate()
     }
 
+    private var scrollerAtEnd = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initRichTextView()
         setupView()
+        setupToolbarArrow()
     }
 
     private fun setupView() {
@@ -93,5 +98,38 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         }
 
         note_richtext_form.setToolbar(note_richtext_toolbar)
+    }
+
+    private fun setupToolbarArrow() {
+        if (note_richtext_toolbar is ARE_ToolbarDefault) {
+            note_richtext_toolbar.viewTreeObserver.addOnScrollChangedListener {
+                val scrollX = note_richtext_toolbar.scrollX
+                val scrollWidth = note_richtext_toolbar.width
+                val fullWidth = note_richtext_toolbar.getChildAt(0).width
+
+                note_imageview_arrow.rotateAnimation(scrollX + scrollWidth < fullWidth)
+            }
+        }
+        note_imageview_arrow.setOnClickListener {
+            if (scrollerAtEnd) {
+                note_richtext_toolbar.smoothScrollBy(-Integer.MAX_VALUE, 0)
+            } else {
+                val fullWidth = note_richtext_toolbar.getChildAt(0).width
+                note_richtext_toolbar.smoothScrollBy(fullWidth, 0);
+            }
+        }
+    }
+
+    private fun View.rotateAnimation(isNextPage: Boolean) {
+        scrollerAtEnd = !isNextPage
+        animate()
+            .setDuration(ANIMATION_DURATION)
+            .rotation(if (!isNextPage) LINEAR_ROTATION else DEFAULT_ROTATION)
+    }
+
+    companion object {
+        private const val DEFAULT_ROTATION = 0F
+        private const val LINEAR_ROTATION = 180F
+        private const val ANIMATION_DURATION = 300L
     }
 }

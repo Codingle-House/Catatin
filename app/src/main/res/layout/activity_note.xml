@@ -15,9 +15,9 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/note_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/note_toolbar"
             app:navigationIcon="@drawable/general_ic_back_white">
 
             <TextView
@@ -78,12 +78,34 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
-        android:id="@+id/note_richtext_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorRichTextEditor"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp" />
+        android:orientation="horizontal"
+        android:weightSum="1000">
+
+        <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+            android:id="@+id/note_richtext_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="850"
+            android:background="@color/colorRichTextEditor"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="150"
+            android:background="@color/colorAccent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:id="@+id/note_imageview_arrow"
+                android:layout_height="24dp"
+                android:src="@drawable/general_ic_arrow_right_black" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
