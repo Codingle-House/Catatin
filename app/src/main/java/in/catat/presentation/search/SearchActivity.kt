@@ -33,7 +33,7 @@ class SearchActivity : AppCompatActivity(R.layout.activity_search) {
                 context = this@SearchActivity,
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,
-                onMenuClick = { pos, data ->
+                onMenuClick = { _, data ->
                     handleMenuDialogClick(data)
                 }
             ).show()

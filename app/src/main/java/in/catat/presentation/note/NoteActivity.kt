@@ -1,6 +1,8 @@
 package `in`.catat.presentation.note
 
 import `in`.catat.R
+import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import android.os.Bundle
 import android.text.Editable
@@ -18,19 +20,65 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         DateUtil.getCurrentDate()
     }
 
+    private val settingsMenu by lazy {
+        listOf(
+            CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
+            CatatanMenuModel(title = getString(R.string.dialog_title_menu_alarm)),
+            CatatanMenuModel(title = getString(R.string.dialog_title_menu_share)),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_lock),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            ),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_focus),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            ),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_pdf),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            )
+        )
+    }
+
     private var scrollerAtEnd = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initRichTextView()
+        setupAppToolbar()
         setupView()
         setupToolbarArrow()
     }
 
-    private fun setupView() {
-        note_toolbar.setNavigationOnClickListener {
-            finish()
+    private fun setupAppToolbar() {
+        with(note_toolbar) {
+            setNavigationOnClickListener {
+                finish()
+            }
+            inflateMenu(R.menu.catatin_menu_more)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_main_setting -> {
+                        GeneralCatatinMenuDialog(
+                            context = this@NoteActivity,
+                            title = getString(R.string.general_text_setting),
+                            dataMenu = settingsMenu,
+                            onMenuClick = { _, data ->
+
+                            }
+                        ).show()
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
         }
+    }
+
+    private fun setupView() {
 
         note_textview_description.text =
             getString(
@@ -73,14 +121,17 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
 
         val bold = CatatinBoldToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
         val italic = CatatinItalicToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val underline = CatatinUnderlineToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
+        val underline =
+            CatatinUnderlineToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
         val strikeTrough =
             CatatinStrikeThroughToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
 
         val quote = CatatinQuoteToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
 
-        val numberList = CatatinNumberListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val bulletList = CatatinBulletListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
+        val numberList =
+            CatatinNumberListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
+        val bulletList =
+            CatatinBulletListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
         val divider = CatatinDividerToolItem()
 
         with(note_richtext_toolbar) {

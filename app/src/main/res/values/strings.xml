@@ -32,11 +32,20 @@
     <string name="dialog_title_menu_todo">Daftar Pekerjaan</string>
     <string name="dialog_title_menu_draw">Coretan</string>
 
+    <string name="dialog_title_menu_fullscreen">Layar Penuh</string>
+    <string name="dialog_title_menu_alarm">Pengingat</string>
+    <string name="dialog_title_menu_share">Bagikan</string>
+    <string name="dialog_title_menu_lock">Kunci</string>
+    <string name="dialog_title_menu_open">Buka Kunci</string>
+    <string name="dialog_title_menu_focus">Mode Fokus</string>
+    <string name="dialog_title_menu_pdf">Jadikan PDF</string>
+    
     <string name="dialog_text_menu_premium">(akses premium)</string>
 
     <!--    General Screen Text-->
     <string name="general_text_no">Tidak</string>
     <string name="general_text_yes">Iya</string>
+    <string name="general_text_setting">Pengaturan</string>
 
     <string name="general_text_hallo">Halo, %s</string>
 

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 context = this@MainActivity,
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,
-                onMenuClick = { pos, data ->
+                onMenuClick = { _, data ->
                     handleMenuDialogClick(data)
                 }
             ).show()
