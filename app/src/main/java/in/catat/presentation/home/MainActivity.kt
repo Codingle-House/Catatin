@@ -1,13 +1,13 @@
 package `in`.catat.presentation.home
 
 import `in`.catat.R
+import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.search.SearchActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import `in`.catat.data.model.CatatanMenuModel
-import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -45,9 +45,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,
                 onMenuClick = { pos, data ->
-                    startActivity(Intent(this, NoteActivity::class.java))
+                    handleMenuDialogClick(data)
                 }
             ).show()
+        }
+    }
+
+    private fun handleMenuDialogClick(data: CatatanMenuModel) {
+        when (data.title) {
+            getString(R.string.dialog_title_menu_notes) -> {
+                startActivity(Intent(this, NoteActivity::class.java))
+            }
+            getString(R.string.dialog_title_menu_todo) -> {
+
+            }
+            else -> {
+
+            }
         }
     }
 
