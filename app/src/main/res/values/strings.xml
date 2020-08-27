@@ -46,6 +46,7 @@
     <string name="general_text_no">Tidak</string>
     <string name="general_text_yes">Iya</string>
     <string name="general_text_setting">Pengaturan</string>
+    <string name="general_text_search">Cari</string>
 
     <string name="general_text_hallo">Halo, %s</string>
 

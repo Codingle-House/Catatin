@@ -26,19 +26,30 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupView()
+        setupToolbarView()
         setupListener()
     }
 
-    private fun setupView() {
-        home_textview_greeting.text = getString(R.string.general_text_hallo, showWelcomeMessage())
+    private fun setupToolbarView() {
+        with(home_toolbar) {
+            title = getString(R.string.general_text_hallo, showWelcomeMessage())
+            inflateMenu(R.menu.catatin_menu_home)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.home_action_search -> {
+                        startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+                        true
+                    }
+                    R.id.home_action_setting -> {
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
+        }
     }
 
     private fun setupListener() {
-        home_imageview_search.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
-        }
-
         home_button_add.setOnClickListener {
             GeneralCatatinMenuDialog(
                 context = this@MainActivity,

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home_action_search"
+        android:icon="@drawable/home_ic_search"
+        android:orderInCategory="100"
+        android:title="@string/general_text_search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/home_action_setting"
+        android:icon="@drawable/home_ic_more"
+        android:orderInCategory="100"
+        android:title="@string/general_text_setting"
+        app:showAsAction="always" />
+
+</menu>
