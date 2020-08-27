@@ -9,13 +9,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
-import com.google.android.material.snackbar.Snackbar
 import id.catat.uikit.richtext_item.*
 import kotlinx.android.synthetic.main.activity_note.*
 
@@ -220,6 +220,11 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        actionSave()
+    }
+
     private fun shareActionSetting() {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = ShareUtil.PLAIN_TYPE
@@ -235,6 +240,10 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         animate()
             .setDuration(ANIMATION_DURATION)
             .rotation(if (!isNextPage) LINEAR_ROTATION else DEFAULT_ROTATION)
+    }
+
+    private fun actionSave() {
+
     }
 
     companion object {
