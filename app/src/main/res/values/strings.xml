@@ -19,6 +19,8 @@
 
     <!--    Home Screen Text-->
     <string name="home_text_total_note">Kamu memiliki %s catatan</string>
+    <string name="home_title_empty_note">Belum Memiliki Catatan</string>
+    <string name="home_text_empty_note">Kamu memiliki catatan apapun, silahkan coba untuk membuat catatan</string>
 
     <!--    Catatin Menu Dialog Screen Text-->
     <string name="dialog_title_menu_add">Tambah Catatan</string>

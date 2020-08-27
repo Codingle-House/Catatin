@@ -2,6 +2,7 @@ package `in`.catat.presentation.onboarding
 
 import `in`.catat.R
 import `in`.catat.data.model.OnBoardingDataModel
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.home.MainActivity
 import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
 import `in`.catat.util.ZoomOutPageTransformer
@@ -13,7 +14,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
-import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
 
@@ -63,7 +63,7 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
             } else {
                 GeneralCatatinDialog(
                     context = this,
-                    image = R.drawable.dialog_ic_confirmation,
+                    image = R.drawable.dialog_ic_questionmark,
                     title = getString(R.string.onboarding_title_dialogskip),
                     description = getString(R.string.onboarding_text_dialogskip),
                     yesTextButton = getString(R.string.general_text_yes),

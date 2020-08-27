@@ -26,7 +26,6 @@ abstract class BaseCatatanDialog(context: Context) : Dialog(context, R.style.Dia
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-        setCancelable(false)
     }
 
     abstract fun setupLayout()
