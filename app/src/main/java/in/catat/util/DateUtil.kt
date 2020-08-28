@@ -12,5 +12,5 @@ object DateUtil {
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date())
     }
 
-    const val DEFAULT_DATE_TIME = "dd MMMM yyyy"
+    const val DEFAULT_DATE_TIME = "dd MMMM HH:mm"
 }
