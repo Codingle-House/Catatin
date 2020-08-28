@@ -3,6 +3,7 @@ package `in`.catat.presentation.todo
 import `in`.catat.R
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import `in`.catat.util.DateUtil
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,10 @@ import androidx.core.view.isGone
 import kotlinx.android.synthetic.main.activity_todo.*
 
 class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
+    private val currentDate by lazy {
+        DateUtil.getCurrentDate()
+    }
+
     private val settingsMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
@@ -38,6 +43,7 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupAppToolbar()
+        setupView()
     }
 
     private fun setupAppToolbar() {
@@ -65,6 +71,17 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
         }
     }
 
+    private fun setupView() {
+        todo_textview_description.text =
+            getString(R.string.todo_text_description, currentDate, "0")
+    }
+
+    private fun setupListener() {
+        todo_button_add.setOnClickListener {
+
+        }
+    }
+
     private fun handleMenuDialogClick(data: CatatanMenuModel) {
         when (data.title) {
             getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
@@ -76,7 +93,7 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
             getString(R.string.dialog_title_menu_lock) -> {
 
             }
-            getString(R.string.dialog_title_menu_open) -> {
+            getString(R.string.dialog_title_menu_copy) -> {
 
             }
             getString(R.string.dialog_title_menu_focus) -> {

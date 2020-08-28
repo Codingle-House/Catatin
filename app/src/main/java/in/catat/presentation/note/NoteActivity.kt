@@ -186,7 +186,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
             getString(R.string.dialog_title_menu_lock) -> {
 
             }
-            getString(R.string.dialog_title_menu_open) -> {
+            getString(R.string.dialog_title_menu_copy) -> {
 
             }
             getString(R.string.dialog_title_menu_focus) -> {

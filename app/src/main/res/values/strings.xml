@@ -36,11 +36,11 @@
     <string name="dialog_title_menu_alarm">Pengingat</string>
     <string name="dialog_title_menu_share">Bagikan</string>
     <string name="dialog_title_menu_lock">Kunci</string>
-    <string name="dialog_title_menu_open">Buka Kunci</string>
+    <string name="dialog_title_menu_copy">Buat Salinan</string>
     <string name="dialog_title_menu_focus">Mode Fokus</string>
     <string name="dialog_title_menu_pdf">Jadikan PDF</string>
 
-    <string name="dialog_text_menu_premium">(akses premium)</string>
+    <string name="dialog_text_menu_premium">(Akses Premium)</string>
 
     <!--    General Screen Text-->
     <string name="general_text_no">Tidak</string>
@@ -65,4 +65,5 @@
 
     <!--    Todo Screen Text-->
     <string name="todo_title_add">Tambah Daftar Pekerjaan</string>
+    <string name="todo_text_description">%s | %s aktivitas</string>
 </resources>

@@ -48,17 +48,42 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/todo_edittext_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/general_bg_form"
                 android:hint="@string/note_title_placeholder"
                 android:padding="15dp"
-                android:id="@+id/todo_edittext_title"
+                android:maxLines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/todo_textview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/colorTextHint"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="26 Agustus 2020 | 5 Karakter" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/todo_button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_general_ic_add_black"
+        app:borderWidth="0dp"
+        app:elevation="10dp"
+        app:fabCustomSize="40dp"
+        app:maxImageSize="20dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

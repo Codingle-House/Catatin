@@ -28,6 +28,7 @@
                 android:background="@drawable/general_bg_form"
                 android:drawableRight="@drawable/ic_general_ic_search_primary"
                 android:hint="@string/note_title_placeholder"
+                android:maxLines="1"
                 android:padding="15dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
@@ -63,6 +64,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
