@@ -39,7 +39,7 @@
     <string name="dialog_title_menu_open">Buka Kunci</string>
     <string name="dialog_title_menu_focus">Mode Fokus</string>
     <string name="dialog_title_menu_pdf">Jadikan PDF</string>
-    
+
     <string name="dialog_text_menu_premium">(akses premium)</string>
 
     <!--    General Screen Text-->
@@ -56,9 +56,13 @@
     <string name="general_text_good_night">Selamat Malam !</string>
 
     <string name="general_text_fullscreen_close">Tekan kembali untuk keluar dari mode layar penuh</string>
+
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>
     <string name="note_text_description">%s | %s karakter</string>
     <string name="note_hint_placeholder">Silahkan ketikkan catatan kamu disini...</string>
+
+    <!--    Todo Screen Text-->
+    <string name="todo_title_add">Tambah Daftar Pekerjaan</string>
 </resources>

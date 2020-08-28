@@ -4,6 +4,7 @@ import `in`.catat.R
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
+import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +47,7 @@ class SearchActivity : AppCompatActivity(R.layout.activity_search) {
                 startActivity(Intent(this, NoteActivity::class.java))
             }
             getString(R.string.dialog_title_menu_todo) -> {
-
+                startActivity(Intent(this, TodoActivity::class.java))
             }
             else -> {
 

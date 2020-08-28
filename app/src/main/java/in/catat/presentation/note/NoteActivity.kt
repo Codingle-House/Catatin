@@ -48,7 +48,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     }
 
     private var scrollerAtEnd = false
-    private var isFullScren = false
+    private var isFullScreen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,7 +201,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     private fun handleFullScreen() {
         note_appbar.isGone = true
         note_edittext_title.isGone = true
-        isFullScren = true
+        isFullScreen = true
         Toast.makeText(
             this,
             getString(R.string.general_text_fullscreen_close),
@@ -210,8 +210,8 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     }
 
     override fun onBackPressed() {
-        if (isFullScren) {
-            isFullScren = false
+        if (isFullScreen) {
+            isFullScreen = false
             note_appbar.isGone = false
             note_edittext_title.isGone = false
         } else {
