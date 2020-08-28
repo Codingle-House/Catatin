@@ -9,7 +9,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -118,7 +117,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     }
 
     private fun initRichTextView() {
-        val checkedBackgroundColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        val checkedBackgroundColor = ContextCompat.getColor(this, R.color.colorSelectedToolItem)
         val uncheckedBackgroundColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         val alignmentLeft = CatatinAlignmentLeftToolItem()
