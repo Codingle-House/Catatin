@@ -3,6 +3,7 @@ package `in`.catat.presentation.todo
 import `in`.catat.R
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
 import android.os.Bundle
 import android.widget.Toast
@@ -44,6 +45,7 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
         super.onCreate(savedInstanceState)
         setupAppToolbar()
         setupView()
+        setupListener()
     }
 
     private fun setupAppToolbar() {
@@ -78,7 +80,14 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
 
     private fun setupListener() {
         todo_button_add.setOnClickListener {
+            GeneralCatatinTodoDialog(
+                context = this@TodoActivity,
+                title = getString(R.string.dialog_title_todo_add),
+                actionText = getString(R.string.general_text_add),
+                actionListener = {
 
+                }
+            ).show()
         }
     }
 

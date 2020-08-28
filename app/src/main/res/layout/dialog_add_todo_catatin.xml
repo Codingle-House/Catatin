@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_rounded_primary"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_textview_todo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        tools:text="Tambah Pekerjaan" />
+
+    <EditText
+        android:id="@+id/dialog_edittext_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_textview_todo_title"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/general_bg_form"
+        android:hint="@string/note_title_placeholder"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/colorTextHint"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/dialog_button_todo"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/dialog_edittext_todo"
+        android:layout_margin="20dp"
+        android:background="@drawable/general_selector_button"
+        android:enabled="false"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        tools:text="Tambah" />
+</RelativeLayout>

@@ -7,8 +7,11 @@
     <color name="colorFab">#5C5C5C</color>
     <color name="colorDotInActive">#D8D8D8</color>
 
+    <color name="colorSelectedToolItem">#333333</color>
     <color name="colorRichTextEditor">#171717</color>
+
     <color name="colorTextHint">#999999</color>
     <color name="colorTextPrimary">#FFFFFF</color>
-    <color name="colorSelectedToolItem">#333333</color>
+
+    <color name="colorButtonDisable">#393939</color>
 </resources>
