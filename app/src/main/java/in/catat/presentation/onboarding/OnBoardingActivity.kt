@@ -75,6 +75,10 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
             }
         }
 
+        onboarding_button_understand.setOnClickListener {
+            goToMainActivity()
+        }
+
         onboarding_button_next.setOnClickListener {
             with(onboarding_viewpager_content) {
                 setCurrentItem(currentItem + 1, true)
@@ -108,6 +112,7 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
     override fun onPageSelected(position: Int) {
         onboarding_button_next.scaleAnimation(position == fragmentList.size - 1)
         onboarding_button_previous.scaleAnimation(position == 0)
+        onboarding_button_understand.scaleAnimation(position != fragmentList.size - 1)
     }
 
     private fun goToMainActivity() {

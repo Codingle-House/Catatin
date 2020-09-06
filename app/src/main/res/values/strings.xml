@@ -7,7 +7,7 @@
     <!--    Onboarding Screen Text-->
     <string name="onboarding_text_skip">Lewati</string>
     <string name="onboarding_title_content1">Akses Mudah</string>
-    <string name="onboarding_title_content2">Pencadangan Otomatis</string>
+    <string name="onboarding_title_content2">Pencadangan Data</string>
     <string name="onboarding_title_content3">Amankan Catatanmu</string>
 
     <string name="onboarding_text_content1">“Catatin membantumu membuat catatan dengan mudah dimanapun dan kapanpun”</string>
@@ -16,6 +16,8 @@
 
     <string name="onboarding_title_dialogskip">Lewati Halaman Ini</string>
     <string name="onboarding_text_dialogskip">Pilih iya jika kamu sudah paham, dan kamu akan melewati halaman ini</string>
+
+    <string name="onboarding_text_understand">Mengerti</string>
 
     <!--    Home Screen Text-->
     <string name="home_text_total_note">Kamu memiliki %s catatan</string>
@@ -44,6 +46,13 @@
 
     <string name="dialog_title_todo_add">Tambah Pekerjaan</string>
     <string name="dialog_title_todo_edit">Ubah Pekerjaan</string>
+    
+    <string name="dialog_title_menu_attachment">Lampiran</string>
+    <string name="dialog_title_menu_file">Berkas</string>
+    <string name="dialog_title_menu_location">Lokasi</string>
+    <string name="dialog_title_menu_video">Video</string>
+    <string name="dialog_title_menu_audio">Suara</string>
+    <string name="dialog_title_menu_sketch">Sketsa</string>
 
     <!--    General Screen Text-->
     <string name="general_text_no">Tidak</string>

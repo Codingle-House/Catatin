@@ -1,3 +1,4 @@
+include ':draw'
 include ':are'
 include ':uikit'
 include ':app'

@@ -47,6 +47,28 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         )
     }
 
+    private val attachmentMenu by lazy {
+        listOf(
+            CatatanMenuModel(title = getString(R.string.dialog_title_menu_file)),
+            CatatanMenuModel(title = getString(R.string.dialog_title_menu_location)),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_video),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            ),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_audio),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            ),
+            CatatanMenuModel(
+                title = getString(R.string.dialog_title_menu_sketch),
+                description = getString(R.string.dialog_text_menu_premium),
+                isPremiumContent = true
+            )
+        )
+    }
+
     private var scrollerAtEnd = false
     private var isFullScreen = false
 
@@ -63,16 +85,27 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
             setNavigationOnClickListener {
                 finish()
             }
-            inflateMenu(R.menu.catatin_menu_more)
+            inflateMenu(R.menu.catatin_menu_note)
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.menu_main_setting -> {
+                    R.id.note_menu_setting -> {
                         GeneralCatatinMenuDialog(
                             context = this@NoteActivity,
                             title = getString(R.string.general_text_setting),
                             dataMenu = settingsMenu,
                             onMenuClick = { _, data ->
                                 handleMenuDialogClick(data)
+                            }
+                        ).show()
+                        true
+                    }
+                    R.id.note_menu_attachment -> {
+                        GeneralCatatinMenuDialog(
+                            context = this@NoteActivity,
+                            title = getString(R.string.dialog_title_menu_attachment),
+                            dataMenu = attachmentMenu,
+                            onMenuClick = { _, data ->
+
                             }
                         ).show()
                         true

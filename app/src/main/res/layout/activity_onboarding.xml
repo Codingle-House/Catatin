@@ -60,6 +60,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:maxImageSize="20dp" />
 
+    <Button
+        android:id="@+id/onboarding_button_understand"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/general_selector_button"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:text="@string/onboarding_text_understand"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/onboarding_button_next"
         android:layout_width="wrap_content"
