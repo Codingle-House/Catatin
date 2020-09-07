@@ -1,5 +1,8 @@
 include ':draw'
+project(':draw').projectDir = new File('libs/draw')
 include ':are'
+project(':are').projectDir = new File('libs/are')
 include ':uikit'
+project(':uikit').projectDir = new File('libs/uikit')
 include ':app'
 rootProject.name = "Catatin"
