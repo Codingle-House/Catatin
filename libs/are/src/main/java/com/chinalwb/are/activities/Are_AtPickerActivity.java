@@ -2,12 +2,14 @@ package com.chinalwb.are.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chinalwb.are.R;
 import com.chinalwb.are.adapters.AtListAdapter;
@@ -67,7 +69,7 @@ public class Are_AtPickerActivity extends AppCompatActivity {
             AtListAdapter listAdapter = new AtListAdapter(this, itemsList);
             this.mListView.setAdapter(listAdapter);
         } else {
-            AtListAdapter listAdapter  = (AtListAdapter) this.mListView.getAdapter();
+            AtListAdapter listAdapter = (AtListAdapter) this.mListView.getAdapter();
             listAdapter.setData(itemsList);
             listAdapter.notifyDataSetChanged();
         }
@@ -106,7 +108,7 @@ public class Are_AtPickerActivity extends AppCompatActivity {
             int index = new Random().nextInt(10);
             if (index > 9) index = 9;
             if (index < 0) index = 0;
-            AtItem atItem = new AtItem(String.valueOf(iconIds[index]), names[index]);
+            AtItem atItem = new AtItem(String.valueOf(iconIds[index]), names[index], Color.BLUE);
             itemsList.add(atItem);
         }
         return itemsList;
