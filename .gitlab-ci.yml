@@ -23,6 +23,7 @@ build:apk:
     - cd app/build/outputs/apk/release/
     - export FILENAME=$(ls)
     - echo FILENAME
+    - curl -F file=@build/app/outputs/apk/release/*.apk -F channels=$CHANNEL_ID -F initial_comment="[BUILD APK] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
   artifacts:
     expire_in: 2 days
     paths:
@@ -44,6 +45,7 @@ build:aab:
     - cd app/build/outputs/bundle/release/
     - export FILENAME=$(ls)
     - echo FILENAME
+    - curl -F file=@build/app/outputs/bundle/release/app-release.aab -F channels=$CHANNEL_ID -F initial_comment="[BUILD AAB] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
   artifacts:
     expire_in: 2 days
     paths:
