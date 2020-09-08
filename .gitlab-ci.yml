@@ -12,25 +12,25 @@ before_script:
   - echo "keyAlias=$KEY_ALIAS" >> keystore.properties
   - echo "aliasPassword=$ALIAS_PASSWORD" >> keystore.properties
 
-build_apk:
-  stage: build
-  only:
-    - develop
-  script:
-    - export BUILD_NUMBER=$CI_JOB_ID
-    - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
-    - cd app/build/outputs/apk/release/
-    - export FILENAME=$(ls)
-    - echo FILENAME
-    artifacts:
-      expire_in: 2 days
-      paths:
-        - app/build/outputs/apk/release/*.apk
-        - app/build/intermediates/manifests/full/release/*.xml
-    only:
-      - develop
-    cache:
-      key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
-      paths:
-        - .gradle/wrapper
-        - .gradle/caches
+#build_apk:
+#  stage: build
+#  only:
+#    - develop
+#  script:
+#    - export BUILD_NUMBER=$CI_JOB_ID
+#    - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
+#    - cd app/build/outputs/apk/release/
+#    - export FILENAME=$(ls)
+#    - echo FILENAME
+#    artifacts:
+#      expire_in: 2 days
+#      paths:
+#        - app/build/outputs/apk/release/*.apk
+#        - app/build/intermediates/manifests/full/release/*.xml
+#    only:
+#      - develop
+#    cache:
+#      key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+#      paths:
+#        - .gradle/wrapper
+#        - .gradle/caches
