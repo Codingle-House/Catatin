@@ -134,5 +134,4 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
             finish()
         }
     }
-
 }

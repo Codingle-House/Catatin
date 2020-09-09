@@ -71,6 +71,7 @@
 
     <string name="general_text_add">Tambah</string>
     <string name="general_text_edit">Ubah</string>
+
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>
