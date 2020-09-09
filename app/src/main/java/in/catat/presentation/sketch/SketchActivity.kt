@@ -68,7 +68,10 @@ class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
     }
 
     private fun setupCanvass() {
-        draw_canvass_view.setCanvassBackground(ContextCompat.getColor(this, R.color.colorPrimary))
+        draw_canvass_view.setCanvassBackground(
+            ContextCompat.getColor(this, R.color.colorPrimary),
+            ContextCompat.getColor(this, R.color.colorRichTextEditor)
+        )
     }
 
     private fun handleMenuDialogClick(data: CatatanMenuModel) {

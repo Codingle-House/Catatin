@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import androidx.core.graphics.drawable.DrawableCompat
 import id.co.draw.R
 import id.co.draw.widget.DrawView
+import kotlinx.android.synthetic.main.layout_catatin_canvas.view.*
 
 /**
  * Created by pertadima on 08,September,2020
@@ -103,8 +104,12 @@ class CatatinCanvas : LinearLayout {
         )
     }
 
-    fun setCanvassBackground(backgroundColor: Int) {
-        canvasBackgroundColor = backgroundColor
-        drawView.setCanvassBackground(backgroundColor)
+    fun setCanvassBackground(
+        canvasColor: Int = Color.BLACK,
+        toolBackgroundColor: Int = Color.BLACK
+    ) {
+        canvasBackgroundColor = canvasColor
+        drawView.setCanvassBackground(canvasColor)
+        catatin_linearlayout?.setBackgroundColor(toolBackgroundColor)
     }
 }
