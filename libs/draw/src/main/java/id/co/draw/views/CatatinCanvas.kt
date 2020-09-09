@@ -9,9 +9,17 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isGone
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import id.co.catatin.core.commons.DiffCallback
+import id.co.catatin.core.commons.GeneralRecyclerView
+import id.co.catatin.core.ext.getColorCompat
 import id.co.draw.R
+import id.co.draw.widget.CircleView
 import id.co.draw.widget.DrawView
-import kotlinx.android.synthetic.main.layout_catatin_canvas.view.*
+import kotlinx.android.synthetic.main.catatin_item_colors.view.*
+import kotlinx.android.synthetic.main.catatin_layout_canvas.view.*
 
 /**
  * Created by pertadima on 08,September,2020
@@ -33,16 +41,60 @@ class CatatinCanvas : LinearLayout {
         defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
+    private val diffUtilCallback by lazy {
+        DiffCallback()
+    }
+
+    private val colors by lazy {
+        mutableListOf(
+            context.getColorCompat(R.color.color1),
+            context.getColorCompat(R.color.color2),
+            context.getColorCompat(R.color.color3),
+            context.getColorCompat(R.color.color4),
+            context.getColorCompat(R.color.color5),
+            context.getColorCompat(R.color.color6),
+            context.getColorCompat(R.color.color7)
+        )
+    }
+
+    private val colorsAdapter by lazy {
+        GeneralRecyclerView<Int>(
+            diffCallback = diffUtilCallback,
+            holderResId = R.layout.catatin_item_colors,
+            onBind = { data, view ->
+                with(view.catatin_circleview_color) {
+                    setColor(data)
+                    setCircleRadius(80F)
+                }
+            },
+            itemListener = { data, pos, _ ->
+                if (isPaintSelected) {
+                    drawView.setCanvassBackground(data)
+                } else if (isPenColorSelecred) {
+                    drawView.setColor(data)
+                    penColor.setColor(data)
+                }
+                linearColor.isGone = true
+            }
+        )
+    }
+
     private lateinit var drawView: DrawView
     private lateinit var toolPencil: ImageView
     private lateinit var toolEraser: ImageView
+    private lateinit var toolPaint: ImageView
+    private lateinit var recyclerviewColor: RecyclerView
+    private lateinit var linearColor: LinearLayout
+    private lateinit var penColor: CircleView
 
     private var isEraserActive = false
     private var canvasBackgroundColor: Int = Color.BLACK
+    private var isPaintSelected = false
+    private var isPenColorSelecred = false
 
     init {
         LayoutInflater.from(context)
-            .inflate(R.layout.layout_catatin_canvas, this, true)
+            .inflate(R.layout.catatin_layout_canvas, this, true)
         inflateDrawView()
         setupInitialDrawingCanvas()
         setupCanvasTooling()
@@ -50,8 +102,12 @@ class CatatinCanvas : LinearLayout {
 
     private fun inflateDrawView() {
         drawView = findViewById(R.id.catatin_draw_view)
-        toolPencil = findViewById<ImageView>(R.id.catatin_imageview_pencil)
-        toolEraser = findViewById<ImageView>(R.id.catatin_imageview_eraser)
+        toolPencil = findViewById(R.id.catatin_imageview_pencil)
+        toolEraser = findViewById(R.id.catatin_imageview_eraser)
+        toolPaint = findViewById(R.id.catatin_imageview_paint)
+        recyclerviewColor = findViewById(R.id.catatin_recyclerview_colors)
+        linearColor = findViewById(R.id.catatin_linearlayout_colors)
+        penColor = findViewById(R.id.catatin_circleview_pencolor)
     }
 
     private fun setupInitialDrawingCanvas() {
@@ -59,11 +115,28 @@ class CatatinCanvas : LinearLayout {
             setBackgroundResource(R.drawable.draw_bg_tool_active)
             DrawableCompat.setTint(DrawableCompat.wrap(drawable), canvasBackgroundColor)
         }
+
+        with(penColor) {
+            setColor(Color.WHITE)
+            setCircleRadius(80F)
+        }
     }
 
     private fun setupCanvasTooling() {
         setupEraserActionListener()
         setupPencilActionListener()
+        setupRecyclerviewColors()
+        setupPaintActionListener()
+        setupPenColorActionListener()
+    }
+
+    private fun setupRecyclerviewColors() {
+        recyclerviewColor.run {
+            adapter = colorsAdapter.apply {
+                setData(colors)
+            }
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     private fun setupEraserActionListener() {
@@ -93,6 +166,20 @@ class CatatinCanvas : LinearLayout {
         }
     }
 
+    private fun setupPaintActionListener() {
+        toolPaint.setOnClickListener {
+            isPaintSelected = isPaintSelected.not()
+            linearColor.isGone = !isPaintSelected
+        }
+    }
+
+    private fun setupPenColorActionListener() {
+        penColor.setOnClickListener {
+            isPenColorSelecred = isPenColorSelecred.not()
+            linearColor.isGone = !isPenColorSelecred
+        }
+    }
+
     private fun ImageView.toggleEraserAction(isActive: Boolean) {
         setBackgroundResource(
             if (isActive) R.drawable.draw_bg_tool_active
@@ -110,6 +197,7 @@ class CatatinCanvas : LinearLayout {
     ) {
         canvasBackgroundColor = canvasColor
         drawView.setCanvassBackground(canvasColor)
+        linearColor.setBackgroundColor(canvasColor)
         catatin_linearlayout?.setBackgroundColor(toolBackgroundColor)
     }
 }

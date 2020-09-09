@@ -10,12 +10,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import id.catat.uikit.richtext_item.*
+import id.co.catatin.core.ext.getColorCompat
+import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
 
 
@@ -150,8 +150,8 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     }
 
     private fun initRichTextView() {
-        val checkedBackgroundColor = ContextCompat.getColor(this, R.color.colorSelectedToolItem)
-        val uncheckedBackgroundColor = ContextCompat.getColor(this, android.R.color.transparent)
+        val checkedBackgroundColor = getColorCompat(R.color.colorSelectedToolItem)
+        val uncheckedBackgroundColor = getColorCompat(android.R.color.transparent)
 
         val alignmentLeft = CatatinAlignmentLeftToolItem()
         val alignmentCenter = CatatinAlignmentCenterToolItem()
@@ -235,11 +235,7 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         note_appbar.isGone = true
         note_edittext_title.isGone = true
         isFullScreen = true
-        Toast.makeText(
-            this,
-            getString(R.string.general_text_fullscreen_close),
-            Toast.LENGTH_LONG
-        ).show()
+        showToast(R.string.general_text_fullscreen_close)
     }
 
     override fun onBackPressed() {

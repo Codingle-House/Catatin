@@ -4,10 +4,10 @@ import `in`.catat.R
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import id.co.catatin.core.ext.getColorCompat
+import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_sketch.*
 
 class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
@@ -69,8 +69,8 @@ class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
 
     private fun setupCanvass() {
         draw_canvass_view.setCanvassBackground(
-            ContextCompat.getColor(this, R.color.colorPrimary),
-            ContextCompat.getColor(this, R.color.colorRichTextEditor)
+            getColorCompat(R.color.colorPrimary),
+            getColorCompat(R.color.colorRichTextEditor)
         )
     }
 
@@ -100,11 +100,7 @@ class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
     private fun handleFullScreen() {
         sketch_appbar.isGone = true
         isFullScreen = true
-        Toast.makeText(
-            this,
-            getString(R.string.general_text_fullscreen_close),
-            Toast.LENGTH_LONG
-        ).show()
+        showToast(R.string.general_text_fullscreen_close)
     }
 
     override fun onBackPressed() {

@@ -7,13 +7,19 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
-class CircleView(context: Context, attrs: AttributeSet): View(context, attrs) {
-    private var mPaint = Paint()
-    var radius = 8f
+class CircleView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private var circleFillPaint = Paint()
+    private var outlinePaint = Paint()
+    var radius = 30F
 
     init {
-        mPaint.apply {
+        circleFillPaint.apply {
             color = Color.BLACK
+            style = Paint.Style.FILL
+        }
+
+        outlinePaint.apply {
+            color = Color.WHITE
             style = Paint.Style.FILL
         }
     }
@@ -21,27 +27,28 @@ class CircleView(context: Context, attrs: AttributeSet): View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val width = canvas.width.toFloat()
-        val height = canvas.height.toFloat()
+        val width = width.toFloat()
+        val height = height.toFloat()
         val cX = width.div(2)
         val cY = height.div(2)
 
-        canvas.drawCircle(cX, cY, radius/2, mPaint)
+        canvas.drawCircle(cX, cY, (radius / 2) + 5, outlinePaint)
+        canvas.drawCircle(cX, cY, radius / 2, circleFillPaint)
     }
 
-    fun setCircleRadius(r: Float){
+    fun setCircleRadius(r: Float) {
         radius = r
         invalidate()
     }
 
-    fun setAlpha(newAlpha: Int){
-        val alpha = (newAlpha*255)/100
-        mPaint.alpha = alpha
+    fun setAlpha(newAlpha: Int) {
+        val alpha = (newAlpha * 255) / 100
+        circleFillPaint.alpha = alpha
         invalidate()
     }
 
-    fun setColor(color: Int){
-        mPaint.color = color
+    fun setColor(color: Int) {
+        circleFillPaint.color = color
         invalidate()
     }
 }

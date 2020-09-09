@@ -1,3 +1,5 @@
+include ':core'
+project(':core').projectDir = new File('libs/core')
 include ':draw'
 project(':draw').projectDir = new File('libs/draw')
 include ':richtext'

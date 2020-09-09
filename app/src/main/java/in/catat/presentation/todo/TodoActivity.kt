@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
+import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_todo.*
 
 class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
@@ -118,11 +119,7 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
         todo_appbar.isGone = true
         todo_edittext_title.isGone = true
         isFullScreen = true
-        Toast.makeText(
-            this,
-            getString(R.string.general_text_fullscreen_close),
-            Toast.LENGTH_LONG
-        ).show()
+        showToast(R.string.general_text_fullscreen_close)
     }
 
     override fun onBackPressed() {
