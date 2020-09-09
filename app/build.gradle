@@ -71,7 +71,7 @@ dependencies {
 
     // Internal Library
     implementation project(":uikit")
-    implementation project(":are")
+    implementation project(":richtext")
     implementation project(":draw")
 
     testImplementation 'junit:junit:4.13'

@@ -1,7 +1,7 @@
 include ':draw'
 project(':draw').projectDir = new File('libs/draw')
-include ':are'
-project(':are').projectDir = new File('libs/are')
+include ':richtext'
+project(':richtext').projectDir = new File('libs/richtext')
 include ':uikit'
 project(':uikit').projectDir = new File('libs/uikit')
 include ':app'
