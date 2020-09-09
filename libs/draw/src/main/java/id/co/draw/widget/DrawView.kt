@@ -32,8 +32,7 @@ class DrawView @JvmOverloads constructor(
     private var mIsStrokeWidthBarEnabled = false
     private var colorBackground = Color.BLACK
 
-    var isEraserOn = false
-        private set
+    private var isEraserOn = false
 
     init {
         mPaint.apply {
@@ -131,7 +130,7 @@ class DrawView @JvmOverloads constructor(
     }
 
     private fun changePaint(paintOptions: PaintOptions) {
-        mPaint.color = if (paintOptions.isEraserOn) Color.WHITE else paintOptions.color
+        mPaint.color = if (paintOptions.isEraserOn) colorBackground else paintOptions.color
         mPaint.strokeWidth = paintOptions.strokeWidth
     }
 
@@ -200,4 +199,9 @@ class DrawView @JvmOverloads constructor(
         invalidate()
     }
 
+    fun drawingActive() {
+        isEraserOn = false
+        mPaintOptions.isEraserOn = false
+        invalidate()
+    }
 }
