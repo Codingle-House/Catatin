@@ -72,6 +72,7 @@ dependencies {
     // Internal Library
     implementation project(":uikit")
     implementation project(":are")
+    implementation project(":draw")
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

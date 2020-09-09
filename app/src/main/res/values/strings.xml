@@ -46,7 +46,7 @@
 
     <string name="dialog_title_todo_add">Tambah Pekerjaan</string>
     <string name="dialog_title_todo_edit">Ubah Pekerjaan</string>
-    
+
     <string name="dialog_title_menu_attachment">Lampiran</string>
     <string name="dialog_title_menu_file">Berkas</string>
     <string name="dialog_title_menu_location">Lokasi</string>

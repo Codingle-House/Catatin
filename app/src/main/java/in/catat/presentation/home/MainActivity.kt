@@ -5,6 +5,7 @@ import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.search.SearchActivity
+import `in`.catat.presentation.sketch.SketchActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
 import android.os.Bundle
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 startActivity(Intent(this, TodoActivity::class.java))
             }
             else -> {
-
+                startActivity(Intent(this, SketchActivity::class.java))
             }
         }
     }
