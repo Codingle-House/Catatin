@@ -70,7 +70,7 @@ class CatatinCanvas : LinearLayout {
             itemListener = { data, pos, _ ->
                 if (isPaintSelected) {
                     drawView.setCanvassBackground(data)
-                } else if (isPenColorSelecred) {
+                } else if (isPenColorSelected) {
                     drawView.setColor(data)
                     penColor.setColor(data)
                 }
@@ -90,7 +90,7 @@ class CatatinCanvas : LinearLayout {
     private var isEraserActive = false
     private var canvasBackgroundColor: Int = Color.BLACK
     private var isPaintSelected = false
-    private var isPenColorSelecred = false
+    private var isPenColorSelected = false
 
     init {
         LayoutInflater.from(context)
@@ -168,6 +168,7 @@ class CatatinCanvas : LinearLayout {
 
     private fun setupPaintActionListener() {
         toolPaint.setOnClickListener {
+            isPenColorSelected = false
             isPaintSelected = isPaintSelected.not()
             linearColor.isGone = !isPaintSelected
         }
@@ -175,8 +176,9 @@ class CatatinCanvas : LinearLayout {
 
     private fun setupPenColorActionListener() {
         penColor.setOnClickListener {
-            isPenColorSelecred = isPenColorSelecred.not()
-            linearColor.isGone = !isPenColorSelecred
+            isPaintSelected = false
+            isPenColorSelected = isPenColorSelected.not()
+            linearColor.isGone = !isPenColorSelected
         }
     }
 
