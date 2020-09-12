@@ -7,6 +7,7 @@ stages:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
+  - echo $KEYSTORE
   - echo $KEYSTORE > key.txt
   - base64 -d key.txt > keystore
   - echo "keyPassword=$KEY_PASSWORD" > key.properties
@@ -20,7 +21,7 @@ build:apk:
   script:
     - export BUILD_NUMBER=$CI_JOB_ID
     - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
-    #- curl -F file=@app/build/outputs/apk/release/app-release.apk -F channels=$CHANNEL_ID -F initial_comment="[BUILD APK] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+    - curl -F file=@app/build/outputs/apk/release/app-release.apk -F channels=$CHANNEL_ID -F initial_comment="[BUILD APK] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
   artifacts:
     expire_in: 2 days
     paths:
