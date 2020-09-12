@@ -26,11 +26,11 @@ build:apk:
     - develop
   script:
     - export BUILD_NUMBER=$CI_JOB_ID
-    - mv ./app/build-ci.gradle ./app/build.gradle || true
+    - mv ./app/ci-build.gradle ./app/build.gradle || true
+    - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
     - cd app/build/outputs/apk/release/
     - export FILENAME=$(ls)
     - echo FILENAME
-    - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
     - curl -F file=@${FILENAME} -F channels=$CHANNEL_ID -F initial_comment="[BUILD APK] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
   artifacts:
     expire_in: 2 days
@@ -49,8 +49,10 @@ build:aab:
   script:
     - export BUILD_NUMBER=$CI_JOB_ID
     - mv ./app/ci-build.gradle ./app/build.gradle || true
-    - cd app/build/outputs/bundle/release/
     - ./gradlew -g /cache/.gradle clean bundleRelease --parallel --stacktrace --no-daemon -x lint
+    - cd app/build/outputs/bundle/release/
+    - export FILENAME=$(ls)
+    - echo FILENAME
     - curl -F file=@${FILENAME} -F channels=$CHANNEL_ID -F initial_comment="[BUILD AAB] SUCCESS JOB FROM $CI_COMMIT_REF_NAME APP BUNDLE - READY TO UPLOAD" -F token=$SLACK_TOKEN https://slack.com/api/files.upload
   artifacts:
     expire_in: 2 days
