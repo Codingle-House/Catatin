@@ -5,8 +5,6 @@ stages:
   - clean
 
 before_script:
-  - rm -f ./app/build.gradle
-  - mv ./app/build-ci.gradle ./app/build.gradle
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
   - echo $KEYSTORE
@@ -26,7 +24,6 @@ build:apk:
     - develop
   script:
     - export BUILD_NUMBER=$CI_JOB_ID
-    - mv ./app/ci-build.gradle ./app/build.gradle || true
     - ./gradlew -g /cache/.gradle clean assembleRelease --parallel --stacktrace --no-daemon -x lint
     - cd app/build/outputs/apk/release/
     - export FILENAME=$(ls)
@@ -48,7 +45,6 @@ build:aab:
     - develop
   script:
     - export BUILD_NUMBER=$CI_JOB_ID
-    - mv ./app/ci-build.gradle ./app/build.gradle || true
     - ./gradlew -g /cache/.gradle clean bundleRelease --parallel --stacktrace --no-daemon -x lint
     - cd app/build/outputs/bundle/release/
     - export FILENAME=$(ls)
