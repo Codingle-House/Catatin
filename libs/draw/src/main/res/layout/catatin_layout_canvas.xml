@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -10,11 +11,109 @@
         android:id="@+id/catatin_draw_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/catatin_linearlayout"
+        app:layout_constraintBottom_toTopOf="@id/catatin_scrollview_tooling"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <HorizontalScrollView
+        android:id="@+id/catatin_scrollview_tooling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:paddingRight="80dp"
+        app:layout_constraintBottom_toTopOf="@id/catatin_linearlayout_colors">
+
+        <LinearLayout
+            android:id="@+id/catatin_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/catatin_imagaview_undo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/draw_ic_undo"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/catatin_imagaview_redo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                app:srcCompat="@drawable/draw_ic_redo"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/catatin_imageview_pencil"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/draw_bg_tool_default"
+                android:padding="10dp"
+                app:srcCompat="@drawable/draw_ic_pencil_default" />
+
+            <ImageView
+                android:id="@+id/catatin_imageview_eraser"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/draw_bg_tool_default"
+                android:padding="10dp"
+                app:srcCompat="@drawable/draw_ic_eraser_default" />
+
+            <ImageView
+                android:id="@+id/catatin_imageview_paint"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/draw_bg_tool_default"
+                android:padding="10dp"
+                app:srcCompat="@drawable/draw_ic_paint_default" />
+
+            <ImageView
+                android:id="@+id/catatin_imageview_stroke"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/draw_bg_tool_default"
+                android:padding="10dp"
+                app:srcCompat="@drawable/draw_ic_stroke" />
+
+            <ImageView
+                android:id="@+id/catatin_imageview_opacity"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/draw_bg_tool_default"
+                android:padding="10dp"
+                app:srcCompat="@drawable/draw_ic_opacity" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <id.co.draw.widget.CircleView
+        android:id="@+id/catatin_circleview_pencolor"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/catatin_scrollview_tooling"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/catatin_scrollview_tooling" />
+
     <LinearLayout
-        android:id="@+id/catatin_linearlayout"
+        android:id="@+id/catatin_linearlayout_colors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
@@ -22,47 +121,26 @@
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
+        android:visibility="gone"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/catatin_linearlayout_colors">
+        app:layout_constraintBottom_toTopOf="@id/catatin_relativelayout_spinner">
 
         <ImageView
-            android:id="@+id/catatin_imageview_pencil"
+            android:id="@+id/catatin_imageviw_colorpicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/draw_bg_tool_default"
-            android:padding="10dp"
-            android:src="@drawable/draw_ic_pencil_default" />
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/draw_ic_color_picker" />
 
-        <ImageView
-            android:id="@+id/catatin_imageview_eraser"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/catatin_recyclerview_colors"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/draw_bg_tool_default"
-            android:padding="10dp"
-            android:src="@drawable/draw_ic_eraser_default" />
-
-        <ImageView
-            android:id="@+id/catatin_imageview_paint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/draw_bg_tool_default"
-            android:padding="10dp"
-            android:src="@drawable/draw_ic_paint_default" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
-    <id.co.draw.widget.CircleView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/catatin_circleview_pencolor"
-        android:layout_marginRight="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/catatin_linearlayout"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/catatin_linearlayout" />
-
-    <LinearLayout
-        android:id="@+id/catatin_linearlayout_colors"
+    <RelativeLayout
+        android:id="@+id/catatin_relativelayout_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
@@ -74,9 +152,30 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/catatin_recyclerview_colors"
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/catatin_seekbar_progress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/catatin_circleview_preview" />
+
+        <id.co.draw.widget.CircleView
+            android:id="@+id/catatin_circleview_preview"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/catatin_imageview_close" />
+
+        <ImageView
+            android:id="@+id/catatin_imageview_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="TODO"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

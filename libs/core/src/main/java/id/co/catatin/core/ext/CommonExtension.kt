@@ -1,10 +1,12 @@
 package id.co.catatin.core.ext
 
 import android.content.Context
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 
 /**
  * Created by pertadima on 09,September,2020
@@ -12,6 +14,10 @@ import androidx.core.content.ContextCompat
 
 fun Context.getColorCompat(@ColorRes color: Int): Int {
     return ContextCompat.getColor(this, color)
+}
+
+fun ImageView.changeDrawableColorCompat(color: Int) {
+    return DrawableCompat.setTint(DrawableCompat.wrap(drawable), color)
 }
 
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
