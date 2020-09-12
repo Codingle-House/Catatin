@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import androidx.appcompat.widget.AppCompatSeekBar
@@ -214,6 +213,19 @@ class CatatinCanvas : LinearLayout {
 
                 isPenColorSelected = false
                 isPaintSelected = true
+
+                progressRelativeLayout.isGone = true
+
+                with(strokeTool) {
+                    setBackgroundResource(R.drawable.draw_bg_tool_default)
+                    changeDrawableColorCompat(Color.WHITE)
+                }
+
+                with(opacityTool) {
+                    setBackgroundResource(R.drawable.draw_bg_tool_default)
+                    changeDrawableColorCompat(Color.WHITE)
+                }
+
             }
         }
     }
@@ -223,6 +235,23 @@ class CatatinCanvas : LinearLayout {
             isPaintSelected = false
             isPenColorSelected = true
             linearColor.isGone = false
+
+            progressRelativeLayout.isGone = true
+
+            with(strokeTool) {
+                setBackgroundResource(R.drawable.draw_bg_tool_default)
+                changeDrawableColorCompat(Color.WHITE)
+            }
+
+            with(opacityTool) {
+                setBackgroundResource(R.drawable.draw_bg_tool_default)
+                changeDrawableColorCompat(Color.WHITE)
+            }
+
+            with(toolPaint) {
+                setBackgroundResource(R.drawable.draw_bg_tool_default)
+                changeDrawableColorCompat(Color.WHITE)
+            }
         }
     }
 
@@ -247,7 +276,6 @@ class CatatinCanvas : LinearLayout {
     private fun setupStrokeOpacityToolActionListener() {
         with(strokeTool) {
             setOnClickListener {
-                Log.e("IRFAN", "WIDTH = $latestStrokeWidth: ");
                 selectedProgress = PROGRESS.STROKE
                 seekBarProgress.progress = latestStrokeWidth
                 progressRelativeLayout.isGone = false
@@ -262,7 +290,6 @@ class CatatinCanvas : LinearLayout {
 
         with(opacityTool) {
             setOnClickListener {
-                Log.e("IRFAN", "OPACITY = $latestOpacity: ");
                 selectedProgress = PROGRESS.OPACITY
                 seekBarProgress.progress = latestOpacity
                 progressRelativeLayout.isGone = false
