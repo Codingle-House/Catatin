@@ -10,9 +10,13 @@ before_script:
   - echo $KEYSTORE
   - echo $KEYSTORE > key.txt
   - base64 -d key.txt > keystore
+  - echo $KEY_PASSWORD
   - echo "keyPassword=$KEY_PASSWORD" > key.properties
+  - echo $KEY_ALIAS
   - echo "keyAlias=$KEY_ALIAS" >> key.properties
+  - echo $ALIAS_PASSWORD
   - echo "aliasPassword=$ALIAS_PASSWORD" >> key.properties
+
 
 build:apk:
   stage: build
