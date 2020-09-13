@@ -3,7 +3,6 @@ package id.co.draw.views
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Color
-import android.media.Image
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -309,6 +308,16 @@ class CatatinCanvas : LinearLayout {
 
         strokeClose.setOnClickListener {
             progressRelativeLayout.isGone = true
+
+            with(strokeTool) {
+                setBackgroundResource(R.drawable.draw_bg_tool_default)
+                changeDrawableColorCompat(Color.WHITE)
+            }
+
+            with(opacityTool) {
+                setBackgroundResource(R.drawable.draw_bg_tool_default)
+                changeDrawableColorCompat(Color.WHITE)
+            }
         }
 
         seekBarProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -335,7 +344,18 @@ class CatatinCanvas : LinearLayout {
 
     private fun setupColorPickerActionListener() {
         colorPicker.setOnClickListener {
-            ColorPickerDialog(context, Color.WHITE).show()
+            ColorPickerDialog(context, Color.WHITE) { color ->
+                color?.let { data ->
+                    if (isPaintSelected) {
+                        drawView.setCanvassBackground(data)
+                    } else if (isPenColorSelected) {
+                        drawView.setColor(data)
+                        penColor.setColor(data)
+                        circleViewPreview.setColor(data)
+                    }
+                    linearColor.isGone = true
+                }
+            }.show()
         }
     }
 

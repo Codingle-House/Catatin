@@ -16,35 +16,24 @@
 package id.co.catatin.colorpicker
 
 import android.content.Context
-import android.view.View
-import android.widget.LinearLayout
+import android.widget.Button
+import android.widget.TextView
 import id.catat.uikit.dialog.BaseCatatanDialog
-import kotlin.math.roundToInt
+import java.lang.String
 
 class ColorPickerDialog(
     context: Context,
-    private val initialColor: Int
-) : BaseCatatanDialog(context), ColorPickerView.OnColorChangedListener, View.OnClickListener {
+    private val initialColor: Int,
+    private val onColorChange: (Int?) -> Unit
+) : BaseCatatanDialog(context), ColorPickerView.OnColorChangedListener {
+
     private var colorPicker: ColorPickerView? = null
-    private var oldColor: ColorPickerPanelView? = null
     private var newColor: ColorPickerPanelView? = null
-    private var listener: OnColorChangedListener? = null
+    private var hexCode: TextView? = null
+    private var pickColor: Button? = null
 
-    interface OnColorChangedListener {
-        fun onColorChanged(color: Int)
-    }
-
-    val color: Int
-        get() = colorPicker!!.color
-
-    override fun onClick(v: View) {
-        if (v.id == R.id.new_color_panel) {
-            if (listener != null) {
-                listener!!.onColorChanged(newColor!!.color)
-            }
-        }
-        dismiss()
-    }
+    val color: Int?
+        get() = colorPicker?.color
 
     override fun setupLayout() {
         setContentView(R.layout.dialog_color_picker)
@@ -52,6 +41,7 @@ class ColorPickerDialog(
 
     override fun onCreateDialog() {
         init(initialColor)
+        setupNewColorActionListener()
     }
 
     private fun init(color: Int) {
@@ -59,27 +49,30 @@ class ColorPickerDialog(
     }
 
     private fun setUp(color: Int) {
-        colorPicker = findViewById<View>(R.id.color_picker_view) as ColorPickerView
-        oldColor = findViewById<View>(R.id.old_color_panel) as ColorPickerPanelView
-        newColor = findViewById<View>(R.id.new_color_panel) as ColorPickerPanelView
-        (oldColor?.parent as LinearLayout).setPadding(
-            colorPicker?.drawingOffset?.roundToInt() ?: 0,
-            0,
-            colorPicker?.drawingOffset?.roundToInt() ?: 0,
-            0
-        )
-        oldColor?.setOnClickListener(this)
-        newColor?.setOnClickListener(this)
+        colorPicker = findViewById(R.id.catatin_colorpicker_color)
+        newColor = findViewById(R.id.catatin_colorpanel_newcolor)
+        hexCode = findViewById(R.id.catatin_textview_hexcolor)
+        pickColor = findViewById(R.id.catatin_button_pick)
+
         colorPicker?.setOnColorChangedListener(this)
-        oldColor?.color = color
+        newColor?.color = color
+        hexCode?.text = newColor?.color?.convertColorToHex().toString()
         colorPicker?.setColor(color, true)
+    }
+
+    private fun setupNewColorActionListener() {
+        pickColor?.setOnClickListener {
+            onColorChange.invoke(newColor?.color)
+            dismiss()
+        }
     }
 
     override fun onColorChanged(color: Int) {
         newColor?.color = color
+        hexCode?.text = newColor?.color?.convertColorToHex().toString()
     }
 
-    fun setOnColorChangedListener(listener: OnColorChangedListener?) {
-        this.listener = listener
+    private fun Int.convertColorToHex(): kotlin.String {
+        return String.format("#%06X", 0xFFFFFF and this)
     }
 }

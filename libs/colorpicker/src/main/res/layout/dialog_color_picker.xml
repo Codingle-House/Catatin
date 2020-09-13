@@ -4,27 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_rounded_white"
-   android:padding="10dp">
+    android:padding="10dp">
 
     <id.co.catatin.colorpicker.ColorPickerView
-        android:id="@+id/color_picker_view"
+        android:id="@+id/catatin_colorpicker_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layerType="software"
         android:tag="portrait" />
 
     <LinearLayout
+        android:id="@+id/catatin_linearlayout_preview"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@id/color_picker_view"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:layout_below="@id/catatin_colorpicker_color"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <id.co.catatin.colorpicker.ColorPickerPanelView
-            android:id="@+id/old_color_panel"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5" />
+            android:id="@+id/catatin_colorpanel_newcolor"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,14 +34,30 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="→"
+            android:text="@string/text_hex"
             android:textSize="20sp" />
 
-        <id.co.catatin.colorpicker.ColorPickerPanelView
-            android:id="@+id/new_color_panel"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+        <TextView
+            android:id="@+id/catatin_textview_hexcolor"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/catatin_bg_hex_color"
+            android:importantForAutofill="no"
+            android:padding="10dp" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/catatin_button_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/catatin_linearlayout_preview"
+        android:layout_margin="20dp"
+        android:background="@drawable/catatin_bg_button_pick"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/action_color_pick"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 </RelativeLayout>
