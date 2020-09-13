@@ -3,6 +3,7 @@ package id.co.draw.views
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Color
+import android.media.Image
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import id.co.catatin.colorpicker.ColorPickerDialog
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.GeneralRecyclerView
 import id.co.catatin.core.ext.changeDrawableColorCompat
@@ -100,6 +102,7 @@ class CatatinCanvas : LinearLayout {
     private lateinit var seekBarProgress: AppCompatSeekBar
     private lateinit var scrollViewTool: HorizontalScrollView
     private lateinit var opacityTool: ImageView
+    private lateinit var colorPicker: ImageView
 
     private var latestOpacity = 100
     private var latestStrokeWidth = 30
@@ -141,6 +144,7 @@ class CatatinCanvas : LinearLayout {
         seekBarProgress = findViewById(R.id.catatin_seekbar_progress)
         scrollViewTool = findViewById(R.id.catatin_scrollview_tooling)
         opacityTool = findViewById(R.id.catatin_imageview_opacity)
+        colorPicker = findViewById(R.id.catatin_imageviw_colorpicker)
     }
 
     private fun setupInitialDrawingCanvas() {
@@ -165,6 +169,7 @@ class CatatinCanvas : LinearLayout {
         setupPenColorActionListener()
         setupUndoAndRedoToolActionListener()
         setupStrokeOpacityToolActionListener()
+        setupColorPickerActionListener()
     }
 
     private fun setupRecyclerviewColors() {
@@ -326,6 +331,12 @@ class CatatinCanvas : LinearLayout {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+    }
+
+    private fun setupColorPickerActionListener() {
+        colorPicker.setOnClickListener {
+            ColorPickerDialog(context, Color.WHITE).show()
+        }
     }
 
     fun setCanvassBackground(

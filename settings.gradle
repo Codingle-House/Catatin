@@ -1,3 +1,5 @@
+include ':colorpicker'
+project(':colorpicker').projectDir = new File('libs/colorpicker')
 include ':core'
 project(':core').projectDir = new File('libs/core')
 include ':draw'
