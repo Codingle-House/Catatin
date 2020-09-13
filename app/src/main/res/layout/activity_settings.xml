@@ -149,11 +149,66 @@
                 android:background="@color/colorLine" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/settings_menu_reset_pin"
+                android:textColor="@color/colorTextPrimary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/settings_title_backup"
+                android:textColor="@color/colorTextHint" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/settings_menu_backup_by_google"
+                android:textColor="@color/colorTextPrimary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/settings_menu_backup_to_google"
+                android:textColor="@color/colorTextPrimary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/settings_menu_backup_manual"
+                android:textColor="@color/colorTextPrimary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/settings_menu_backup_history"
                 android:textColor="@color/colorTextPrimary" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
