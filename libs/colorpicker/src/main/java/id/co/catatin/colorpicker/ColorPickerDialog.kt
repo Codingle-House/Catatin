@@ -16,6 +16,7 @@
 package id.co.catatin.colorpicker
 
 import android.content.Context
+import android.graphics.Color
 import android.widget.Button
 import android.widget.TextView
 import id.catat.uikit.dialog.BaseCatatanDialog
@@ -46,6 +47,7 @@ class ColorPickerDialog(
 
     private fun init(color: Int) {
         setUp(color)
+        newColor?.borderColor = Color.BLACK
     }
 
     private fun setUp(color: Int) {
