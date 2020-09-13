@@ -18,4 +18,5 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
             }
         }
     }
+
 }
