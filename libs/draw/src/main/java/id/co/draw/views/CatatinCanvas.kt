@@ -68,19 +68,8 @@ class CatatinCanvas : LinearLayout {
                     setCircleRadius(80F)
                 }
             },
-            itemListener = { data, pos, _ ->
-                if (isPaintSelected) {
-                    with(toolPaint) {
-                        setBackgroundResource(R.drawable.draw_bg_tool_default)
-                        changeDrawableColorCompat(Color.WHITE)
-                    }
-                    drawView.setCanvassBackground(data)
-                } else if (isPenColorSelected) {
-                    drawView.setColor(data)
-                    penColor.setColor(data)
-                    circleViewPreview.setColor(data)
-                }
-                linearColor.isGone = true
+            itemListener = { data, _, _ ->
+                handleColorClickListener(data)
             }
         )
     }
@@ -108,14 +97,18 @@ class CatatinCanvas : LinearLayout {
 
     private var isEraserActive = false
     private var canvasBackgroundColor: Int = Color.BLACK
-    private var isPaintSelected = false
-    private var isPenColorSelected = false
 
     private var selectedProgress = PROGRESS.STROKE
+    private var selectedColorTools = COLORS.PEN
 
     enum class PROGRESS {
         STROKE,
         OPACITY
+    }
+
+    enum class COLORS {
+        PEN,
+        BACKGROUND
     }
 
     init {
@@ -215,8 +208,7 @@ class CatatinCanvas : LinearLayout {
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
                 changeDrawableColorCompat(canvasBackgroundColor)
 
-                isPenColorSelected = false
-                isPaintSelected = true
+                selectedColorTools = COLORS.BACKGROUND
 
                 progressRelativeLayout.isGone = true
 
@@ -236,8 +228,7 @@ class CatatinCanvas : LinearLayout {
 
     private fun setupPenColorActionListener() {
         penColor.setOnClickListener {
-            isPaintSelected = false
-            isPenColorSelected = true
+            selectedColorTools = COLORS.PEN
             linearColor.isGone = false
 
             progressRelativeLayout.isGone = true
@@ -346,17 +337,36 @@ class CatatinCanvas : LinearLayout {
         colorPicker.setOnClickListener {
             ColorPickerDialog(context, Color.WHITE) { color ->
                 color?.let { data ->
-                    if (isPaintSelected) {
-                        drawView.setCanvassBackground(data)
-                    } else if (isPenColorSelected) {
-                        drawView.setColor(data)
-                        penColor.setColor(data)
-                        circleViewPreview.setColor(data)
+                    when (selectedColorTools) {
+                        COLORS.PEN -> {
+                            drawView.setColor(data)
+                            penColor.setColor(data)
+                            circleViewPreview.setColor(data)
+                        }
+                        COLORS.BACKGROUND -> drawView.setCanvassBackground(data)
                     }
                     linearColor.isGone = true
                 }
             }.show()
         }
+    }
+
+    private fun handleColorClickListener(color: Int) {
+        when (selectedColorTools) {
+            COLORS.PEN -> {
+                drawView.setColor(color)
+                penColor.setColor(color)
+                circleViewPreview.setColor(color)
+            }
+            COLORS.BACKGROUND -> {
+                with(toolPaint) {
+                    setBackgroundResource(R.drawable.draw_bg_tool_default)
+                    changeDrawableColorCompat(Color.WHITE)
+                }
+                drawView.setCanvassBackground(color)
+            }
+        }
+        linearColor.isGone = true
     }
 
     fun setCanvassBackground(
