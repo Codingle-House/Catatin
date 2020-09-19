@@ -74,6 +74,8 @@
 
     <string name="general_text_login_by_google">Masuk Menggunakan Google</string>
 
+    <string name="general_text_add_alarm">Tambah Pengingat</string>
+
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>

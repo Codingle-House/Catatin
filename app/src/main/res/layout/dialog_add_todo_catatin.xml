@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,11 +36,28 @@
         android:textColorHint="@color/colorTextHint"
         android:textSize="12sp" />
 
+    <TextView
+        android:id="@+id/dialog_textview_todo_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_edittext_todo"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/general_bg_rounded_stroke"
+        android:gravity="center_horizontal"
+        android:padding="15dp"
+        android:text="@string/general_text_add_alarm"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextHint"
+        app:drawableLeftCompat="@drawable/general_ic_clock"
+        app:drawableStartCompat="@drawable/general_ic_clock" />
+
     <Button
         android:id="@+id/dialog_button_todo"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_below="@+id/dialog_edittext_todo"
+        android:layout_below="@+id/dialog_textview_todo_alarm"
         android:layout_margin="20dp"
         android:background="@drawable/general_selector_button"
         android:enabled="false"
