@@ -19,7 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object NetworkModule {
-    //TODO: "MODIFY BASE URL"
     private const val BASE_URL = "https://api.github.com/"
 
     @Singleton
