@@ -1,16 +1,15 @@
 package `in`.catat.presentation.sketch
 
 import `in`.catat.R
+import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import id.co.catatin.core.ext.getColorCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_sketch.*
 
-class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
+class SketchActivity : BaseActivity(R.layout.activity_sketch) {
     private val settingsMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
@@ -36,10 +35,13 @@ class SketchActivity : AppCompatActivity(R.layout.activity_sketch) {
 
     private var isFullScreen = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         setupToolbar()
         setupCanvass()
+    }
+
+    override fun onViewModelObserver() {
+
     }
 
     private fun setupToolbar() {

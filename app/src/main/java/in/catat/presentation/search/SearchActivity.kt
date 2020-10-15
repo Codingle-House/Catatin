@@ -1,6 +1,7 @@
 package `in`.catat.presentation.search
 
 import `in`.catat.R
+import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
@@ -10,7 +11,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchActivity : AppCompatActivity(R.layout.activity_search) {
+class SearchActivity : BaseActivity(R.layout.activity_search) {
     private val catatanMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_notes)),
@@ -23,9 +24,12 @@ class SearchActivity : AppCompatActivity(R.layout.activity_search) {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         setupListener()
+    }
+
+    override fun onViewModelObserver() {
+
     }
 
     private fun setupListener() {

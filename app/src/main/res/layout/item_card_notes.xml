@@ -5,28 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorDefaultCard"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/note_textview_notes_datetime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/colorTextHint"
             android:textSize="12sp"
-            android:textStyle="bold"
             tools:text="24 Agustus 16:25" />
 
         <TextView
             android:id="@+id/note_textview_notes_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:text="Lorem Ipsum Color Sit Ame" />
@@ -35,6 +40,7 @@
             android:id="@+id/note_textview_notes_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="4dp"
             android:textColor="@android:color/white"
             android:textSize="10sp"
@@ -45,11 +51,33 @@
             android:id="@+id/note_textview_notes_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="4dp"
             android:maxLines="3"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="normal"
             tools:text="Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit." />
+
+        <ImageView
+            android:id="@+id/note_imageview_notes_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/note_textview_notes_islocked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center_vertical"
+            android:text="@string/general_text_notes_locked"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/note_layer_itemlocked" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

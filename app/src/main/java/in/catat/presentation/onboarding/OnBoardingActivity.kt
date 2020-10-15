@@ -1,6 +1,7 @@
 package `in`.catat.presentation.onboarding
 
 import `in`.catat.R
+import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.OnBoardingDataModel
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.home.HomeActivity
@@ -9,15 +10,13 @@ import `in`.catat.util.ZoomOutPageTransformer
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
 
-class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
+class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     ViewPager.OnPageChangeListener {
 
     private val fragmentList by lazy {
@@ -50,10 +49,13 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
         SliderPagerAdapter(supportFragmentManager, fragmentList)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         setupAction()
         setupViewPager()
+    }
+
+    override fun onViewModelObserver() {
+
     }
 
     private fun setupAction() {

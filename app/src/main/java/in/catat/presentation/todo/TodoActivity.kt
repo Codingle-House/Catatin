@@ -1,17 +1,16 @@
 package `in`.catat.presentation.todo
 
 import `in`.catat.R
+import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_todo.*
 
-class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
+class TodoActivity : BaseActivity(R.layout.activity_todo) {
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
     }
@@ -41,11 +40,14 @@ class TodoActivity : AppCompatActivity(R.layout.activity_todo) {
 
     private var isFullScreen = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         setupAppToolbar()
         setupView()
         setupListener()
+    }
+
+    override fun onViewModelObserver() {
+
     }
 
     private fun setupAppToolbar() {

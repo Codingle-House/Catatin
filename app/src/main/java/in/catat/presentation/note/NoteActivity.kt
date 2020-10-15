@@ -1,16 +1,15 @@
 package `in`.catat.presentation.note
 
 import `in`.catat.R
+import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import `in`.catat.util.ShareUtil
 import android.content.Intent
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import id.catat.uikit.richtext_item.*
@@ -19,7 +18,7 @@ import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
 
 
-class NoteActivity : AppCompatActivity(R.layout.activity_note) {
+class NoteActivity : BaseActivity(R.layout.activity_note) {
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
     }
@@ -72,12 +71,15 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
     private var scrollerAtEnd = false
     private var isFullScreen = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         initRichTextView()
         setupAppToolbar()
         setupView()
         setupToolbarArrow()
+    }
+
+    override fun onViewModelObserver() {
+
     }
 
     private fun setupAppToolbar() {
