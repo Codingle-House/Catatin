@@ -27,10 +27,10 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
+            android:fontFamily="@font/roboto_bold"
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             tools:text="Lewati Halaman Ini" />
 
         <TextView
@@ -40,11 +40,11 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
+            android:fontFamily="@font/roboto_light"
             android:gravity="center_horizontal"
             android:lines="3"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textStyle="normal"
             tools:text="Pilih iya jika kamu sudah paham, dan kamu akan melewati halaman ini" />
 
         <LinearLayout
@@ -63,6 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"
                 android:gravity="center_horizontal"
                 android:padding="20dp"
                 android:textAlignment="center"
@@ -74,11 +75,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/roboto_bold"
                 android:gravity="center_horizontal"
                 android:padding="20dp"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
                 tools:text="Yes" />
         </LinearLayout>
     </LinearLayout>
