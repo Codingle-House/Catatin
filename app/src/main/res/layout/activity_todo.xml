@@ -54,8 +54,8 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/general_bg_form"
                 android:hint="@string/note_title_placeholder"
-                android:padding="15dp"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="12sp" />

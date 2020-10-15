@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.catat.uikit.dialog.BaseCatatanDialog
-import id.catat.uikit.util.DiffCallback
+import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.dialog_item_menu_catatin.view.*
 import kotlinx.android.synthetic.main.dialog_menu_catatin.*
 

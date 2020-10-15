@@ -6,7 +6,6 @@ import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import id.co.catatin.core.ext.showToast

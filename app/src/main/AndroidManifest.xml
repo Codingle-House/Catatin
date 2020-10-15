@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.home.MainActivity"
+            android:name=".presentation.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity

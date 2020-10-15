@@ -45,9 +45,9 @@
         android:src="@drawable/general_ic_lock" />
 
     <View
+        android:id="@+id/dialog_view_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:id="@+id/dialog_view_line"
         android:layout_below="@id/dialog_linearlayout_item_menu"
         android:layout_marginTop="20dp"
         android:background="@color/uiKitColorLine" />

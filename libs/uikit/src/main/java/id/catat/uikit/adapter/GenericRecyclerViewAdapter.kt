@@ -8,7 +8,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.catat.uikit.util.DiffCallback
+import id.co.catatin.core.commons.DiffCallback
 
 /**
  * Created by pertadima on 23,August,2020

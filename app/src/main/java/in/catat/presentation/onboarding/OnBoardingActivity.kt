@@ -3,7 +3,7 @@ package `in`.catat.presentation.onboarding
 import `in`.catat.R
 import `in`.catat.data.model.OnBoardingDataModel
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
-import `in`.catat.presentation.home.MainActivity
+import `in`.catat.presentation.home.HomeActivity
 import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
 import `in`.catat.util.ZoomOutPageTransformer
 import android.animation.Animator
@@ -116,7 +116,7 @@ class OnBoardingActivity : AppCompatActivity(R.layout.activity_onboarding),
     }
 
     private fun goToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 

@@ -16,4 +16,6 @@
     <color name="colorButtonDisable">#393939</color>
     <color name="colorRed">#F83D3D</color>
     <color name="colorLine">#313131</color>
+
+    <color name="colorDefaultCard">#363636</color>
 </resources>

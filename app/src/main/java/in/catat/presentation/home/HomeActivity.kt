@@ -1,6 +1,7 @@
 package `in`.catat.presentation.home
 
 import `in`.catat.R
+import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
@@ -10,11 +11,24 @@ import `in`.catat.presentation.sketch.SketchActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import id.catat.uikit.adapter.GenericRecyclerViewAdapter
+import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+@AndroidEntryPoint
+class HomeActivity : AppCompatActivity(R.layout.activity_main) {
+
+    @Inject
+    lateinit var diffCallback: DiffCallback
+
+    private val homeViewModel: HomeViewModel by viewModels()
+
     private val catatanMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_notes)),
@@ -27,10 +41,44 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
     }
 
+    private val notesAdapter by lazy {
+        GenericRecyclerViewAdapter<UserNotesDto>(
+            diffCallback = diffCallback,
+            holderResId = R.layout.item_card_notes,
+            onBind = { data, pos, view ->
+                with(view) {
+
+                }
+            },
+            itemListener = { data, pos, _ ->
+
+            }
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbarView()
         setupListener()
+        setupViewFlipper()
+        getData()
+        setupRecyclerView()
+    }
+
+    private fun getData() {
+        homeViewModel.getUserNotes()
+    }
+
+    private fun setupViewFlipper() {
+        //TODO("IRFAN: REMOVE WHEN REAL DATA AVAILABLE")
+        home_viewflipper_content.displayedChild = AVAILABLE_STATE
+    }
+
+    private fun setupRecyclerView() {
+        with(home_recyclerview_notes) {
+            adapter = notesAdapter
+            layoutManager = GridLayoutManager(this@HomeActivity, 2)
+        }
     }
 
     private fun setupToolbarView() {
@@ -40,11 +88,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.home_action_search -> {
-                        startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+                        startActivity(Intent(this@HomeActivity, SearchActivity::class.java))
                         true
                     }
                     R.id.home_action_setting -> {
-                        startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                        startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
                         true
                     }
                     else -> super.onOptionsItemSelected(it)
@@ -56,7 +104,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setupListener() {
         home_button_add.setOnClickListener {
             GeneralCatatinMenuDialog(
-                context = this@MainActivity,
+                context = this@HomeActivity,
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,
                 onMenuClick = { _, data ->
@@ -65,6 +113,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             ).show()
         }
     }
+
 
     private fun handleMenuDialogClick(data: CatatanMenuModel) {
         when (data.title) {
@@ -98,5 +147,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         private val GOOD_MORNING_RANGE = 0..11
         private val GOOD_MORNING_AFTERNOON = 12..15
         private val GOOD_MORNING_EVENING = 16..19
+
+        private const val EMPTY_STATE = 0
+        private const val AVAILABLE_STATE = 1
     }
 }

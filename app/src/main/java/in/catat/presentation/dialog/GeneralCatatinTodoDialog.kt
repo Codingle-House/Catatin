@@ -5,7 +5,6 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import id.catat.uikit.dialog.BaseCatatanDialog
-import kotlinx.android.synthetic.main.activity_note.*
 import kotlinx.android.synthetic.main.dialog_add_todo_catatin.*
 
 /**
