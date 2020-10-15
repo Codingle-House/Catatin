@@ -154,6 +154,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/settings_menu_reset_pin"
+                android:id="@+id/settings_textview_menu_resetpin"
                 android:textColor="@color/colorTextPrimary" />
 
             <TextView

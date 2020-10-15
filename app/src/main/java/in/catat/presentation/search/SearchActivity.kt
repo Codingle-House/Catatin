@@ -7,11 +7,16 @@ import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.activity_search.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchActivity : BaseActivity(R.layout.activity_search) {
+    @Inject
+    lateinit var diffCallback: DiffCallback
+
     private val catatanMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_notes)),
@@ -25,10 +30,17 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
     }
 
     override fun onViewCreated() {
+        setupToolbar()
         setupListener()
     }
 
     override fun onViewModelObserver() {
+        search_toolbar.setNavigationOnClickListener {
+            finish()
+        }
+    }
+
+    private fun setupToolbar() {
 
     }
 
@@ -37,6 +49,7 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
             GeneralCatatinMenuDialog(
                 context = this@SearchActivity,
                 title = getString(R.string.dialog_title_menu_add),
+                diffCallback = diffCallback,
                 dataMenu = catatanMenu,
                 onMenuClick = { _, data ->
                     handleMenuDialogClick(data)

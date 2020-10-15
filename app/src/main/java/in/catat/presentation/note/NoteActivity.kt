@@ -12,13 +12,20 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+import dagger.hilt.android.AndroidEntryPoint
 import id.catat.uikit.richtext_item.*
+import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.getColorCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class NoteActivity : BaseActivity(R.layout.activity_note) {
+    @Inject
+    lateinit var diffCallback: DiffCallback
+
+
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
     }
@@ -94,6 +101,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                         GeneralCatatinMenuDialog(
                             context = this@NoteActivity,
                             title = getString(R.string.general_text_setting),
+                            diffCallback = diffCallback,
                             dataMenu = settingsMenu,
                             onMenuClick = { _, data ->
                                 handleMenuDialogClick(data)
@@ -105,6 +113,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                         GeneralCatatinMenuDialog(
                             context = this@NoteActivity,
                             title = getString(R.string.dialog_title_menu_attachment),
+                            diffCallback = diffCallback,
                             dataMenu = attachmentMenu,
                             onMenuClick = { _, data ->
 

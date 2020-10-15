@@ -5,11 +5,18 @@ import `in`.catat.base.BaseActivity
 import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import androidx.core.view.isGone
+import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.getColorCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_sketch.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SketchActivity : BaseActivity(R.layout.activity_sketch) {
+    @Inject
+    lateinit var diffCallback: DiffCallback
+
     private val settingsMenu by lazy {
         listOf(
             CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
@@ -56,6 +63,7 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
                         GeneralCatatinMenuDialog(
                             context = this@SketchActivity,
                             title = getString(R.string.general_text_setting),
+                            diffCallback = diffCallback,
                             dataMenu = settingsMenu,
                             onMenuClick = { _, data ->
                                 handleMenuDialogClick(data)

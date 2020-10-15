@@ -7,10 +7,17 @@ import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
 import androidx.core.view.isGone
+import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_todo.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TodoActivity : BaseActivity(R.layout.activity_todo) {
+    @Inject
+    lateinit var diffCallback: DiffCallback
+
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
     }
@@ -62,6 +69,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                         GeneralCatatinMenuDialog(
                             context = this@TodoActivity,
                             title = getString(R.string.general_text_setting),
+                            diffCallback = diffCallback,
                             dataMenu = settingsMenu,
                             onMenuClick = { _, data ->
                                 handleMenuDialogClick(data)

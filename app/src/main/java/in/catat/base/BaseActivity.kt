@@ -1,6 +1,8 @@
 package `in`.catat.base
 
 import `in`.catat.R
+import `in`.catat.presentation.login.LoginActivity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -68,4 +70,13 @@ abstract class BaseActivity : AppCompatActivity {
         super.onDestroy()
     }
 
+    fun checkIsUserLoggedIn(userLoginAction: () -> Unit) {
+        //TODO: CHECK USER LOGGED IN
+        val isUserLogin = false
+        if (isUserLogin) {
+            userLoginAction.invoke()
+        } else {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+    }
 }

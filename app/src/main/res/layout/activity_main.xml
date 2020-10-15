@@ -87,8 +87,8 @@
                     android:id="@+id/home_textview_content_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="@android:color/white"
                     tools:text="Kamu memiliki 3 catatan" />

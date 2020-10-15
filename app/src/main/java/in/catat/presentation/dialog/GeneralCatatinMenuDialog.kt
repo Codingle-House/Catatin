@@ -6,11 +6,13 @@ import android.content.Context
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.catat.uikit.dialog.BaseCatatanDialog
 import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.dialog_item_menu_catatin.view.*
 import kotlinx.android.synthetic.main.dialog_menu_catatin.*
+import javax.inject.Inject
 
 /**
  * Created by pertadima on 23,August,2020
@@ -18,14 +20,11 @@ import kotlinx.android.synthetic.main.dialog_menu_catatin.*
 
 class GeneralCatatinMenuDialog(
     context: Context,
+    private val diffCallback: DiffCallback,
     private val title: String,
     private val dataMenu: List<CatatanMenuModel> = listOf(),
     private val onMenuClick: (Int, CatatanMenuModel) -> Unit
 ) : BaseCatatanDialog(context) {
-
-    private val diffCallback by lazy {
-        DiffCallback()
-    }
 
     private val menuAdapter by lazy {
         GenericRecyclerViewAdapter<CatatanMenuModel>(
@@ -68,5 +67,4 @@ class GeneralCatatinMenuDialog(
             layoutManager = LinearLayoutManager(context)
         }
     }
-
 }

@@ -135,12 +135,19 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         home_button_add.setOnClickListener {
             GeneralCatatinMenuDialog(
                 context = this@HomeActivity,
+                diffCallback = diffCallback,
                 title = getString(R.string.dialog_title_menu_add),
                 dataMenu = catatanMenu,
                 onMenuClick = { _, data ->
                     handleMenuDialogClick(data)
                 }
             ).show()
+        }
+    }
+
+    private fun setupFilterListener() {
+        home_imageview_filter.setOnClickListener {
+
         }
     }
 
