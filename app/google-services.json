@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "632406824572",
+    "firebase_url": "https://catatin-c5ee2.firebaseio.com",
+    "project_id": "catatin-c5ee2",
+    "storage_bucket": "catatin-c5ee2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632406824572:android:5a7211e61b7404fbfd5bf9",
+        "android_client_info": {
+          "package_name": "in.catat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632406824572-fhh3jj9ple52qpmp319a6q6q1jovp7e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCAfD6gGq6ADqdOhzY9SW8zGhYlDzSvYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632406824572-fhh3jj9ple52qpmp319a6q6q1jovp7e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
