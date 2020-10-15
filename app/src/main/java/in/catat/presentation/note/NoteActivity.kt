@@ -83,9 +83,15 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         setupAppToolbar()
         setupView()
         setupToolbarArrow()
+        setupAdMob()
     }
 
+
     override fun onViewModelObserver() {
+        note_adview_banner.initializeAdMob()
+    }
+
+    private fun setupAdMob() {
 
     }
 
@@ -128,7 +134,6 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     }
 
     private fun setupView() {
-
         note_textview_description.text =
             getString(
                 R.string.note_text_description,

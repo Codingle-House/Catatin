@@ -60,11 +60,19 @@
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="12sp" />
 
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/note_adview_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-7778597937630443/7311721104" />
+
             <TextView
                 android:id="@+id/note_textview_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/colorTextHint"
                 android:textSize="12sp"
