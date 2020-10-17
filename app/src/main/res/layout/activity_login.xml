@@ -68,8 +68,10 @@
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
+        android:id="@+id/login_button_google"
         android:paddingBottom="10dp"
         android:text="@string/general_text_login_by_google"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
