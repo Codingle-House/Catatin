@@ -23,12 +23,9 @@
             app:navigationIcon="@drawable/general_ic_back_white">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="?android:attr/actionBarSize"
-                android:gravity="center_horizontal"
                 android:text="@string/todo_title_add"
-                android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
