@@ -91,4 +91,9 @@ abstract class BaseActivity : AppCompatActivity {
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+    }
 }

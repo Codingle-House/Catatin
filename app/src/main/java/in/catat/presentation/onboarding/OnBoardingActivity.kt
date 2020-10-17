@@ -101,6 +101,7 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
 
     private fun goToMainActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
         finish()
     }
 

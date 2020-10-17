@@ -24,7 +24,6 @@ import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_note.*
 import kotlinx.android.synthetic.main.item_card_notes.view.*
 import java.util.*
 import javax.inject.Inject
@@ -121,10 +120,12 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 when (it.itemId) {
                     R.id.home_action_search -> {
                         startActivity(Intent(this@HomeActivity, SearchActivity::class.java))
+                        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
                         true
                     }
                     R.id.home_action_setting -> {
                         startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
+                        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
                         true
                     }
                     else -> super.onOptionsItemSelected(it)
@@ -163,11 +164,14 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 )
             }
             else -> {
-                startActivity(Intent(this, SketchActivity::class.java).putExtra(
-                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
-                ))
+                startActivity(
+                    Intent(this, SketchActivity::class.java).putExtra(
+                        SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
+                    )
+                )
             }
         }
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
     }
 
     private fun showWelcomeMessage(): String {
@@ -223,6 +227,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 )
             )
         }
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
     }
 
     companion object {

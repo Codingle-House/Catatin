@@ -20,6 +20,7 @@ class SplashScreenActivity : BaseActivity(R.layout.activity_splash_screen) {
         handler.postDelayed({
             val intent = Intent(this, OnBoardingActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
             finish()
         }, SPLASH_SCREEN_DURATION)
     }
