@@ -1,7 +1,7 @@
 package `in`.catat.di
 
 import `in`.catat.BuildConfig
-import `in`.catat.domain.service.AppNetworkService
+import `in`.catat.domain.app.service.AppNetworkService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,6 +1,6 @@
-package `in`.catat.domain.datasource
+package `in`.catat.domain.app.datasource
 
-import `in`.catat.domain.service.AppNetworkService
+import `in`.catat.domain.app.service.AppNetworkService
 import javax.inject.Inject
 
 /**

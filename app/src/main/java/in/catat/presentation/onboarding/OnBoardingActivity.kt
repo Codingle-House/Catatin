@@ -2,7 +2,6 @@ package `in`.catat.presentation.onboarding
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import `in`.catat.data.model.OnBoardingDataModel
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.home.HomeActivity
 import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
@@ -11,42 +10,20 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
-
+@AndroidEntryPoint
 class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     ViewPager.OnPageChangeListener {
 
-    private val fragmentList by lazy {
-        listOf(
-            OnBoardingFragment.newInstance(
-                OnBoardingDataModel(
-                    image = R.drawable.onboarding_ic_content_1,
-                    title = getString(R.string.onboarding_title_content1),
-                    description = getString(R.string.onboarding_text_content1)
-                )
-            ),
-            OnBoardingFragment.newInstance(
-                OnBoardingDataModel(
-                    image = R.drawable.onboarding_ic_content_2,
-                    title = getString(R.string.onboarding_title_content2),
-                    description = getString(R.string.onboarding_text_content2)
-                )
-            ),
-            OnBoardingFragment.newInstance(
-                OnBoardingDataModel(
-                    image = R.drawable.onboarding_ic_content_3,
-                    title = getString(R.string.onboarding_title_content3),
-                    description = getString(R.string.onboarding_text_content3)
-                )
-            )
-        )
-    }
+    private val onBoardingViewModel: OnBoardingViewModel by viewModels()
 
     private val sliderAdapter by lazy {
-        SliderPagerAdapter(supportFragmentManager, fragmentList)
+        SliderPagerAdapter(supportFragmentManager)
     }
 
     override fun onViewCreated() {
@@ -55,12 +32,17 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     }
 
     override fun onViewModelObserver() {
-
+        onBoardingViewModel.observeOnBoardingData().onResult {
+            val onBoardingFragments = it.map { onBoardingData ->
+                OnBoardingFragment.newInstance(onBoardingDataModel = onBoardingData)
+            }
+            sliderAdapter.setData(onBoardingFragments)
+        }
     }
 
     private fun setupAction() {
         onboarding_textview_skip.setOnClickListener {
-            if (onboarding_viewpager_content.currentItem == fragmentList.size - 1) {
+            if (onboarding_viewpager_content.currentItem == sliderAdapter.count - 1) {
                 goToMainActivity()
             } else {
                 GeneralCatatinDialog(
@@ -112,9 +94,9 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     }
 
     override fun onPageSelected(position: Int) {
-        onboarding_button_next.scaleAnimation(position == fragmentList.size - 1)
+        onboarding_button_next.scaleAnimation(position == sliderAdapter.count - 1)
         onboarding_button_previous.scaleAnimation(position == 0)
-        onboarding_button_understand.scaleAnimation(position != fragmentList.size - 1)
+        onboarding_button_understand.scaleAnimation(position != sliderAdapter.count - 1)
     }
 
     private fun goToMainActivity() {

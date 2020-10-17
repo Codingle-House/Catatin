@@ -1,7 +1,7 @@
 package `in`.catat.presentation.home
 
 import `in`.catat.data.dto.UserNotesDto
-import `in`.catat.domain.repository.AppRepository
+import `in`.catat.domain.app.repository.AppRepository
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData

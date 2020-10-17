@@ -10,10 +10,20 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  */
 
 class SliderPagerAdapter(
-    fragmentManager: FragmentManager,
-    private val fragmentList: List<Fragment>
+    fragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private val fragmentList: MutableList<Fragment> = mutableListOf()
+
     private var currentPosition = -1
+
+    fun setData(fragment: List<Fragment>) {
+        with(fragmentList) {
+            clear()
+            addAll(fragment)
+        }
+        notifyDataSetChanged()
+    }
 
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]
@@ -22,6 +32,8 @@ class SliderPagerAdapter(
     override fun getCount(): Int {
         return fragmentList.size
     }
+
+
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
         super.setPrimaryItem(container, position, `object`)

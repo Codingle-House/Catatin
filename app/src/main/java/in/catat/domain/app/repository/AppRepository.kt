@@ -1,7 +1,7 @@
-package `in`.catat.domain.repository
+package `in`.catat.domain.app.repository
 
-import `in`.catat.domain.datasource.AppLocalDataSource
-import `in`.catat.domain.datasource.AppRemoteDataSource
+import `in`.catat.domain.app.datasource.AppLocalDataSource
+import `in`.catat.domain.app.datasource.AppRemoteDataSource
 import javax.inject.Inject
 
 /**

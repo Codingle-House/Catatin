@@ -1,4 +1,4 @@
-package `in`.catat.domain.datasource
+package `in`.catat.domain.app.datasource
 
 import javax.inject.Inject
 
