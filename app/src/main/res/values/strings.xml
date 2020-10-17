@@ -78,13 +78,14 @@
 
     <string name="general_text_notes_locked">Terkunci</string>
     <string name="general_text_emptystring"> </string>
+
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>
     <string name="note_text_description">%s | %s karakter</string>
     <string name="note_hint_placeholder">Silahkan ketikkan catatan kamu disini...</string>
 
-    <!--    Todo Screen Text-->
+    <!--    To'do Screen Text-->
     <string name="todo_title_add">Tambah Daftar Pekerjaan</string>
     <string name="todo_text_description">%s | %s aktivitas</string>
 
@@ -105,4 +106,8 @@
 
     <string name="setting_text_pin_not_setup">Belum diatur</string>
     <string name="settings_text_not_logged_in">Kamu belum masuk menggunakan akun googlemu, silahkan masuk terlebih dahulu agar dapat menggunakan beberapa fitur tertentu</string>
+
+    <!--    To'do Screen Text-->
+    <string name="login_title">Masuk Terlebih Dahulu</string>
+    <string name="login_text_description">Untuk dapat menggunakan fitur ini, silahkan untuk login terlebih dahulu</string>
 </resources>
