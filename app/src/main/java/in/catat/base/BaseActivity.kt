@@ -10,13 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import id.co.catatin.core.commons.CustomViewUnbinder
+import id.co.catatin.core.ext.getColorCompat
 
 
 /**
@@ -41,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity {
             setContentView(contentLayoutId)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+            window.statusBarColor = getColorCompat(R.color.colorPrimary)
         }
         onViewCreated()
         onViewModelObserver()

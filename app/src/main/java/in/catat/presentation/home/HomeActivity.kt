@@ -24,6 +24,7 @@ import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_note.*
 import kotlinx.android.synthetic.main.item_card_notes.view.*
 import java.util.*
 import javax.inject.Inject
@@ -162,7 +163,9 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 )
             }
             else -> {
-                startActivity(Intent(this, SketchActivity::class.java))
+                startActivity(Intent(this, SketchActivity::class.java).putExtra(
+                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
+                ))
             }
         }
     }
@@ -214,7 +217,11 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                     TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT
                 )
             )
-            UserNotesDto.NOTE_TYPE.SKETCH -> startActivity(Intent(this, SketchActivity::class.java))
+            UserNotesDto.NOTE_TYPE.SKETCH -> startActivity(
+                Intent(this, SketchActivity::class.java).putExtra(
+                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.EDIT
+                )
+            )
         }
     }
 

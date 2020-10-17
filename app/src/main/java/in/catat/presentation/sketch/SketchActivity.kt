@@ -3,8 +3,9 @@ package `in`.catat.presentation.sketch
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
-import `in`.catat.presentation.search.SearchViewModel
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,10 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
     lateinit var diffCallback: DiffCallback
 
     private val sketchViewModel: SketchViewModel by viewModels()
+
+    private val noteStatus by lazy {
+        intent?.getSerializableExtra(SketchKey.STATUS) as NoteStatusEnum
+    }
 
     private val settingsDialog by lazy {
         GeneralCatatinMenuDialog(
@@ -53,15 +58,8 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
                 finish()
             }
             inflateMenu(R.menu.catatin_menu_more)
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_main_setting -> {
-                        settingsDialog.show()
-                        true
-                    }
-                    else -> super.onOptionsItemSelected(it)
-                }
-            }
+            menu.findItem(R.id.note_menu_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
+            setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
 
@@ -95,6 +93,16 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
         }
     }
 
+    private fun handleMenuClick(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.menu_main_setting -> {
+                settingsDialog.show()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(menuItem)
+        }
+    }
+
     private fun handleFullScreen() {
         sketch_appbar.isGone = true
         isFullScreen = true
@@ -108,5 +116,9 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
         } else {
             finish()
         }
+    }
+
+    object SketchKey {
+        const val STATUS = "SketchActivity.STATUS"
     }
 }

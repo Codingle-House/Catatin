@@ -3,8 +3,10 @@ package `in`.catat.presentation.search
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
+import `in`.catat.presentation.sketch.SketchActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
 import androidx.activity.viewModels
@@ -60,13 +62,23 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
     private fun handleMenuDialogClick(data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
-                startActivity(Intent(this, NoteActivity::class.java))
+                startActivity(
+                    Intent(this, NoteActivity::class.java).putExtra(
+                        NoteActivity.NoteKey.STATUS, NoteStatusEnum.CREATE
+                    )
+                )
             }
             getString(R.string.dialog_title_menu_todo) -> {
-                startActivity(Intent(this, TodoActivity::class.java))
+                startActivity(
+                    Intent(this, TodoActivity::class.java).putExtra(
+                        TodoActivity.TodoKey.STATUS, NoteStatusEnum.CREATE
+                    )
+                )
             }
             else -> {
-
+                startActivity(Intent(this, SketchActivity::class.java).putExtra(
+                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
+                ))
             }
         }
     }

@@ -3,8 +3,8 @@ package `in`.catat.presentation.dialog
 import `in`.catat.R
 import android.content.Context
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import id.catat.uikit.dialog.BaseCatatanDialog
+import id.co.catatin.core.ext.getDrawableCompat
 import kotlinx.android.synthetic.main.dialog_catatin.*
 
 /**
@@ -31,7 +31,7 @@ class GeneralCatatinDialog(
     }
 
     private fun setupView() {
-        dialog_imageview_icon.setImageDrawable(ContextCompat.getDrawable(context, image))
+        dialog_imageview_icon.setImageDrawable(context.getDrawableCompat(image))
         dialog_textview_title.text = title
         dialog_textview_desc.text = description
 

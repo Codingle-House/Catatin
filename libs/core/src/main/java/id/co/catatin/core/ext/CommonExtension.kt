@@ -1,9 +1,11 @@
 package id.co.catatin.core.ext
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -26,4 +28,8 @@ fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 
 fun Context.showToast(@StringRes message: Int, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, getString(message), duration).show()
+}
+
+fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
+    return ContextCompat.getDrawable(this, id)
 }

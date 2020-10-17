@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.chinalwb.are.Util
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Hr
 import id.catat.uikit.R
+import id.co.catatin.core.ext.getDrawableCompat
 
 /**
  * Created by pertadima on 27,August,2020
@@ -28,7 +29,7 @@ class CatatinDividerToolItem(
             val params = LinearLayout.LayoutParams(size, size)
             imageView.apply {
                 layoutParams = params
-                setImageDrawable(ContextCompat.getDrawable(context, icon))
+                setImageDrawable(context.getDrawableCompat(icon))
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
                 bringToFront()
             }

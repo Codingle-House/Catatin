@@ -90,8 +90,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                 finish()
             }
             inflateMenu(R.menu.catatin_menu_note)
-            note_toolbar.menu.findItem(R.id.note_menu_delete).isVisible =
-                noteStatus == NoteStatusEnum.EDIT
+            menu.findItem(R.id.note_menu_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
             setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
@@ -179,12 +178,12 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             }
         }
         note_imageview_arrow.setOnClickListener {
-            if (scrollerAtEnd) {
-                note_richtext_toolbar.smoothScrollBy(-Integer.MAX_VALUE, 0)
-            } else {
-                val fullWidth = note_richtext_toolbar.getChildAt(0).width
-                note_richtext_toolbar.smoothScrollBy(fullWidth, 0);
-            }
+            val fullWidth = note_richtext_toolbar.getChildAt(0).width
+
+            note_richtext_toolbar.smoothScrollBy(
+                if (scrollerAtEnd) -Integer.MAX_VALUE else fullWidth,
+                0
+            )
         }
     }
 

@@ -11,6 +11,7 @@ import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Strikethrough
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_UpdaterDefault
 import com.chinalwb.are.styles.toolitems.IARE_ToolItem_Updater
 import id.catat.uikit.R
+import id.co.catatin.core.ext.getDrawableCompat
 
 /**
  * Created by pertadima on 27,August,2020
@@ -42,7 +43,7 @@ class CatatinStrikeThroughToolItem(
             val params = LinearLayout.LayoutParams(size, size)
             imageView.apply {
                 layoutParams = params
-                setImageDrawable(ContextCompat.getDrawable(context, icon))
+                setImageDrawable(context.getDrawableCompat(icon))
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
                 bringToFront()
             }
