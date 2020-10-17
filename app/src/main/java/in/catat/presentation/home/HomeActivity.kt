@@ -2,8 +2,8 @@ package `in`.catat.presentation.home
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
-import `in`.catat.data.model.CatatanMenuModel
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.search.SearchActivity
@@ -35,16 +35,14 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
-    //TODO: IRFAN - MOVE TO INTERACTOR
-    private val catatanMenu by lazy {
-        listOf(
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_notes)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_todo)),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_draw),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            )
+    private val notesTypeDialog by lazy {
+        GeneralCatatinMenuDialog(
+            context = this@HomeActivity,
+            diffCallback = diffCallback,
+            title = getString(R.string.dialog_title_menu_add),
+            onMenuClick = { _, data ->
+                handleMenuDialogClick(data)
+            }
         )
     }
 
@@ -53,9 +51,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             diffCallback = diffCallback,
             holderResId = R.layout.item_card_notes,
             onBind = ::bindNotesAdapter,
-            itemListener = { data, pos, _ ->
-
-            }
+            itemListener = ::notesListener
         )
     }
 
@@ -79,6 +75,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 } else {
                     AVAILABLE_STATE
                 }
+            }
+
+            observeNotesTypes().onResult {
+                notesTypeDialog.setData(it)
             }
         }
     }
@@ -133,15 +133,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun setupListener() {
         home_button_add.setOnClickListener {
-            GeneralCatatinMenuDialog(
-                context = this@HomeActivity,
-                diffCallback = diffCallback,
-                title = getString(R.string.dialog_title_menu_add),
-                dataMenu = catatanMenu,
-                onMenuClick = { _, data ->
-                    handleMenuDialogClick(data)
-                }
-            ).show()
+            notesTypeDialog.show()
         }
     }
 
@@ -152,8 +144,8 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
 
-    private fun handleMenuDialogClick(data: CatatanMenuModel) {
-        when (data.title) {
+    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+        when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
                 startActivity(Intent(this, NoteActivity::class.java))
             }
@@ -194,6 +186,18 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         with(view.note_textview_notes_value) {
             text = data.description
             isGone = data.isLocked
+        }
+    }
+
+    private fun notesListener(data: UserNotesDto, pos: Int, view: View) {
+        if (data.isLocked) {
+            return
+        }
+
+        when (data.type) {
+            UserNotesDto.NOTE_TYPE.NOTE -> startActivity(Intent(this, NoteActivity::class.java))
+            UserNotesDto.NOTE_TYPE.SKETCH -> startActivity(Intent(this, SketchActivity::class.java))
+            UserNotesDto.NOTE_TYPE.TODO -> startActivity(Intent(this, TodoActivity::class.java))
         }
     }
 

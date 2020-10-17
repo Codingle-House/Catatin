@@ -12,5 +12,7 @@ class AppRepository @Inject constructor(
     private val appLocalDataSource: AppLocalDataSource,
     private val appRemoteDataSource: AppRemoteDataSource
 ) {
-
+    fun getAttachmentMenuList() = appLocalDataSource.attachmentMenuList
+    fun getSettingsMenu() = appLocalDataSource.settingsMenu
+    fun getNotesType() = appLocalDataSource.notesType
 }

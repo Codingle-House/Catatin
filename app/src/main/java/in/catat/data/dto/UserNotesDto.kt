@@ -11,4 +11,10 @@ data class UserNotesDto(
     val description: String = "",
     val image: String = "",
     val isLocked: Boolean = false
-)
+) {
+    object NOTE_TYPE {
+        const val NOTE = "note"
+        const val TODO = "todo"
+        const val SKETCH = "sketch"
+    }
+}

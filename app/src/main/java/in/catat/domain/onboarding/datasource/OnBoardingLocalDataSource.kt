@@ -27,6 +27,4 @@ class OnBoardingLocalDataSource @Inject constructor() {
                 description = R.string.onboarding_text_content3
             )
         )
-
-
 }

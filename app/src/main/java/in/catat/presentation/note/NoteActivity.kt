@@ -2,7 +2,7 @@ package `in`.catat.presentation.note
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import `in`.catat.util.ShareUtil
@@ -10,6 +10,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,58 +26,36 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     @Inject
     lateinit var diffCallback: DiffCallback
 
+    private val noteViewModel: NoteViewModel by viewModels()
 
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
     }
 
-    private val settingsMenu by lazy {
-        listOf(
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_alarm)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_share)),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_lock),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_focus),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_pdf),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            )
-        )
-    }
-
-    private val attachmentMenu by lazy {
-        listOf(
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_file)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_location)),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_video),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_audio),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_sketch),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            )
-        )
-    }
-
     private var scrollerAtEnd = false
     private var isFullScreen = false
+
+    private val settingsDialog by lazy {
+        GeneralCatatinMenuDialog(
+            context = this@NoteActivity,
+            title = getString(R.string.general_text_setting),
+            diffCallback = diffCallback,
+            onMenuClick = { _, data ->
+                handleMenuDialogClick(data)
+            }
+        )
+    }
+
+    private val attachmentDialog by lazy {
+        GeneralCatatinMenuDialog(
+            context = this@NoteActivity,
+            title = getString(R.string.dialog_title_menu_attachment),
+            diffCallback = diffCallback,
+            onMenuClick = { _, data ->
+                handleMenuDialogClick(data)
+            }
+        )
+    }
 
     override fun onViewCreated() {
         initRichTextView()
@@ -88,11 +67,19 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
 
 
     override fun onViewModelObserver() {
-        note_adview_banner.initializeAdMob()
+        with(noteViewModel) {
+            observeAttachmentMenu().onResult {
+                attachmentDialog.setData(it)
+            }
+
+            observeSettingsMenu().onResult {
+                settingsDialog.setData(it)
+            }
+        }
     }
 
     private fun setupAdMob() {
-
+        note_adview_banner.initializeAdMob()
     }
 
     private fun setupAppToolbar() {
@@ -104,27 +91,11 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.note_menu_setting -> {
-                        GeneralCatatinMenuDialog(
-                            context = this@NoteActivity,
-                            title = getString(R.string.general_text_setting),
-                            diffCallback = diffCallback,
-                            dataMenu = settingsMenu,
-                            onMenuClick = { _, data ->
-                                handleMenuDialogClick(data)
-                            }
-                        ).show()
+                        settingsDialog.show()
                         true
                     }
                     R.id.note_menu_attachment -> {
-                        GeneralCatatinMenuDialog(
-                            context = this@NoteActivity,
-                            title = getString(R.string.dialog_title_menu_attachment),
-                            diffCallback = diffCallback,
-                            dataMenu = attachmentMenu,
-                            onMenuClick = { _, data ->
-
-                            }
-                        ).show()
+                        attachmentDialog.show()
                         true
                     }
                     else -> super.onOptionsItemSelected(it)
@@ -225,8 +196,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         }
     }
 
-    private fun handleMenuDialogClick(data: CatatanMenuModel) {
-        when (data.title) {
+    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+        when (getString(data.title)) {
             getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
             getString(R.string.dialog_title_menu_alarm) -> {
 

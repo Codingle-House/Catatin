@@ -2,10 +2,11 @@ package `in`.catat.presentation.todo
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
+import androidx.activity.viewModels
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
@@ -18,31 +19,21 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     @Inject
     lateinit var diffCallback: DiffCallback
 
-    private val currentDate by lazy {
-        DateUtil.getCurrentDate()
+    private val todoViewModel: TodoViewModel by viewModels()
+
+    private val settingsDialog by lazy {
+        GeneralCatatinMenuDialog(
+            context = this@TodoActivity,
+            title = getString(R.string.general_text_setting),
+            diffCallback = diffCallback,
+            onMenuClick = { _, data ->
+                handleMenuDialogClick(data)
+            }
+        )
     }
 
-    private val settingsMenu by lazy {
-        listOf(
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_fullscreen)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_alarm)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_share)),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_lock),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_focus),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            ),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_pdf),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            )
-        )
+    private val currentDate by lazy {
+        DateUtil.getCurrentDate()
     }
 
     private var isFullScreen = false
@@ -54,7 +45,11 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     }
 
     override fun onViewModelObserver() {
-
+        with(todoViewModel) {
+            observeSettingsMenu().onResult {
+                settingsDialog.setData(it)
+            }
+        }
     }
 
     private fun setupAppToolbar() {
@@ -66,15 +61,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_main_setting -> {
-                        GeneralCatatinMenuDialog(
-                            context = this@TodoActivity,
-                            title = getString(R.string.general_text_setting),
-                            diffCallback = diffCallback,
-                            dataMenu = settingsMenu,
-                            onMenuClick = { _, data ->
-                                handleMenuDialogClick(data)
-                            }
-                        ).show()
+                        settingsDialog.show()
                         true
                     }
                     else -> super.onOptionsItemSelected(it)
@@ -101,8 +88,8 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         }
     }
 
-    private fun handleMenuDialogClick(data: CatatanMenuModel) {
-        when (data.title) {
+    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+        when (getString(data.title)) {
             getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
             getString(R.string.dialog_title_menu_alarm) -> {
 

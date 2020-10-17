@@ -2,11 +2,12 @@ package `in`.catat.presentation.search
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import `in`.catat.data.model.CatatanMenuModel
+import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.activity_search.*
@@ -17,15 +18,16 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
     @Inject
     lateinit var diffCallback: DiffCallback
 
-    private val catatanMenu by lazy {
-        listOf(
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_notes)),
-            CatatanMenuModel(title = getString(R.string.dialog_title_menu_todo)),
-            CatatanMenuModel(
-                title = getString(R.string.dialog_title_menu_draw),
-                description = getString(R.string.dialog_text_menu_premium),
-                isPremiumContent = true
-            )
+    private val searchViewModel: SearchViewModel by viewModels()
+
+    private val notesTypeDialog by lazy {
+        GeneralCatatinMenuDialog(
+            context = this@SearchActivity,
+            diffCallback = diffCallback,
+            title = getString(R.string.dialog_title_menu_add),
+            onMenuClick = { _, data ->
+                handleMenuDialogClick(data)
+            }
         )
     }
 
@@ -35,31 +37,28 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
     }
 
     override fun onViewModelObserver() {
-        search_toolbar.setNavigationOnClickListener {
-            finish()
+        with(searchViewModel) {
+            observeNotesTypes().onResult {
+                notesTypeDialog.setData(it)
+            }
         }
     }
 
     private fun setupToolbar() {
+        search_toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
     }
 
     private fun setupListener() {
         search_button_add.setOnClickListener {
-            GeneralCatatinMenuDialog(
-                context = this@SearchActivity,
-                title = getString(R.string.dialog_title_menu_add),
-                diffCallback = diffCallback,
-                dataMenu = catatanMenu,
-                onMenuClick = { _, data ->
-                    handleMenuDialogClick(data)
-                }
-            ).show()
+            notesTypeDialog.show()
         }
     }
 
-    private fun handleMenuDialogClick(data: CatatanMenuModel) {
-        when (data.title) {
+    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+        when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
                 startActivity(Intent(this, NoteActivity::class.java))
             }
