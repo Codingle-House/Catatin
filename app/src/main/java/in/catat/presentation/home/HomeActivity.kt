@@ -4,6 +4,7 @@ import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
+import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.search.SearchActivity
@@ -147,10 +148,18 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     private fun handleMenuDialogClick(data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
-                startActivity(Intent(this, NoteActivity::class.java))
+                startActivity(
+                    Intent(this, NoteActivity::class.java).putExtra(
+                        NoteActivity.NoteKey.STATUS, NoteStatusEnum.CREATE
+                    )
+                )
             }
             getString(R.string.dialog_title_menu_todo) -> {
-                startActivity(Intent(this, TodoActivity::class.java))
+                startActivity(
+                    Intent(this, TodoActivity::class.java).putExtra(
+                        TodoActivity.TodoKey.STATUS, NoteStatusEnum.CREATE
+                    )
+                )
             }
             else -> {
                 startActivity(Intent(this, SketchActivity::class.java))
@@ -195,9 +204,17 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
 
         when (data.type) {
-            UserNotesDto.NOTE_TYPE.NOTE -> startActivity(Intent(this, NoteActivity::class.java))
+            UserNotesDto.NOTE_TYPE.NOTE -> startActivity(
+                Intent(this, NoteActivity::class.java).putExtra(
+                    NoteActivity.NoteKey.STATUS, NoteStatusEnum.EDIT
+                )
+            )
+            UserNotesDto.NOTE_TYPE.TODO -> startActivity(
+                Intent(this, TodoActivity::class.java).putExtra(
+                    TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT
+                )
+            )
             UserNotesDto.NOTE_TYPE.SKETCH -> startActivity(Intent(this, SketchActivity::class.java))
-            UserNotesDto.NOTE_TYPE.TODO -> startActivity(Intent(this, TodoActivity::class.java))
         }
     }
 

@@ -3,12 +3,14 @@ package `in`.catat.presentation.note
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import `in`.catat.util.ShareUtil
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isGone
@@ -32,6 +34,10 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         DateUtil.getCurrentDate()
     }
 
+    private val noteStatus by lazy {
+        intent?.getSerializableExtra(NoteKey.STATUS) as NoteStatusEnum
+    }
+
     private var scrollerAtEnd = false
     private var isFullScreen = false
 
@@ -40,9 +46,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             context = this@NoteActivity,
             title = getString(R.string.general_text_setting),
             diffCallback = diffCallback,
-            onMenuClick = { _, data ->
-                handleMenuDialogClick(data)
-            }
+            onMenuClick = ::handleMenuDialogClick
         )
     }
 
@@ -51,9 +55,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             context = this@NoteActivity,
             title = getString(R.string.dialog_title_menu_attachment),
             diffCallback = diffCallback,
-            onMenuClick = { _, data ->
-                handleMenuDialogClick(data)
-            }
+            onMenuClick = ::handleMenuDialogClick
         )
     }
 
@@ -88,19 +90,9 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                 finish()
             }
             inflateMenu(R.menu.catatin_menu_note)
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.note_menu_setting -> {
-                        settingsDialog.show()
-                        true
-                    }
-                    R.id.note_menu_attachment -> {
-                        attachmentDialog.show()
-                        true
-                    }
-                    else -> super.onOptionsItemSelected(it)
-                }
-            }
+            note_toolbar.menu.findItem(R.id.note_menu_delete).isVisible =
+                noteStatus == NoteStatusEnum.EDIT
+            setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
 
@@ -196,7 +188,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         }
     }
 
-    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+    private fun handleMenuDialogClick(post: Int, data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
             getString(R.string.dialog_title_menu_alarm) -> {
@@ -257,8 +249,29 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             .rotation(if (!isNextPage) LINEAR_ROTATION else DEFAULT_ROTATION)
     }
 
+    private fun handleMenuClick(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.note_menu_setting -> {
+                settingsDialog.show()
+                true
+            }
+            R.id.note_menu_attachment -> {
+                attachmentDialog.show()
+                true
+            }
+            R.id.note_menu_delete -> {
+                true
+            }
+            else -> super.onOptionsItemSelected(menuItem)
+        }
+    }
+
     private fun actionSave() {
 
+    }
+
+    object NoteKey {
+        const val STATUS = "NoteActivity.STATUS"
     }
 
     companion object {

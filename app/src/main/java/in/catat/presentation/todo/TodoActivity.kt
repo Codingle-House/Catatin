@@ -3,6 +3,7 @@ package `in`.catat.presentation.todo
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
@@ -20,6 +21,10 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     lateinit var diffCallback: DiffCallback
 
     private val todoViewModel: TodoViewModel by viewModels()
+
+    private val todoStatus by lazy {
+        intent?.getSerializableExtra(TodoActivity.TodoKey.STATUS) as NoteStatusEnum
+    }
 
     private val settingsDialog by lazy {
         GeneralCatatinMenuDialog(
@@ -126,5 +131,9 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         } else {
             finish()
         }
+    }
+
+    object TodoKey {
+        const val STATUS = "TodoActivity.STATUS"
     }
 }
