@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(R.layout.activity_login) {
     override fun onViewCreated() {
-        auth = FirebaseAuth.getInstance()
         setupToolbar()
         doGoogleLogin()
         configureGoogleSignIn()

@@ -2,6 +2,7 @@ package `in`.catat.base
 
 import `in`.catat.R
 import `in`.catat.presentation.login.LoginActivity
+import `in`.catat.util.tracking.TrackingUtil
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import id.co.catatin.core.commons.CustomViewUnbinder
 import id.co.catatin.core.ext.getColorCompat
+import javax.inject.Inject
 
 
 /**
@@ -33,7 +35,11 @@ import id.co.catatin.core.ext.getColorCompat
  */
 
 abstract class BaseActivity : AppCompatActivity {
-    protected lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var trackingUtil: TrackingUtil
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInOptions: GoogleSignInOptions
