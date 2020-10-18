@@ -1,6 +1,6 @@
 package `in`.catat.domain.onboarding.repository
 
-import `in`.catat.data.dto.OnboardingDataDto
+import `in`.catat.data.dto.OnBoardingDataDto
 import `in`.catat.domain.onboarding.datasource.OnBoardingLocalDataSource
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class OnBoardingRepository @Inject constructor(
     private val onBoardingLocalDataSource: OnBoardingLocalDataSource
 ) {
-    fun getOnBoardingDataList(): List<OnboardingDataDto> {
+    fun getOnBoardingDataList(): List<OnBoardingDataDto> {
         return onBoardingLocalDataSource.onBoardingDataList
     }
 }

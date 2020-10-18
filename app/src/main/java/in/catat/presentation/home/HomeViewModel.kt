@@ -34,64 +34,21 @@ class HomeViewModel @ViewModelInject constructor(
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = false,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             ),
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = true,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             ),
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = false,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                image = "https://mymodernmet.com/wp/wp-content/uploads/2019/03/elements-of-art-6.jpg"
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = true,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = true,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = false,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = false,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
-                isLocked = true,
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            ),
-            UserNotesDto(
-                date = "24 Agustus 16:25 ",
-                title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = false,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
                 image = "https://mymodernmet.com/wp/wp-content/uploads/2019/03/elements-of-art-6.jpg"
@@ -99,21 +56,64 @@ class HomeViewModel @ViewModelInject constructor(
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = true,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             ),
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = true,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             ),
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
-                type = UserNotesDto.NOTE_TYPE.NOTE,
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = false,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = false,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = true,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = false,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+                image = "https://mymodernmet.com/wp/wp-content/uploads/2019/03/elements-of-art-6.jpg"
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = true,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
+                isLocked = true,
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            ),
+            UserNotesDto(
+                date = "24 Agustus 16:25 ",
+                title = "Lorem Ipsum Color Sit Ame",
+                type = UserNotesDto.NoteType.NOTE,
                 isLocked = false,
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             )

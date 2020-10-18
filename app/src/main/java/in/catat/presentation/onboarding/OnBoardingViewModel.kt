@@ -1,6 +1,6 @@
 package `in`.catat.presentation.onboarding
 
-import `in`.catat.data.dto.OnboardingDataDto
+import `in`.catat.data.dto.OnBoardingDataDto
 import `in`.catat.domain.onboarding.repository.OnBoardingRepository
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -17,8 +17,8 @@ class OnBoardingViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val onBoardingLiveData = MutableLiveData<List<OnboardingDataDto>>()
-    fun observeOnBoardingData(): MutableLiveData<List<OnboardingDataDto>> = onBoardingLiveData
+    private val onBoardingLiveData = MutableLiveData<List<OnBoardingDataDto>>()
+    fun observeOnBoardingData(): MutableLiveData<List<OnBoardingDataDto>> = onBoardingLiveData
 
     init {
         onBoardingLiveData.postValue(onBoardingRepository.getOnBoardingDataList())

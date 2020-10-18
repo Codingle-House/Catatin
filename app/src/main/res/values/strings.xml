@@ -91,6 +91,7 @@
     <!--    To'do Screen Text-->
     <string name="todo_title_add">Tambah Daftar Pekerjaan</string>
     <string name="todo_text_description">%s | %s aktivitas</string>
+    <string name="todo_text_alarm">Alarm pada : %s</string>
 
     <!--    Settings Screen Text-->
     <string name="settings_title_account">Akun</string>

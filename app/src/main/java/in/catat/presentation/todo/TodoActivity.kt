@@ -3,18 +3,25 @@ package `in`.catat.presentation.todo
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.dto.NoteTodoDto
 import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
+import android.graphics.Paint
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
+import id.co.catatin.core.ext.getDrawableCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_todo.*
+import kotlinx.android.synthetic.main.item_notes_todo.view.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,9 +40,15 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             context = this@TodoActivity,
             title = getString(R.string.general_text_setting),
             diffCallback = diffCallback,
-            onMenuClick = { _, data ->
-                handleMenuDialogClick(data)
-            }
+            onMenuClick = ::handleMenuDialogClick
+        )
+    }
+
+    private val todoAdapter by lazy {
+        GenericRecyclerViewAdapter<NoteTodoDto>(
+            diffCallback = diffCallback,
+            holderResId = R.layout.item_notes_todo,
+            onBind = ::bindTodoAdapter
         )
     }
 
@@ -49,12 +62,17 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         setupAppToolbar()
         setupView()
         setupListener()
+        setupRecyclerView()
     }
 
     override fun onViewModelObserver() {
         with(todoViewModel) {
             observeSettingsMenu().onResult {
                 settingsDialog.setData(it)
+            }
+
+            observeTodoList().onResult {
+                todoAdapter.setData(it)
             }
         }
     }
@@ -67,6 +85,13 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             inflateMenu(R.menu.catatin_menu_more)
             menu.findItem(R.id.menu_main_delete).isVisible = todoStatus == NoteStatusEnum.EDIT
             setOnMenuItemClickListener { handleMenuClick(it) }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        with(todo_recyclerview_notes) {
+            adapter = todoAdapter
+            layoutManager = LinearLayoutManager(this@TodoActivity)
         }
     }
 
@@ -88,7 +113,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         }
     }
 
-    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+    private fun handleMenuDialogClick(post: Int, data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_fullscreen) -> handleFullScreen()
             getString(R.string.dialog_title_menu_alarm) -> {
@@ -154,6 +179,29 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             }
             else -> super.onOptionsItemSelected(menuItem)
         }
+    }
+
+    private fun bindTodoAdapter(data: NoteTodoDto, pos: Int, view: View) {
+        view.todo_imageview_circle.setImageDrawable(
+            getDrawableCompat(
+                if (data.isDone) {
+                    R.drawable.general_ic_circle_outline
+                } else {
+                    R.drawable.general_ic_circle_fill
+                }
+            )
+        )
+        with(view.todo_textview_title) {
+            text = data.name
+            if (data.isDone) {
+                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }
+        }
+        with(view.todo_textview_alarm) {
+            isGone = data.reminderDate.isEmpty()
+            text = getString(R.string.todo_text_alarm, data.reminderDate)
+        }
+        view.todo_view_line.isGone = todoAdapter.itemCount - 1 == pos
     }
 
     object TodoKey {

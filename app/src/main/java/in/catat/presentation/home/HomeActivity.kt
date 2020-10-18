@@ -28,7 +28,7 @@ import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import id.co.catatin.core.ext.setSpannableForegroundColor
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_card_notes.view.*
+import kotlinx.android.synthetic.main.item_notes_card.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     private val notesAdapter by lazy {
         GenericRecyclerViewAdapter<UserNotesDto>(
             diffCallback = diffCallback,
-            holderResId = R.layout.item_card_notes,
+            holderResId = R.layout.item_notes_card,
             onBind = ::bindNotesAdapter,
             itemListener = ::notesListener
         )
@@ -211,17 +211,17 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
 
         when (data.type) {
-            UserNotesDto.NOTE_TYPE.NOTE -> startActivity(
+            UserNotesDto.NoteType.NOTE -> startActivity(
                 Intent(this, NoteActivity::class.java).putExtra(
                     NoteActivity.NoteKey.STATUS, NoteStatusEnum.EDIT
                 )
             )
-            UserNotesDto.NOTE_TYPE.TODO -> startActivity(
+            UserNotesDto.NoteType.TODO -> startActivity(
                 Intent(this, TodoActivity::class.java).putExtra(
                     TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT
                 )
             )
-            UserNotesDto.NOTE_TYPE.SKETCH -> startActivity(
+            UserNotesDto.NoteType.SKETCH -> startActivity(
                 Intent(this, SketchActivity::class.java).putExtra(
                     SketchActivity.SketchKey.STATUS, NoteStatusEnum.EDIT
                 )

@@ -12,7 +12,7 @@ data class UserNotesDto(
     val image: String = "",
     val isLocked: Boolean = false
 ) {
-    object NOTE_TYPE {
+    object NoteType {
         const val NOTE = "note"
         const val TODO = "todo"
         const val SKETCH = "sketch"

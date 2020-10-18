@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="20dp">
+
+    <ImageView
+        android:id="@+id/todo_imageview_delete"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/todo_textview_title"
+        app:srcCompat="@drawable/general_ic_bin" />
+
+    <ImageView
+        android:id="@+id/todo_imageview_edit"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
+        app:layout_constraintRight_toLeftOf="@id/todo_imageview_delete"
+        app:layout_constraintTop_toTopOf="@id/todo_textview_title"
+        app:srcCompat="@drawable/general_ic_pencil" />
+
+    <ImageView
+        android:id="@+id/todo_imageview_circle"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:src="@drawable/general_ic_circle_fill"
+        app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/todo_textview_title" />
+
+    <TextView
+        android:id="@+id/todo_textview_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:maxLines="1"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toRightOf="@id/todo_imageview_circle"
+        app:layout_constraintRight_toLeftOf="@id/todo_imageview_edit"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Membeli Ikan" />
+
+    <TextView
+        android:id="@+id/todo_textview_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/todo_textview_title"
+        tools:text="Alarm pada : 20 Juni 2020 | 14:30" />
+
+    <View
+        android:id="@+id/todo_view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/todo_textview_alarm" />
+</androidx.constraintlayout.widget.ConstraintLayout>

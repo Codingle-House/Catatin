@@ -1,7 +1,7 @@
 package `in`.catat.domain.onboarding.datasource
 
 import `in`.catat.R
-import `in`.catat.data.dto.OnboardingDataDto
+import `in`.catat.data.dto.OnBoardingDataDto
 import javax.inject.Inject
 
 /**
@@ -9,19 +9,19 @@ import javax.inject.Inject
  */
 
 class OnBoardingLocalDataSource @Inject constructor() {
-    val onBoardingDataList: List<OnboardingDataDto>
+    val onBoardingDataList: List<OnBoardingDataDto>
         get() = listOf(
-            OnboardingDataDto(
+            OnBoardingDataDto(
                 image = R.drawable.onboarding_ic_content_1,
                 title = R.string.onboarding_title_content1,
                 description = R.string.onboarding_text_content1
             ),
-            OnboardingDataDto(
+            OnBoardingDataDto(
                 image = R.drawable.onboarding_ic_content_2,
                 title = R.string.onboarding_title_content2,
                 description = R.string.onboarding_text_content2
             ),
-            OnboardingDataDto(
+            OnBoardingDataDto(
                 image = R.drawable.onboarding_ic_content_3,
                 title = R.string.onboarding_title_content3,
                 description = R.string.onboarding_text_content3

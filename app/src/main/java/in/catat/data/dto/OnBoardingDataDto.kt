@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class OnboardingDataDto(
+data class OnBoardingDataDto(
     @DrawableRes val image: Int = R.drawable.onboarding_ic_content_1,
     @StringRes val title: Int = 0,
     @StringRes val description: Int = 0,
