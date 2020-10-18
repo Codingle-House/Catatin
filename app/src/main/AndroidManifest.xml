@@ -65,6 +65,11 @@
             android:name=".presentation.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
+            android:name=".presentation.pin.PinActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

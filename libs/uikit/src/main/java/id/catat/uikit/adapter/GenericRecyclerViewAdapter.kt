@@ -50,6 +50,8 @@ class GenericRecyclerViewAdapter<T : Any>(
 
     override fun getItemCount(): Int = listData.size
 
+    fun getItem() = listData
+
     fun updateData(datas: List<T>) {
         with(listData) {
             clearData()
@@ -60,6 +62,14 @@ class GenericRecyclerViewAdapter<T : Any>(
 
     fun setData(datas: List<T>) {
         calculateDiff(datas)
+    }
+
+    fun setNotifyItemChanged(datas: List<T>, pos: Int) {
+        with(listData) {
+            clear()
+            addAll(datas)
+        }
+        notifyItemChanged(pos)
     }
 
     fun addData(newDatas: List<T>) {

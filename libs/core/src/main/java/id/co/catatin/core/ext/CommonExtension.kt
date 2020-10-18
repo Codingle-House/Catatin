@@ -33,3 +33,8 @@ fun Context.showToast(@StringRes message: Int, duration: Int = Toast.LENGTH_SHOR
 fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
     return ContextCompat.getDrawable(this, id)
 }
+
+fun Context.toDp(value: Float): Int {
+    val scale: Float = resources.displayMetrics.density
+    return (value * scale + 0.5f).toInt()
+}

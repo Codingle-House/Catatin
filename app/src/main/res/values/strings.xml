@@ -114,4 +114,7 @@
     <!--    Login Screen Text-->
     <string name="login_title">Masuk Terlebih Dahulu</string>
     <string name="login_text_description">Untuk dapat menggunakan fitur ini, silahkan untuk login terlebih dahulu</string>
+
+    <!--    Pin Screen Text-->
+    <string name="pin_forgot_pin">Lupa Pin Kamu ?</string>
 </resources>
