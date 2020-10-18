@@ -211,6 +211,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             startActivity(
                 Intent(this, PinActivity::class.java)
             )
+            overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
             return
         }
 
