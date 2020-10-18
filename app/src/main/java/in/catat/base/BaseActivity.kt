@@ -35,9 +35,8 @@ import id.co.catatin.core.ext.getColorCompat
 abstract class BaseActivity : AppCompatActivity {
     protected lateinit var auth: FirebaseAuth
 
-    val RC_SIGN_IN: Int = 1
-    protected lateinit var googleSignInClient: GoogleSignInClient
-    protected lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInOptions: GoogleSignInOptions
 
     @LayoutRes
     private var contentLayoutId: Int = -1
@@ -117,7 +116,7 @@ abstract class BaseActivity : AppCompatActivity {
     }
 
     //TODO: CHANGE TO NEW ACTIVITY RESULT API
-    protected fun signIn() {
+    protected fun googleSignIn() {
         val signInIntent: Intent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -149,5 +148,9 @@ abstract class BaseActivity : AppCompatActivity {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+    }
+
+    companion object {
+        private const val RC_SIGN_IN: Int = 1
     }
 }

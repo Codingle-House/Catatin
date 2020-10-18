@@ -4,8 +4,10 @@ import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
+import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
 import android.content.Intent
 import android.text.Editable
@@ -16,9 +18,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isGone
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import dagger.hilt.android.AndroidEntryPoint
-import id.catat.uikit.richtext_item.*
 import id.co.catatin.core.commons.DiffCallback
-import id.co.catatin.core.ext.getColorCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
 import javax.inject.Inject
@@ -128,42 +128,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     }
 
     private fun initRichTextView() {
-        val checkedBackgroundColor = getColorCompat(R.color.colorSelectedToolItem)
-        val uncheckedBackgroundColor = getColorCompat(android.R.color.transparent)
-
-        val alignmentLeft = CatatinAlignmentLeftToolItem()
-        val alignmentCenter = CatatinAlignmentCenterToolItem()
-        val alignmentRight = CatatinAlignmentRightToolItem()
-
-        val bold = CatatinBoldToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val italic = CatatinItalicToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val underline =
-            CatatinUnderlineToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val strikeTrough =
-            CatatinStrikeThroughToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-
-        val quote = CatatinQuoteToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-
-        val numberList =
-            CatatinNumberListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val bulletList =
-            CatatinBulletListToolItem(checkedBackgroundColor, uncheckedBackgroundColor)
-        val divider = CatatinDividerToolItem()
-
-        with(note_richtext_toolbar) {
-            addToolbarItem(alignmentLeft)
-            addToolbarItem(alignmentCenter)
-            addToolbarItem(alignmentRight)
-            addToolbarItem(bold)
-            addToolbarItem(italic)
-            addToolbarItem(underline)
-            addToolbarItem(strikeTrough)
-            addToolbarItem(quote)
-            addToolbarItem(numberList)
-            addToolbarItem(bulletList)
-            addToolbarItem(divider)
-        }
-
+        val toolItems = RichTextItem.richTextDefaultItem(this)
+        note_richtext_toolbar.addToolbarItems(toolItems)
         note_richtext_form.setToolbar(note_richtext_toolbar)
     }
 
@@ -226,6 +192,20 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         }
     }
 
+    private fun showDeleteDialog() {
+        GeneralCatatinDialog(
+            context = this,
+            image = R.drawable.notes_ic_delete,
+            title = getString(R.string.onboarding_title_dialogskip),
+            description = getString(R.string.onboarding_text_dialogskip),
+            yesTextButton = getString(R.string.general_text_yes),
+            yesClickListener = {
+
+            },
+            noTextButton = getString(R.string.general_text_no)
+        ).show()
+    }
+
     override fun onPause() {
         super.onPause()
         actionSave()
@@ -259,6 +239,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                 true
             }
             R.id.note_menu_delete -> {
+                showDeleteDialog()
                 true
             }
             else -> super.onOptionsItemSelected(menuItem)

@@ -2,7 +2,6 @@ package `in`.catat.presentation.login
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -24,7 +23,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
     private fun doGoogleLogin() {
         login_button_google.setOnClickListener {
-            signIn()
+            googleSignIn()
         }
     }
 

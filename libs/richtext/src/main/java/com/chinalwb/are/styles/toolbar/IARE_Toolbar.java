@@ -15,6 +15,8 @@ public interface IARE_Toolbar {
 
     public void addToolbarItem(IARE_ToolItem toolbarItem);
 
+    public void addToolbarItems(List<IARE_ToolItem> toolbarItems);
+
     public List<IARE_ToolItem> getToolItems();
 
     public void setEditText(AREditText editText);

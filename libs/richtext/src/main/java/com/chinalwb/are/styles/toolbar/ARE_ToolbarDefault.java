@@ -53,6 +53,18 @@ public class ARE_ToolbarDefault extends HorizontalScrollView implements IARE_Too
     }
 
     @Override
+    public void addToolbarItems(List<IARE_ToolItem> toolbarItems) {
+        for (IARE_ToolItem toolItem : toolbarItems) {
+            toolItem.setToolbar(this);
+            mToolItems.add(toolItem);
+            View view = toolItem.getView(context);
+            if (view != null) {
+                container.addView(view);
+            }
+        }
+    }
+
+    @Override
     public List<IARE_ToolItem> getToolItems() {
         return mToolItems;
     }
