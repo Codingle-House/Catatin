@@ -231,6 +231,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 )
             )
         }
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
     }
 
     private fun TextView.styleContentTitle(contentSize: Int) {
