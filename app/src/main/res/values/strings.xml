@@ -117,4 +117,6 @@
 
     <!--    Pin Screen Text-->
     <string name="pin_forgot_pin">Lupa Pin Kamu ?</string>
+    <string name="pin_text_login_title">Masukkan Nomor Pin</string>
+    <string name="pin_text_login_description">Masukan 6 Digit Nomor Pin Kamu Untuk Masuk</string>
 </resources>

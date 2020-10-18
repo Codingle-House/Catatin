@@ -185,7 +185,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         view.todo_imageview_circle.setImageDrawable(
             getDrawableCompat(
                 if (data.isDone) {
-                    R.drawable.general_ic_circle_outline
+                    R.drawable.uikit_ic_circle_outline
                 } else {
                     R.drawable.general_ic_circle_fill
                 }
