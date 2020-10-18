@@ -12,7 +12,10 @@ import `in`.catat.presentation.settings.SettingsActivity
 import `in`.catat.presentation.sketch.SketchActivity
 import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
+import id.co.catatin.core.ext.setSpannableForegroundColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_card_notes.view.*
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity(R.layout.activity_main) {
@@ -41,9 +46,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             context = this@HomeActivity,
             diffCallback = diffCallback,
             title = getString(R.string.dialog_title_menu_add),
-            onMenuClick = { _, data ->
-                handleMenuDialogClick(data)
-            }
+            onMenuClick = ::handleMenuDialogClick
         )
     }
 
@@ -67,10 +70,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         with(homeViewModel) {
             observeUserNotes().onResult {
                 notesAdapter.setData(it)
-
-                home_textview_content_title.text =
-                    getString(R.string.home_text_total_note, it.size.toString())
-
+                home_textview_content_title.styleContentTitle(it.size)
                 home_viewflipper_content.displayedChild = if (it.isEmpty()) {
                     EMPTY_STATE
                 } else {
@@ -147,7 +147,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
 
-    private fun handleMenuDialogClick(data: CatatinMenuDto) {
+    private fun handleMenuDialogClick(post: Int, data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
                 startActivity(
@@ -228,6 +228,26 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             )
         }
         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+    }
+
+    private fun TextView.styleContentTitle(contentSize: Int) {
+        val firstWord = SpannableString(
+            getString(R.string.home_text_total_note).substringBefore("%s")
+        ).apply {
+            setSpannableForegroundColor(this@HomeActivity)
+        }
+        text = firstWord
+        val notesCount = SpannableString(contentSize.toString()).apply {
+            setSpannableForegroundColor(this@HomeActivity, R.color.colorAccent)
+        }
+        append(notesCount)
+        val secondWord: Spannable = SpannableString(
+            getString(R.string.home_text_total_note).substringAfter("%s")
+        ).apply {
+            setSpannableForegroundColor(this@HomeActivity)
+        }
+
+        append(secondWord)
     }
 
     companion object {
