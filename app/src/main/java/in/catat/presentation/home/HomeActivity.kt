@@ -232,7 +232,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun TextView.styleContentTitle(contentSize: Int) {
         val firstWord = SpannableString(
-            getString(R.string.home_text_total_note).substringBefore("%s")
+            getString(R.string.home_text_total_note).substringBefore(CONTENT_STYLE_DELIMITED)
         ).apply {
             setSpannableForegroundColor(this@HomeActivity)
         }
@@ -242,7 +242,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
         append(notesCount)
         val secondWord: Spannable = SpannableString(
-            getString(R.string.home_text_total_note).substringAfter("%s")
+            getString(R.string.home_text_total_note).substringAfter(CONTENT_STYLE_DELIMITED)
         ).apply {
             setSpannableForegroundColor(this@HomeActivity)
         }
@@ -259,5 +259,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         private const val AVAILABLE_STATE = 1
 
         private const val GRID_SPAN_COUNT = 2
+
+        private const val CONTENT_STYLE_DELIMITED = "%s"
     }
 }
