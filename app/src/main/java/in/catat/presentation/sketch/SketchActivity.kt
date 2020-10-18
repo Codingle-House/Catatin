@@ -4,6 +4,7 @@ import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -58,7 +59,7 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
                 finish()
             }
             inflateMenu(R.menu.catatin_menu_more)
-            menu.findItem(R.id.note_menu_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
+            menu.findItem(R.id.menu_main_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
             setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
@@ -94,13 +95,31 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
     }
 
     private fun handleMenuClick(menuItem: MenuItem): Boolean {
-        when (menuItem.itemId) {
+        return when (menuItem.itemId) {
             R.id.menu_main_setting -> {
                 settingsDialog.show()
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(menuItem)
+            R.id.menu_main_delete -> {
+                showDeleteDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(menuItem)
         }
+    }
+
+    private fun showDeleteDialog() {
+        GeneralCatatinDialog(
+            context = this,
+            image = R.drawable.notes_ic_delete,
+            title = getString(R.string.geberal_title_delete_note),
+            description = getString(R.string.geberal_text_delete_note),
+            yesTextButton = getString(R.string.general_text_yes),
+            yesClickListener = {
+
+            },
+            noTextButton = getString(R.string.general_text_no)
+        ).show()
     }
 
     private fun handleFullScreen() {

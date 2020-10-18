@@ -4,9 +4,11 @@ import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,15 +65,8 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                 finish()
             }
             inflateMenu(R.menu.catatin_menu_more)
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_main_setting -> {
-                        settingsDialog.show()
-                        true
-                    }
-                    else -> super.onOptionsItemSelected(it)
-                }
-            }
+            menu.findItem(R.id.menu_main_delete).isVisible = todoStatus == NoteStatusEnum.EDIT
+            setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
 
@@ -130,6 +125,34 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             todo_edittext_title.isGone = false
         } else {
             finish()
+        }
+    }
+
+    private fun showDeleteDialog() {
+        GeneralCatatinDialog(
+            context = this,
+            image = R.drawable.notes_ic_delete,
+            title = getString(R.string.geberal_title_delete_note),
+            description = getString(R.string.geberal_text_delete_note),
+            yesTextButton = getString(R.string.general_text_yes),
+            yesClickListener = {
+
+            },
+            noTextButton = getString(R.string.general_text_no)
+        ).show()
+    }
+
+    private fun handleMenuClick(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.menu_main_setting -> {
+                settingsDialog.show()
+                true
+            }
+            R.id.menu_main_delete -> {
+                showDeleteDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(menuItem)
         }
     }
 
