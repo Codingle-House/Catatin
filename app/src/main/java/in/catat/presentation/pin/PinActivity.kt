@@ -29,9 +29,14 @@ class PinActivity : BaseActivity(R.layout.activity_pin) {
     }
 
     private fun setupPinView() {
-        pin_pinview.bindView(
-            title = getString(R.string.pin_text_login_title),
-            description = getString(R.string.pin_text_login_description)
-        )
+        with(pin_pinview) {
+            bindView(
+                title = getString(R.string.pin_text_login_title),
+                description = getString(R.string.pin_text_login_description)
+            )
+            setListener {
+                showErrorMessage("hahaha ahha ahhaa ahha")
+            }
+        }
     }
 }

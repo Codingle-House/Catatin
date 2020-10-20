@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import androidx.core.view.isGone
 import id.catat.uikit.R
@@ -31,6 +32,8 @@ class CatatinPinView @JvmOverloads constructor(
     private val diffCallback by lazy {
         DiffCallback()
     }
+
+    private var onPinDone: () -> Unit = { kotlin.run { } }
 
     private val indicatorAdapter by lazy {
         GenericRecyclerViewAdapter<NumpadIndicatorDto>(
@@ -135,6 +138,9 @@ class CatatinPinView @JvmOverloads constructor(
                 }
             indicatorAdapter.setNotifyItemChanged(newIndicatorList, currentIndicator)
             currentIndicator = currentIndicator.dec()
+            with(pin_cardview_error) {
+                if(isGone.not()) isGone = true
+            }
         } else {
             if (currentIndicator == indicatorList.size - 1) {
                 return
@@ -145,6 +151,21 @@ class CatatinPinView @JvmOverloads constructor(
                     NumpadIndicatorDto(if (numpadIndicatorDto.isSelected) true else index == currentIndicator)
                 }
             indicatorAdapter.setNotifyItemChanged(newIndicatorList, currentIndicator)
+            if (indicatorAdapter.getItem().filter { indicator ->
+                    indicator.isSelected
+                }.size == indicatorList.size
+            ) {
+                onPinDone.invoke()
+            }
+        }
+    }
+
+    fun showErrorMessage(error: String) {
+        pin_textview_error.text = error
+        val shakeAnim = AnimationUtils.loadAnimation(context, R.anim.shake_animation)
+        with(pin_cardview_error) {
+            isGone = false
+            startAnimation(shakeAnim)
         }
     }
 
@@ -160,6 +181,10 @@ class CatatinPinView @JvmOverloads constructor(
     fun bindView(title: String, description: String) {
         pin_textview_title.text = title
         pin_textview_description.text = description
+    }
+
+    fun setListener(onPinDone: () -> Unit) {
+        this.onPinDone = onPinDone
     }
 
     companion object {
