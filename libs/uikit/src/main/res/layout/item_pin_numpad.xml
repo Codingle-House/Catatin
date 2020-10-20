@@ -8,12 +8,12 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/colorDefaultCard"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/_40sdp">
 
         <TextView
             android:id="@+id/numpad_textview_number"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:textSize="25sp"
+            android:textSize="@dimen/_20ssp"
             tools:text="1" />
 
         <ImageView

@@ -85,7 +85,7 @@
         android:backgroundTint="@color/colorAccent"
         app:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
-        app:elevation="@dimen/_10sdp"
+        app:elevation="@dimen/_5sdp"
         app:fabCustomSize="@dimen/_30sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

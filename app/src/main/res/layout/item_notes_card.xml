@@ -5,45 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorDefaultCard"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingTop="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_16sdp">
 
         <TextView
             android:id="@+id/note_textview_notes_datetime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/colorTextHint"
-            android:textSize="12sp"
+            android:textSize="@dimen/_9ssp"
             tools:text="24 Agustus 16:25" />
 
         <TextView
             android:id="@+id/note_textview_notes_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/roboto_medium"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_12ssp"
             tools:text="Lorem Ipsum Color Sit Ame" />
 
         <TextView
             android:id="@+id/note_textview_notes_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:textColor="@android:color/white"
-            android:textSize="10sp"
+            android:textSize="@dimen/_10ssp"
             tools:ignore="SmallSp"
             tools:text="Catatan" />
 
@@ -51,33 +51,33 @@
             android:id="@+id/note_textview_notes_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_light"
             android:maxLines="3"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            android:textSize="@dimen/_11ssp"
             tools:text="Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit." />
 
         <ImageView
             android:id="@+id/note_imageview_notes_image"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/note_textview_notes_islocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:drawablePadding="10dp"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center_vertical"
             android:text="@string/general_text_notes_locked"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp"
+            android:textSize="@dimen/_10ssp"
             app:drawableStartCompat="@drawable/note_layer_itemlocked" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

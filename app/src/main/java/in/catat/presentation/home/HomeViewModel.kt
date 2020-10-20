@@ -30,7 +30,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     //TODO: REMOVE DUMMY DATA
     fun getUserNotes() {
-        val userNotes = listOf(
+        val userNotes = listOf<UserNotesDto>(
             UserNotesDto(
                 date = "24 Agustus 16:25 ",
                 title = "Lorem Ipsum Color Sit Ame",
