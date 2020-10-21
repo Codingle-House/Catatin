@@ -25,10 +25,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
                 android:text="@string/note_title_add"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_12ssp" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@drawable/general_bg_form"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="@string/note_title_placeholder"
                 android:maxLines="1"
                 android:padding="@dimen/_13sdp"
