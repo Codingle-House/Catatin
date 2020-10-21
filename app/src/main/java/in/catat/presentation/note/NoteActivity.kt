@@ -40,8 +40,17 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         intent?.getSerializableExtra(NoteKey.STATUS) as NoteStatusEnum
     }
 
-    private var scrollerAtEnd = false
-    private var isFullScreen = false
+    private val handler by lazy {
+        Handler()
+    }
+
+    private val myRunnable = Runnable {
+        note_adview_banner?.run {
+            initializeAdMob()
+            bringToFront()
+            isGone = false
+        }
+    }
 
     private val settingsDialog by lazy {
         GeneralCatatinMenuDialog(
@@ -60,6 +69,9 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             onMenuClick = ::handleMenuDialogClick
         )
     }
+
+    private var scrollerAtEnd = false
+    private var isFullScreen = false
 
     override fun onViewCreated() {
         initRichTextView()
@@ -83,14 +95,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     }
 
     private fun setupAdMob() {
-        val handler = Handler()
-        handler.postDelayed({
-            with(note_adview_banner) {
-                initializeAdMob()
-                bringToFront()
-                isGone = false
-            }
-        }, ADMOB_DELAY)
+        handler.postDelayed(myRunnable, ADMOB_DELAY)
     }
 
     private fun setupAppToolbar() {
@@ -257,6 +262,11 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
 
     private fun actionSave() {
 
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(myRunnable)
+        super.onDestroy()
     }
 
     object NoteKey {

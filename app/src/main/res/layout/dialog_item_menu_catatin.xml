@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,8 +11,10 @@
         android:id="@+id/dialog_linearlayout_item_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_toStartOf="@id/dialog_imageview_lock"
         android:layout_toLeftOf="@id/dialog_imageview_lock"
         android:orientation="vertical">
 
@@ -19,36 +22,40 @@
             android:id="@+id/dialog_textview_menu_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@android:color/white"
+            android:textSize="@dimen/_11ssp"
             tools:text="Catatan" />
 
         <TextView
             android:id="@+id/dialog_textview_menu_item_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:fontFamily="@font/roboto_medium"
             android:textColor="@color/uiKitColorAccent"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/_9ssp"
             tools:text="(akses premium)" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/dialog_imageview_lock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="12sp"
         android:layout_alignTop="@id/dialog_linearlayout_item_menu"
         android:layout_alignBottom="@id/dialog_linearlayout_item_menu"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:src="@drawable/general_ic_lock" />
+        app:srcCompat="@drawable/general_ic_lock" />
 
     <View
         android:id="@+id/dialog_view_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/dialog_linearlayout_item_menu"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="@color/uiKitColorLine" />
 </RelativeLayout>

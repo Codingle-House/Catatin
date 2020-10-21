@@ -2,7 +2,7 @@
 <resources>
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_up_animation</item>
-        <item name="android:windowExitAnimation">@anim/fade_out_animation</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_animation</item>
     </style>
 
     <style name="DialogSlideAnim" parent="@android:style/Theme.Dialog">
