@@ -10,6 +10,7 @@ import `in`.catat.util.DateUtil
 import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
 import android.content.Intent
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
@@ -22,6 +23,7 @@ import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class NoteActivity : BaseActivity(R.layout.activity_note) {
@@ -81,7 +83,13 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     }
 
     private fun setupAdMob() {
-        note_adview_banner.initializeAdMob()
+        val handler = Handler()
+        handler.postDelayed({
+            with(note_adview_banner) {
+                initializeAdMob()
+                bringToFront()
+            }
+        }, ADMOB_DELAY)
     }
 
     private fun setupAppToolbar() {
@@ -258,5 +266,6 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         private const val DEFAULT_ROTATION = 0F
         private const val LINEAR_ROTATION = 180F
         private const val ANIMATION_DURATION = 300L
+        private const val ADMOB_DELAY = 5000L
     }
 }
