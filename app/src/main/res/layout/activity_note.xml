@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:adSize="BANNER"
+                android:visibility="gone"
                 app:adUnitId="ca-app-pub-7778597937630443/7311721104" />
 
             <TextView

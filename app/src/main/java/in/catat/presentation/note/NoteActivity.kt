@@ -88,6 +88,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             with(note_adview_banner) {
                 initializeAdMob()
                 bringToFront()
+                isGone = false
             }
         }, ADMOB_DELAY)
     }

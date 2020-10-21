@@ -1,9 +1,11 @@
 package id.co.catatin.core.ext
 
+import android.app.Activity
 import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.DisplayMetrics
 
 /**
  * Created by pertadima on 18,October,2020
@@ -20,3 +22,4 @@ fun SpannableString.setSpannableForegroundColor(
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 }
+

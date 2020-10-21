@@ -1,7 +1,9 @@
 package id.co.catatin.core.ext
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -37,4 +39,23 @@ fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
 fun Context.toDp(value: Float): Int {
     val scale: Float = resources.displayMetrics.density
     return (value * scale + 0.5f).toInt()
+}
+
+fun Activity.checkDeviceDensity(isSmallScreen: () -> Unit) {
+    val metrics = DisplayMetrics()
+    windowManager.defaultDisplay.getMetrics(metrics)
+
+    val widthPixels = metrics.widthPixels
+    val heightPixels = metrics.heightPixels
+
+    val scaleFactor = metrics.density
+
+    val widthDp = widthPixels / scaleFactor
+    val heightDp = heightPixels / scaleFactor
+
+    val smallestWidth: Float = widthDp.coerceAtMost(heightDp)
+
+    if (smallestWidth <= 320) {
+        isSmallScreen.invoke()
+    }
 }

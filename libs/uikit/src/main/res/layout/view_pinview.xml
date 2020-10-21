@@ -5,41 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/pin_imageview_lock"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uikit_ic_lock" />
+
     <TextView
         android:id="@+id/pin_textview_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toTopOf="@id/pin_textview_description" />
+        app:layout_constraintTop_toBottomOf="@id/pin_imageview_lock" />
 
     <TextView
         android:id="@+id/pin_textview_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/roboto_light"
         android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_11ssp"
-        app:layout_constraintBottom_toTopOf="@id/pin_recyclerview_indicator" />
+        app:layout_constraintTop_toBottomOf="@id/pin_textview_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pin_recyclerview_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_60sdp"
-        app:layout_constraintBottom_toTopOf="@id/pin_recyclerview_number"
+        android:layout_marginTop="@dimen/_40sdp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pin_textview_description" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/pin_cardview_error"

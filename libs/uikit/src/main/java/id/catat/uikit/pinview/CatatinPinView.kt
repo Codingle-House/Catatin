@@ -12,6 +12,7 @@ import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import id.co.catatin.core.ext.getDrawableCompat
+import id.co.catatin.core.ext.toDp
 import kotlinx.android.synthetic.main.item_pin_indicator.view.*
 import kotlinx.android.synthetic.main.item_pin_numpad.view.*
 import kotlinx.android.synthetic.main.view_pinview.view.*
@@ -80,7 +81,7 @@ class CatatinPinView @JvmOverloads constructor(
                 setData(numpadList)
             }
             layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 3)
-            addItemDecoration(EqualSpaceItemDecoration())
+            addItemDecoration(EqualSpaceItemDecoration(spaceHeight = context.toDp(5F)))
         }
 
         with(pin_recyclerview_indicator) {
@@ -93,7 +94,7 @@ class CatatinPinView @JvmOverloads constructor(
                     androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
                     false
                 )
-            addItemDecoration(EqualSpaceItemDecoration(spaceHeight = 10))
+            addItemDecoration(EqualSpaceItemDecoration(spaceHeight = context.toDp(5F)))
         }
     }
 

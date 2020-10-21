@@ -2,8 +2,11 @@ package `in`.catat.presentation.pin
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.ext.checkDeviceDensity
 import kotlinx.android.synthetic.main.activity_pin.*
+
 
 /**
  * Created by pertadima on 18,October,2020
@@ -14,6 +17,9 @@ class PinActivity : BaseActivity(R.layout.activity_pin) {
     override fun onViewCreated() {
         setupToolbar()
         setupPinView()
+        checkDeviceDensity {
+            pin_appbar.isGone = true
+        }
     }
 
     override fun onViewModelObserver() {
