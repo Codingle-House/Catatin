@@ -5,6 +5,7 @@ import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.presentation.dialog.GeneralCatatinFilterMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.pin.LoginPinActivity
@@ -51,6 +52,13 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         )
     }
 
+    private val filterTypeDialog by lazy {
+        GeneralCatatinFilterMenuDialog(
+            context = this@HomeActivity,
+            diffCallback = diffCallback
+        )
+    }
+
     private val notesAdapter by lazy {
         GenericRecyclerViewAdapter<UserNotesDto>(
             diffCallback = diffCallback,
@@ -81,6 +89,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
             observeNotesTypes().onResult {
                 notesTypeDialog.setData(it)
+            }
+
+            observeNotesFilter().onResult {
+
             }
         }
     }
@@ -136,6 +148,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupListener() {
+        home_imageview_filter.setOnClickListener {
+            filterTypeDialog.show()
+        }
+
         home_button_add.setOnClickListener {
             notesTypeDialog.show()
         }

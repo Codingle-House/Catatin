@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/resetpin_appbar"
+        android:id="@+id/verification_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/resetpin_toolbar"
+            android:id="@+id/verification_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/general_ic_back_white" />
@@ -32,7 +32,7 @@
             android:layout_width="@dimen/_150sdp"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@drawable/onboarding_ic_content_3"
+            android:src="@drawable/verification_ic_email"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_appbar" />
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/_35sdp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_horizontal"
-            android:text="@string/resetpin_title_page"
+            android:text="@string/verification_title_page"
             android:textAlignment="center"
             android:textSize="@dimen/_13ssp" />
 
@@ -53,12 +53,12 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/roboto_light"
             android:gravity="center_horizontal"
-            android:text="@string/resetpin_text_description"
+            android:text="@string/verification_text_description"
             android:textAlignment="center" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/resetpin_button_google"
+        android:id="@+id/verification_button_google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

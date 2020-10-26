@@ -75,6 +75,12 @@
             android:name=".presentation.resetpin.ResetPinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+
+        <activity
+            android:name=".presentation.verification.SendVerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

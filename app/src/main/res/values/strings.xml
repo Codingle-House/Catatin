@@ -120,4 +120,12 @@
     <!--    Reset Pin Screen Text-->
     <string name="resetpin_title_page">Lupa Nomor Pin</string>
     <string name="resetpin_text_description">Silahkan masuk menggunakan google, sehingga kami bisa mengirimkan email mengenai intruksi untuk mengatur ulang nomor pin kamu</string>
+
+    <!--    Send Verification Pin Screen Text-->
+    <string name="verification_title_page">Kirim Verifikasi Email</string>
+    <string name="verification_text_description">Kami akan mengirimkan instruksi mengenai mengatur ulang nomor pin kamu. Silahkan cek kotak masuk email kamu. </string>
+
+    <!--    Filter Screen Text-->
+    <string name="filter_title_page">Filter Catatan Berdasarkan</string>
+    <string name="filter_action">Pilih Filter</string>
 </resources>

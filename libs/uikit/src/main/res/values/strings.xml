@@ -14,5 +14,5 @@
         <item>0</item>
     </string-array>
 
-    <string name="pin_text_forgotpassword">Lupa Password ?</string>
+    <string name="pin_text_forgotpassword">Lupa Pin Kamu ?</string>
 </resources>

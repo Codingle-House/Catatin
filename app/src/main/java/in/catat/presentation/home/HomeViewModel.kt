@@ -1,5 +1,6 @@
 package `in`.catat.presentation.home
 
+import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.domain.app.repository.AppRepository
@@ -24,8 +25,15 @@ class HomeViewModel @ViewModelInject constructor(
     private val notesTypeLiveData = MutableLiveData<List<CatatinMenuDto>>()
     fun observeNotesTypes(): MutableLiveData<List<CatatinMenuDto>> = notesTypeLiveData
 
+    private val notesFilterLiveData = MutableLiveData<List<CatatinFilterMenuDto>>()
+    fun observeNotesFilter(): MutableLiveData<List<CatatinFilterMenuDto>> = notesFilterLiveData
+
     init {
         notesTypeLiveData.postValue(repository.getNotesType())
+        val notesFilter = repository.getNotesType().map {
+            CatatinFilterMenuDto(title = it.title)
+        }
+        notesFilterLiveData.postValue(notesFilter)
     }
 
     //TODO: REMOVE DUMMY DATA

@@ -3,6 +3,7 @@ package `in`.catat.presentation.dialog
 import `in`.catat.R
 import `in`.catat.data.dto.CatatinMenuDto
 import android.content.Context
+import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,19 +29,8 @@ class GeneralCatatinMenuDialog(
         GenericRecyclerViewAdapter<CatatinMenuDto>(
             diffCallback = diffCallback,
             holderResId = R.layout.dialog_item_menu_catatin,
-            onBind = { data, pos, view ->
-                view.dialog_textview_menu_item_title.text = context.getString(data.title)
-                with(view.dialog_textview_menu_item_description) {
-                    isGone = context.getString(data.description).isEmpty()
-                    text = context.getString(data.description)
-                }
-                view.dialog_imageview_lock.isVisible = data.isPremiumContent
-                view.dialog_view_line.isGone = pos == dataMenu.size - 1
-            },
-            itemListener = { data, pos, _ ->
-                onMenuClick.invoke(pos, data)
-                dismiss()
-            }
+            onBind = ::menuBindView,
+            itemListener = ::menuItemListener
         )
     }
 
@@ -72,5 +62,20 @@ class GeneralCatatinMenuDialog(
             addAll(menus)
         }
         menuAdapter.setData(dataMenu)
+    }
+
+    private fun menuBindView(data: CatatinMenuDto, pos: Int, view: View) {
+        view.dialog_textview_menu_item_title.text = context.getString(data.title)
+        with(view.dialog_textview_menu_item_description) {
+            isGone = context.getString(data.description).isEmpty()
+            text = context.getString(data.description)
+        }
+        view.dialog_imageview_lock.isVisible = data.isPremiumContent
+        view.dialog_view_line.isGone = pos == dataMenu.size - 1
+    }
+
+    private fun menuItemListener(data: CatatinMenuDto, pos: Int, view: View) {
+        onMenuClick.invoke(pos, data)
+        dismiss()
     }
 }
