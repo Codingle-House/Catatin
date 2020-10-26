@@ -36,6 +36,10 @@ class HomeViewModel @ViewModelInject constructor(
         notesFilterLiveData.postValue(notesFilter)
     }
 
+    fun setNotesFilter(filteredData: List<CatatinFilterMenuDto>) {
+        notesFilterLiveData.postValue(filteredData)
+    }
+
     //TODO: REMOVE DUMMY DATA
     fun getUserNotes() {
         val userNotes = listOf<UserNotesDto>(

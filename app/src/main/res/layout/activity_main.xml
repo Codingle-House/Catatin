@@ -84,7 +84,16 @@
                         android:id="@+id/home_imageview_filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_3sdp"
                         app:srcCompat="@drawable/general_ic_filter" />
+
+                    <ImageView
+                        android:id="@+id/home_imageview_filter_indicator"
+                        android:layout_width="@dimen/_6sdp"
+                        android:layout_height="@dimen/_6sdp"
+                        android:layout_gravity="top|right"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/general_ic_circle_filter" />
                 </FrameLayout>
 
                 <TextView

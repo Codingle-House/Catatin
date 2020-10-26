@@ -26,7 +26,7 @@
         android:layout_marginBottom="@dimen/_35sdp" />
 
     <Button
-        android:id="@+id/onboarding_button_understand"
+        android:id="@+id/dialog_button_filter"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
         android:layout_below="@id/dialog_recyclerview_menufilter"

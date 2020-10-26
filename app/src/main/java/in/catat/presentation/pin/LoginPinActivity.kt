@@ -55,6 +55,8 @@ class LoginPinActivity : BaseActivity(R.layout.activity_pin) {
                                 ResetPinActivity::class.java
                             )
                         )
+                        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+                        finish()
                     }
                 }
             }

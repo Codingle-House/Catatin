@@ -2,6 +2,7 @@ package `in`.catat.presentation.home
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.enum.NoteStatusEnum
@@ -55,7 +56,8 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     private val filterTypeDialog by lazy {
         GeneralCatatinFilterMenuDialog(
             context = this@HomeActivity,
-            diffCallback = diffCallback
+            diffCallback = diffCallback,
+            onFilterSelected = ::handleFilterListener
         )
     }
 
@@ -71,6 +73,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     override fun onViewCreated() {
         setupToolbarView()
         setupListener()
+        setupFilterListener()
         getData()
         setupRecyclerView()
     }
@@ -92,7 +95,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             }
 
             observeNotesFilter().onResult {
-
+                filterTypeDialog.setData(it)
             }
         }
     }
@@ -148,10 +151,6 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupListener() {
-        home_imageview_filter.setOnClickListener {
-            filterTypeDialog.show()
-        }
-
         home_button_add.setOnClickListener {
             notesTypeDialog.show()
         }
@@ -159,7 +158,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun setupFilterListener() {
         home_imageview_filter.setOnClickListener {
-
+            filterTypeDialog.show()
         }
     }
 
@@ -270,6 +269,18 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
         append(secondWord)
     }
+
+    private fun handleFilterListener(filteredMenu: MutableList<CatatinFilterMenuDto>) {
+        val isShown = filteredMenu.any { it.isSelected }.not()
+        with(home_imageview_filter_indicator) {
+            isGone = isShown
+            animate().apply {
+                scaleX(if (isShown.not()) 1F else 0F)
+                scaleY(if (isShown.not()) 1F else 0F)
+            }.duration = 400
+        }
+    }
+
 
     companion object {
         private val GOOD_MORNING_RANGE = 0..11
