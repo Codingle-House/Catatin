@@ -7,6 +7,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.catat.uikit.R
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
@@ -34,7 +36,7 @@ class CatatinPinView @JvmOverloads constructor(
         DiffCallback()
     }
 
-    private var onPinDone: () -> Unit = { kotlin.run { } }
+    private var onPinDone: (PinAction) -> Unit = { _ -> kotlin.run { } }
 
     private val indicatorAdapter by lazy {
         GenericRecyclerViewAdapter<NumpadIndicatorDto>(
@@ -73,6 +75,9 @@ class CatatinPinView @JvmOverloads constructor(
     init {
         LayoutInflater.from(context).inflate(R.layout.view_pinview, this, true)
         setupRecyclerView()
+        pin_textview_forgotpassword.setOnClickListener {
+            onPinDone.invoke(PinAction.OnForgotPassword)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -80,7 +85,7 @@ class CatatinPinView @JvmOverloads constructor(
             adapter = numpadAdapter.apply {
                 setData(numpadList)
             }
-            layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 3)
+            layoutManager = GridLayoutManager(context, 3)
             addItemDecoration(EqualSpaceItemDecoration(spaceHeight = context.toDp(5F)))
         }
 
@@ -89,9 +94,9 @@ class CatatinPinView @JvmOverloads constructor(
                 setData(indicatorList)
             }
             layoutManager =
-                androidx.recyclerview.widget.LinearLayoutManager(
+                LinearLayoutManager(
                     context,
-                    androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+                    LinearLayoutManager.HORIZONTAL,
                     false
                 )
             addItemDecoration(EqualSpaceItemDecoration(spaceHeight = context.toDp(5F)))
@@ -140,7 +145,7 @@ class CatatinPinView @JvmOverloads constructor(
             indicatorAdapter.setNotifyItemChanged(newIndicatorList, currentIndicator)
             currentIndicator = currentIndicator.dec()
             with(pin_cardview_error) {
-                if(isGone.not()) isGone = true
+                if (isGone.not()) isGone = true
             }
         } else {
             if (currentIndicator == indicatorList.size - 1) {
@@ -156,7 +161,7 @@ class CatatinPinView @JvmOverloads constructor(
                     indicator.isSelected
                 }.size == indicatorList.size
             ) {
-                onPinDone.invoke()
+                onPinDone.invoke(PinAction.OnPinDone)
             }
         }
     }
@@ -170,6 +175,15 @@ class CatatinPinView @JvmOverloads constructor(
         }
     }
 
+    fun bindView(title: String, description: String) {
+        pin_textview_title.text = title
+        pin_textview_description.text = description
+    }
+
+    fun setListener(onPinDone: (PinAction) -> Unit) {
+        this.onPinDone = onPinDone
+    }
+
     internal data class NumpadIndicatorDto(
         val isSelected: Boolean = false
     )
@@ -179,13 +193,9 @@ class CatatinPinView @JvmOverloads constructor(
         val isDelete: Boolean = false
     )
 
-    fun bindView(title: String, description: String) {
-        pin_textview_title.text = title
-        pin_textview_description.text = description
-    }
-
-    fun setListener(onPinDone: () -> Unit) {
-        this.onPinDone = onPinDone
+    sealed class PinAction {
+        object OnPinDone : PinAction()
+        object OnForgotPassword : PinAction()
     }
 
     companion object {

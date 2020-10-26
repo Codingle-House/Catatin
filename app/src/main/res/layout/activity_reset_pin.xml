@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/login_appbar"
+        android:id="@+id/resetpin_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/login_toolbar"
+            android:id="@+id/resetpin_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/general_ic_back_white" />
@@ -42,7 +42,7 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_horizontal"
-            android:text="@string/login_title"
+            android:text="@string/resetpin_title_page"
             android:textAlignment="center"
             android:textSize="@dimen/_13ssp" />
 
@@ -52,12 +52,12 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/roboto_light"
             android:gravity="center_horizontal"
-            android:text="@string/login_text_description"
+            android:text="@string/resetpin_text_description"
             android:textAlignment="center" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/login_button_google"
+        android:id="@+id/resetpin_button_google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

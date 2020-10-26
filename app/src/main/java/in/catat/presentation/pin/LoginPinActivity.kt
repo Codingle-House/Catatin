@@ -2,8 +2,11 @@ package `in`.catat.presentation.pin
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.presentation.resetpin.ResetPinActivity
+import android.content.Intent
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
+import id.catat.uikit.pinview.CatatinPinView
 import id.co.catatin.core.ext.checkDeviceDensity
 import kotlinx.android.synthetic.main.activity_pin.*
 
@@ -13,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_pin.*
  */
 
 @AndroidEntryPoint
-class PinActivity : BaseActivity(R.layout.activity_pin) {
+class LoginPinActivity : BaseActivity(R.layout.activity_pin) {
     override fun onViewCreated() {
         setupToolbar()
         setupPinView()
@@ -41,7 +44,19 @@ class PinActivity : BaseActivity(R.layout.activity_pin) {
                 description = getString(R.string.pin_text_login_description)
             )
             setListener {
-                showErrorMessage("hahaha ahha ahhaa ahha")
+                when (it) {
+                    is CatatinPinView.PinAction.OnPinDone -> {
+                        showErrorMessage("hahaha ahha ahhaa ahha")
+                    }
+                    is CatatinPinView.PinAction.OnForgotPassword -> {
+                        startActivity(
+                            Intent(
+                                this@LoginPinActivity,
+                                ResetPinActivity::class.java
+                            )
+                        )
+                    }
+                }
             }
         }
     }

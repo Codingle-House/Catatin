@@ -7,7 +7,7 @@ import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
-import `in`.catat.presentation.pin.PinActivity
+import `in`.catat.presentation.pin.LoginPinActivity
 import `in`.catat.presentation.search.SearchActivity
 import `in`.catat.presentation.settings.SettingsActivity
 import `in`.catat.presentation.sketch.SketchActivity
@@ -209,7 +209,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     private fun notesListener(data: UserNotesDto, pos: Int, view: View) {
         if (data.isLocked) {
             startActivity(
-                Intent(this, PinActivity::class.java)
+                Intent(this, LoginPinActivity::class.java)
             )
             overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
             return

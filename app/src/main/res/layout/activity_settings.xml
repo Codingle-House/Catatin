@@ -45,6 +45,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_animation"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/_16sdp"
             android:paddingTop="@dimen/_16sdp">
@@ -72,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_25sdp"
                         android:fontFamily="@font/roboto_regular"
+                        android:lineSpacingExtra="@dimen/_2sdp"
                         android:text="@string/settings_text_not_logged_in"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="@dimen/_11ssp" />
@@ -111,7 +113,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/settings_menu_pin_setup"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/_11ssp" />
@@ -140,7 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/settings_menu_global_pin"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/_11ssp" />
@@ -164,7 +166,7 @@
                 android:id="@+id/settings_textview_menu_resetpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingVertical="@dimen/_16sdp"
                 android:text="@string/settings_menu_reset_pin"
                 android:textColor="@color/colorTextPrimary"
@@ -181,7 +183,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingVertical="@dimen/_16sdp"
                 android:text="@string/settings_menu_backup_by_google"
                 android:textColor="@color/colorTextPrimary"
@@ -195,7 +197,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingVertical="@dimen/_16sdp"
                 android:text="@string/settings_menu_backup_to_google"
                 android:textColor="@color/colorTextPrimary"
@@ -209,7 +211,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingVertical="@dimen/_16sdp"
                 android:text="@string/settings_menu_backup_manual"
                 android:textColor="@color/colorTextPrimary"
@@ -223,7 +225,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingVertical="@dimen/_16sdp"
                 android:text="@string/settings_menu_backup_history"
                 android:textColor="@color/colorTextPrimary"
