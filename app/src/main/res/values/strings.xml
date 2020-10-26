@@ -45,7 +45,6 @@
     <string name="dialog_text_menu_premium">(Akses Premium)</string>
 
     <string name="dialog_title_todo_add">Tambah Pekerjaan</string>
-    <string name="dialog_title_todo_edit">Ubah Pekerjaan</string>
 
     <string name="dialog_title_menu_attachment">Lampiran</string>
     <string name="dialog_title_menu_file">Berkas</string>
@@ -70,7 +69,6 @@
     <string name="general_text_fullscreen_close">Tekan kembali untuk keluar dari mode layar penuh</string>
 
     <string name="general_text_add">Tambah</string>
-    <string name="general_text_edit">Ubah</string>
 
     <string name="general_text_login_by_google">Masuk Menggunakan Google</string>
 
@@ -116,7 +114,6 @@
     <string name="login_text_description">Untuk dapat menggunakan fitur ini, silahkan untuk login terlebih dahulu</string>
 
     <!--    Pin Screen Text-->
-    <string name="pin_title_forgot">Lupa Pin Kamu ?</string>
     <string name="pin_text_login_title">Masukkan Nomor Pin</string>
     <string name="pin_text_login_description">Masukan 6 Digit Nomor Pin Kamu Untuk Masuk</string>
 
