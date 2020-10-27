@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layoutAnimation="@anim/layout_animation"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/pin_ic_success"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_appbar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center_horizontal"
+            android:text="@string/resetpin_title_page_success"
+            android:textAlignment="center"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_horizontal"
+            android:text="@string/resetpin_text_description_success"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/resetpin_action_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/general_selector_button"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_6sdp"
+        android:text="@string/resetpin_action_homepage"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

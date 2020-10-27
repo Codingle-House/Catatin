@@ -120,7 +120,10 @@
 
     <!--    Reset Pin Screen Text-->
     <string name="resetpin_title_page">Lupa Nomor Pin</string>
+    <string name="resetpin_title_page_success">Nomor Pin Dihapus</string>
     <string name="resetpin_text_description">Silahkan masuk menggunakan google, sehingga kami bisa mengirimkan email mengenai intruksi untuk mengatur ulang nomor pin kamu</string>
+    <string name="resetpin_text_description_success">Nomor pin kamu sudah berhasil dihapus, untuk saat ini nomor pin akan dinonaktifkan. Atur ulang nomor pin kamu untuk menjamin keamanan catatanmu !</string>
+    <string name="resetpin_action_homepage">Beranda</string>
 
     <!--    Send Verification Pin Screen Text-->
     <string name="verification_title_page">Kirim Verifikasi Email</string>
