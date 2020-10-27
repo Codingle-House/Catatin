@@ -30,8 +30,8 @@ class HomeViewModel @ViewModelInject constructor(
 
     init {
         notesTypeLiveData.postValue(repository.getNotesType())
-        val notesFilter = repository.getNotesType().map {
-            CatatinFilterMenuDto(title = it.title)
+        val notesFilter = repository.getNotesType().mapIndexed { index, it ->
+            CatatinFilterMenuDto(id = index, title = it.title)
         }
         notesFilterLiveData.postValue(notesFilter)
     }

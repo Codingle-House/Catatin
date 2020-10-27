@@ -6,7 +6,7 @@ import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.enum.NoteStatusEnum
-import `in`.catat.presentation.dialog.GeneralCatatinFilterMenuDialog
+import `in`.catat.presentation.dialog.filter.GeneralCatatinFilterMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.pin.LoginPinActivity
@@ -14,6 +14,9 @@ import `in`.catat.presentation.search.SearchActivity
 import `in`.catat.presentation.settings.SettingsActivity
 import `in`.catat.presentation.sketch.SketchActivity
 import `in`.catat.presentation.todo.TodoActivity
+import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
+import `in`.catat.util.AnimationConstant.FULL_SCALE
+import `in`.catat.util.AnimationConstant.HIDE_SCALE
 import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
@@ -76,6 +79,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         setupFilterListener()
         getData()
         setupRecyclerView()
+        setupDefaultFilter()
     }
 
     override fun onViewModelObserver() {
@@ -104,6 +108,14 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         homeViewModel.getUserNotes()
     }
 
+    private fun setupDefaultFilter() {
+        with(home_imageview_filter_indicator) {
+            animate().apply {
+                scaleX(HIDE_SCALE)
+                scaleY(HIDE_SCALE)
+            }.duration = 0
+        }
+    }
 
     private fun setupRecyclerView() {
         with(home_recyclerview_notes) {
@@ -272,12 +284,12 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun handleFilterListener(filteredMenu: MutableList<CatatinFilterMenuDto>) {
         val isShown = filteredMenu.any { it.isSelected }.not()
+        homeViewModel.setNotesFilter(filteredMenu)
         with(home_imageview_filter_indicator) {
-            isGone = isShown
             animate().apply {
-                scaleX(if (isShown.not()) 1F else 0F)
-                scaleY(if (isShown.not()) 1F else 0F)
-            }.duration = 400
+                scaleX(if (isShown.not()) FULL_SCALE else HIDE_SCALE)
+                scaleY(if (isShown.not()) FULL_SCALE else HIDE_SCALE)
+            }.duration = DEFAULT_ANIMATION_DURATION
         }
     }
 

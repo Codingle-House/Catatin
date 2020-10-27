@@ -1,12 +1,13 @@
-package `in`.catat.presentation.dialog
+package `in`.catat.presentation.dialog.filter
 
 import `in`.catat.R
 import `in`.catat.data.dto.CatatinFilterMenuDto
+import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
+import `in`.catat.util.AnimationConstant.FULL_SCALE
 import android.content.Context
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.catat.uikit.dialog.BaseCatatanDialog
 import id.co.catatin.core.commons.DiffCallback
 import kotlinx.android.synthetic.main.dialog_filter_catatin.*
@@ -20,15 +21,15 @@ import kotlinx.android.synthetic.main.item_notes_filter.view.*
 class GeneralCatatinFilterMenuDialog(
     context: Context,
     private val diffCallback: DiffCallback,
-    private val dataMenu: MutableList<CatatinFilterMenuDto> = mutableListOf(),
     private val onFilterSelected: (MutableList<CatatinFilterMenuDto>) -> Unit
 ) : BaseCatatanDialog(context) {
 
+    private var dataMenu: MutableList<CatatinFilterMenuDto> = mutableListOf()
+
     private val filterAdapter by lazy {
-        GenericRecyclerViewAdapter<CatatinFilterMenuDto>(
+        GeneralCacatinFilterMenuAdapter(
+            context = context,
             diffCallback = diffCallback,
-            holderResId = R.layout.item_notes_filter,
-            onBind = ::filterBindView,
             itemListener = ::filterItemListener
         )
     }
@@ -61,10 +62,7 @@ class GeneralCatatinFilterMenuDialog(
 
 
     fun setData(menus: List<CatatinFilterMenuDto>) {
-        with(dataMenu) {
-            clear()
-            addAll(menus)
-        }
+        dataMenu = menus.toMutableList()
         filterAdapter.setData(dataMenu)
     }
 
@@ -73,9 +71,9 @@ class GeneralCatatinFilterMenuDialog(
         with(view.dialog_imageview_menufilter_check) {
             isVisible = data.isSelected
             animate().apply {
-                scaleX(if (data.isSelected) 1F else 0F)
+                scaleX(if (data.isSelected) FULL_SCALE else 0F)
                 scaleY(if (data.isSelected) 1F else 0F)
-            }.duration = 400
+            }.duration = DEFAULT_ANIMATION_DURATION
         }
         view.dialog_view_menufilter_line.isVisible = pos != dataMenu.size - 1
     }

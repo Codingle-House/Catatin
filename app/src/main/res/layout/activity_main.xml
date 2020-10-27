@@ -92,7 +92,6 @@
                         android:layout_width="@dimen/_6sdp"
                         android:layout_height="@dimen/_6sdp"
                         android:layout_gravity="top|right"
-                        android:visibility="gone"
                         app:srcCompat="@drawable/general_ic_circle_filter" />
                 </FrameLayout>
 

@@ -5,6 +5,7 @@ package `in`.catat.data.dto
  */
 
 data class CatatinFilterMenuDto(
+    val id: Int,
     val title: Int,
     val isSelected: Boolean = false
 )
