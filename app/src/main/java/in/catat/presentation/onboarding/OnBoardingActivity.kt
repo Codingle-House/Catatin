@@ -6,6 +6,7 @@ import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.home.HomeActivity
 import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
 import `in`.catat.util.ZoomOutPageTransformer
+import `in`.catat.util.tracking.trackingEvent
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
@@ -42,6 +43,7 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
 
     private fun setupAction() {
         onboarding_textview_skip.setOnClickListener {
+            trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CLICKED)
             if (onboarding_viewpager_content.currentItem == sliderAdapter.count - 1) {
                 goToMainActivity()
             } else {
@@ -52,9 +54,13 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
                     description = getString(R.string.onboarding_text_dialogskip),
                     yesTextButton = getString(R.string.general_text_yes),
                     yesClickListener = {
+                        trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CONFIRMED)
                         goToMainActivity()
                     },
-                    noTextButton = getString(R.string.general_text_no)
+                    noTextButton = getString(R.string.general_text_no),
+                    noClickListener = {
+                        trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CANCELED)
+                    }
                 ).show()
             }
         }

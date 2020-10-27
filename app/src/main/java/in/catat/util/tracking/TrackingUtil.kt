@@ -7,7 +7,14 @@ import com.flurry.android.FlurryAgent
  */
 
 class TrackingUtil() {
-    fun startTrackingEvent(trackingEvent: String, trackingContext: HashMap<String, String>) {
-        FlurryAgent.logEvent(trackingEvent, trackingContext)
+    fun startTrackingEvent(
+        trackingEvent: String,
+        trackingContext: HashMap<String, String>? = null
+    ) {
+        trackingContext?.let {
+            FlurryAgent.logEvent(trackingEvent, it)
+        } ?: kotlin.run {
+            FlurryAgent.logEvent(trackingEvent)
+        }
     }
 }
