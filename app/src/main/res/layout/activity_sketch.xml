@@ -19,7 +19,7 @@
             android:id="@+id/sketch_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_6sdp"
             app:navigationIcon="@drawable/general_ic_back_white">
 
             <EditText

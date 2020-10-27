@@ -66,8 +66,9 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
 
     private fun setupCanvass() {
         draw_canvass_view.setCanvassBackground(
-            getColorCompat(R.color.colorPrimary),
-            getColorCompat(R.color.colorRichTextEditor)
+            canvasColor = getColorCompat(android.R.color.white),
+            toolBackgroundColor = getColorCompat(R.color.colorRichTextEditor),
+            additionalToolBackgroundColor = getColorCompat(R.color.colorPrimary)
         )
     }
 

@@ -9,7 +9,7 @@ import javax.inject.Inject
  */
 
 class AppLocalDataSource @Inject constructor() {
-    val attachmentMenuList: List<CatatinMenuDto>
+    val settingsMenu: List<CatatinMenuDto>
         get() = listOf(
             CatatinMenuDto(title = R.string.dialog_title_menu_fullscreen),
             CatatinMenuDto(title = R.string.dialog_title_menu_alarm),
@@ -31,7 +31,7 @@ class AppLocalDataSource @Inject constructor() {
             )
         )
 
-    val settingsMenu: List<CatatinMenuDto>
+    val attachmentMenuList: List<CatatinMenuDto>
         get() = listOf(
             CatatinMenuDto(title = R.string.dialog_title_menu_file),
             CatatinMenuDto(title = R.string.dialog_title_menu_location),

@@ -6,7 +6,11 @@ import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.*
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.SeekBar
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -96,7 +100,7 @@ class CatatinCanvas : LinearLayout {
     private var latestStrokeWidth = 30
 
     private var isEraserActive = false
-    private var canvasBackgroundColor: Int = Color.BLACK
+    private var accentColor: Int = Color.BLACK
 
     private var selectedProgress = PROGRESS.STROKE
     private var selectedColorTools = COLORS.PEN
@@ -142,15 +146,15 @@ class CatatinCanvas : LinearLayout {
     private fun setupInitialDrawingCanvas() {
         toolPencil.apply {
             setBackgroundResource(R.drawable.draw_bg_tool_active)
-            changeDrawableColorCompat(canvasBackgroundColor)
+            changeDrawableColorCompat(accentColor)
         }
 
         with(penColor) {
-            setColor(Color.WHITE)
+            setColor(accentColor)
             setCircleRadius(DEFAULT_COLOR_RADIUS)
         }
 
-        circleViewPreview.setColor(Color.WHITE)
+        circleViewPreview.setColor(accentColor)
     }
 
     private fun setupCanvasTooling() {
@@ -206,7 +210,7 @@ class CatatinCanvas : LinearLayout {
                 linearColor.isGone = false
 
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
-                changeDrawableColorCompat(canvasBackgroundColor)
+                changeDrawableColorCompat(accentColor)
 
                 selectedColorTools = COLORS.BACKGROUND
 
@@ -255,7 +259,7 @@ class CatatinCanvas : LinearLayout {
             if (isActive) R.drawable.draw_bg_tool_active
             else R.drawable.draw_bg_tool_default
         )
-        changeDrawableColorCompat(if (isActive) canvasBackgroundColor else Color.WHITE)
+        changeDrawableColorCompat(if (isActive) accentColor else Color.WHITE)
     }
 
     private fun setupUndoAndRedoToolActionListener() {
@@ -276,7 +280,7 @@ class CatatinCanvas : LinearLayout {
                 progressRelativeLayout.isGone = false
 
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
-                changeDrawableColorCompat(canvasBackgroundColor)
+                changeDrawableColorCompat(accentColor)
 
                 opacityTool.setBackgroundResource(R.drawable.draw_bg_tool_default)
                 opacityTool.changeDrawableColorCompat(Color.WHITE)
@@ -290,7 +294,7 @@ class CatatinCanvas : LinearLayout {
                 progressRelativeLayout.isGone = false
 
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
-                changeDrawableColorCompat(canvasBackgroundColor)
+                changeDrawableColorCompat(accentColor)
 
                 strokeTool.setBackgroundResource(R.drawable.draw_bg_tool_default)
                 strokeTool.changeDrawableColorCompat(Color.WHITE)
@@ -335,7 +339,7 @@ class CatatinCanvas : LinearLayout {
 
     private fun setupColorPickerActionListener() {
         colorPicker.setOnClickListener {
-            ColorPickerDialog(context, Color.WHITE) { color ->
+            ColorPickerDialog(context, accentColor) { color ->
                 color?.let { data ->
                     when (selectedColorTools) {
                         COLORS.PEN -> {
@@ -371,14 +375,21 @@ class CatatinCanvas : LinearLayout {
 
     fun setCanvassBackground(
         canvasColor: Int = Color.BLACK,
-        toolBackgroundColor: Int = Color.BLACK
+        toolBackgroundColor: Int = Color.BLACK,
+        additionalToolBackgroundColor: Int = Color.BLACK
     ) {
-        canvasBackgroundColor = canvasColor
-        drawView.setCanvassBackground(canvasColor)
-        linearColor.setBackgroundColor(canvasColor)
+        accentColor = additionalToolBackgroundColor
+
+        penColor.setColor(additionalToolBackgroundColor)
+        linearColor.setBackgroundColor(additionalToolBackgroundColor)
         scrollViewTool.setBackgroundColor(toolBackgroundColor)
         catatin_linearlayout.setBackgroundColor(toolBackgroundColor)
-        progressRelativeLayout.setBackgroundColor(canvasColor)
+        progressRelativeLayout.setBackgroundColor(additionalToolBackgroundColor)
+
+        with(drawView) {
+            setCanvassBackground(canvasColor)
+            setColor(additionalToolBackgroundColor)
+        }
     }
 
     companion object {
