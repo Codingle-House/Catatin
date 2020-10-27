@@ -45,7 +45,6 @@ class GeneralCatatinFilterMenuDialog(
 
     private fun setupListener() {
         dialog_button_filter.setOnClickListener {
-            onFilterSelected.invoke(dataMenu)
             dismiss()
         }
     }
@@ -66,18 +65,6 @@ class GeneralCatatinFilterMenuDialog(
         filterAdapter.setData(dataMenu)
     }
 
-    private fun filterBindView(data: CatatinFilterMenuDto, pos: Int, view: View) {
-        view.dialog_textview_menufilter_item_title.text = context.getString(data.title)
-        with(view.dialog_imageview_menufilter_check) {
-            isVisible = data.isSelected
-            animate().apply {
-                scaleX(if (data.isSelected) FULL_SCALE else 0F)
-                scaleY(if (data.isSelected) 1F else 0F)
-            }.duration = DEFAULT_ANIMATION_DURATION
-        }
-        view.dialog_view_menufilter_line.isVisible = pos != dataMenu.size - 1
-    }
-
     private fun filterItemListener(data: CatatinFilterMenuDto, pos: Int, view: View) {
         val newDataMenu = mutableListOf<CatatinFilterMenuDto>()
         with(newDataMenu) {
@@ -89,5 +76,10 @@ class GeneralCatatinFilterMenuDialog(
         )
         newDataMenu[pos] = selectedFilter
         setData(newDataMenu)
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        onFilterSelected.invoke(dataMenu)
     }
 }
