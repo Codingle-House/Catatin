@@ -108,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:id="@+id/settings_relativelayout_menu_createpin"
                 android:paddingVertical="@dimen/_16sdp">
 
                 <TextView

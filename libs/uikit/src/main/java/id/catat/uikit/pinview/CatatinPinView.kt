@@ -184,6 +184,10 @@ class CatatinPinView @JvmOverloads constructor(
         this.onPinDone = onPinDone
     }
 
+    fun hideForgotPinView() {
+        pin_textview_forgotpassword.isGone = true
+    }
+
     internal data class NumpadIndicatorDto(
         val isSelected: Boolean = false
     )

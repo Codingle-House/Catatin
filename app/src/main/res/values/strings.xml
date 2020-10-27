@@ -133,4 +133,8 @@
     <!--    Filter Screen Text-->
     <string name="filter_title_page">Filter Catatan Berdasarkan</string>
     <string name="filter_action">Pilih Filter</string>
+
+    <!--    Create Pin Screen Text-->
+    <string name="createpin_title_page">Tambah Nomor Pin</string>
+    <string name="createpin_text_description">Filter Catatan Berdasarkan</string>
 </resources>
