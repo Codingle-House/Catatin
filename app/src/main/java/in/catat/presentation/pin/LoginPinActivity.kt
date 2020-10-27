@@ -56,7 +56,6 @@ class LoginPinActivity : BaseActivity(R.layout.activity_pin) {
                             )
                         )
                         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
-                        finish()
                     }
                 }
             }

@@ -77,9 +77,10 @@
     <string name="general_text_notes_locked">Terkunci</string>
     <string name="general_text_emptystring"> </string>
 
-    <string name="geberal_title_delete_note">Hapus Catatan</string>
-    <string name="geberal_text_delete_note">Mungkin ini adalah catatan penting untukmu. Apakah kamu ingin menghapusnya ?</string>
+    <string name="general_title_delete_note">Hapus Catatan</string>
+    <string name="general_text_delete_note">Mungkin ini adalah catatan penting untukmu. Apakah kamu ingin menghapusnya ?</string>
 
+    <string name="general_text_timer_minutes_seconds">%02d:%02d</string>
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>
@@ -124,6 +125,7 @@
     <!--    Send Verification Pin Screen Text-->
     <string name="verification_title_page">Kirim Verifikasi Email</string>
     <string name="verification_text_description">Kami akan mengirimkan instruksi mengenai mengatur ulang nomor pin kamu. Silahkan cek kotak masuk email kamu. </string>
+    <string name="verification_action_resend">Kirim Ulang Verifikasi Email</string>
 
     <!--    Filter Screen Text-->
     <string name="filter_title_page">Filter Catatan Berdasarkan</string>

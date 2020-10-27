@@ -32,6 +32,7 @@ class ResetPinActivity : BaseActivity(R.layout.activity_reset_pin) {
             //TODO("IRFAN DO GOOGLE LOGIN)
             startActivity(Intent(this@ResetPinActivity, SendVerificationActivity::class.java))
             overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+            finish()
         }
     }
 }

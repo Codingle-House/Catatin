@@ -210,8 +210,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         GeneralCatatinDialog(
             context = this,
             image = R.drawable.notes_ic_delete,
-            title = getString(R.string.geberal_title_delete_note),
-            description = getString(R.string.geberal_text_delete_note),
+            title = getString(R.string.general_title_delete_note),
+            description = getString(R.string.general_text_delete_note),
             yesTextButton = getString(R.string.general_text_yes),
             yesClickListener = {
 

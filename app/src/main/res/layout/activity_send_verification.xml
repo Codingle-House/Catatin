@@ -59,18 +59,17 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/verification_button_google"
+        android:id="@+id/verification_button_resend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:background="@drawable/general_bg_button_google"
-        android:drawableStart="@drawable/general_ic_google"
-        android:drawableLeft="@drawable/general_ic_google"
+        android:background="@drawable/general_selector_button"
+        android:fontFamily="@font/roboto_bold"
         android:paddingHorizontal="@dimen/_16sdp"
         android:paddingVertical="@dimen/_6sdp"
-        android:text="@string/general_text_login_by_google"
+        android:text="@string/verification_action_resend"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary" />
 
