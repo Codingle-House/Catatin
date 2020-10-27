@@ -136,5 +136,8 @@
 
     <!--    Create Pin Screen Text-->
     <string name="createpin_title_page">Tambah Nomor Pin</string>
-    <string name="createpin_text_description">Filter Catatan Berdasarkan</string>
+    <string name="createpin_text_description">Masukkan 6 Digit Nomor Pin Yang Akan Digunakan Untuk Masuk </string>
+
+    <string name="createpin_title_page_confirmation">Konfirmasi Nomor Pin</string>
+    <string name="createpin_text_description_confirmation">Masukkan 6 Digit Nomor Pin Untuk Dikonfirmasi</string>
 </resources>

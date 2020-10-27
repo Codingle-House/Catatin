@@ -2,7 +2,6 @@ package `in`.catat.presentation.createpin
 
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
-import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import id.catat.uikit.pinview.CatatinPinView
 import kotlinx.android.synthetic.main.activity_create_pin.*
@@ -12,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_create_pin.*
  */
 
 @AndroidEntryPoint
-class CreatePinActivity : BaseActivity(R.layout.activity_create_pin) {
+class CreatePinConfirmationActivity : BaseActivity(R.layout.activity_create_pin) {
     override fun onViewCreated() {
         setupToolbar()
         setupPinView()
@@ -31,19 +30,13 @@ class CreatePinActivity : BaseActivity(R.layout.activity_create_pin) {
     private fun setupPinView() {
         with(createpin_pinview) {
             bindView(
-                title = getString(R.string.createpin_title_page),
-                description = getString(R.string.createpin_text_description)
+                title = getString(R.string.createpin_title_page_confirmation),
+                description = getString(R.string.createpin_text_description_confirmation)
             )
             hideForgotPinView()
             setListener {
                 if (it is CatatinPinView.PinAction.OnPinDone) {
-                    startActivity(
-                        Intent(
-                            this@CreatePinActivity,
-                            CreatePinConfirmationActivity::class.java
-                        )
-                    )
-                    overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+
                 }
             }
         }
