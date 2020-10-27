@@ -1,13 +1,17 @@
 package `in`.catat.di
 
+import `in`.catat.data.local.AppDatabase
+import `in`.catat.domain.app.datasource.AppLocalDataSource
 import `in`.catat.util.tracking.TrackingUtil
+import android.content.Context
+import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import id.co.catatin.core.commons.DiffCallback
-import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
@@ -28,4 +32,15 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Singleton
+    @Provides
+    fun providesRoomDatabase(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(appContext, AppDatabase::class.java, "catatin_db")
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Singleton
+    @Provides
+    fun providesLocalDataBase(appDatabase: AppDatabase) = AppLocalDataSource(appDatabase)
 }

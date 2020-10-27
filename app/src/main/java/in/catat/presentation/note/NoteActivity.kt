@@ -3,12 +3,14 @@ package `in`.catat.presentation.note
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.dto.InsertNoteDto
 import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
+import `in`.catat.util.constants.AppConstants
 import android.content.Intent
 import android.os.Handler
 import android.text.Editable
@@ -261,7 +263,17 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     }
 
     private fun actionSave() {
+        val title = note_edittext_title.text.toString()
+        val content = note_richtext_form.text.toString()
+        if (title.isEmpty() && content.isEmpty()) return
 
+        val insertNoteDto = InsertNoteDto(
+            title = note_edittext_title.text.toString(),
+            content = note_richtext_form.text.toString(),
+            type = AppConstants.TYPE_NOTE,
+            createdAt = currentDate
+        )
+        noteViewModel.doInsertNote(insertNoteDto)
     }
 
     override fun onDestroy() {

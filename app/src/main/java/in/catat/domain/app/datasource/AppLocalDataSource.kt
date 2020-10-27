@@ -2,13 +2,17 @@ package `in`.catat.domain.app.datasource
 
 import `in`.catat.R
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.local.AppDatabase
+import `in`.catat.data.local.entity.NoteEntity
 import javax.inject.Inject
 
 /**
  * Created by pertadima on 06,October,2020
  */
 
-class AppLocalDataSource @Inject constructor() {
+class AppLocalDataSource @Inject constructor(
+    private val appDatabase: AppDatabase
+) {
     val settingsMenu: List<CatatinMenuDto>
         get() = listOf(
             CatatinMenuDto(title = R.string.dialog_title_menu_fullscreen),
@@ -67,4 +71,6 @@ class AppLocalDataSource @Inject constructor() {
                 isPremiumContent = true
             )
         )
+
+    suspend fun insertNote(note: NoteEntity) = appDatabase.noteDao().insertNote(note)
 }
