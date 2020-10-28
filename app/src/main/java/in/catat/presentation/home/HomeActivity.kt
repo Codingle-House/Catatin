@@ -4,10 +4,11 @@ import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.dto.NoteDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.data.enum.NoteStatusEnum
-import `in`.catat.presentation.dialog.filter.GeneralCatatinFilterMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import `in`.catat.presentation.dialog.filter.GeneralCatatinFilterMenuDialog
 import `in`.catat.presentation.note.NoteActivity
 import `in`.catat.presentation.pin.LoginPinActivity
 import `in`.catat.presentation.search.SearchActivity
@@ -65,7 +66,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private val notesAdapter by lazy {
-        GenericRecyclerViewAdapter<UserNotesDto>(
+        GenericRecyclerViewAdapter<NoteDto>(
             diffCallback = diffCallback,
             holderResId = R.layout.item_notes_card,
             onBind = ::bindNotesAdapter,
@@ -77,7 +78,6 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         setupToolbarView()
         setupListener()
         setupFilterListener()
-        getData()
         setupRecyclerView()
         setupDefaultFilter()
     }
@@ -216,8 +216,8 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         )
     }
 
-    private fun bindNotesAdapter(data: UserNotesDto, pos: Int, view: View) {
-        view.note_textview_notes_datetime.text = data.date
+    private fun bindNotesAdapter(data: NoteDto, pos: Int, view: View) {
+        view.note_textview_notes_datetime.text = data.createdAt
         view.note_textview_notes_title.text = data.title
         view.note_textview_notes_type.text = data.type
         view.note_textview_notes_islocked.isGone = data.isLocked.not()
@@ -228,12 +228,12 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
 
         with(view.note_textview_notes_value) {
-            text = data.description
+            text = data.content
             isGone = data.isLocked
         }
     }
 
-    private fun notesListener(data: UserNotesDto, pos: Int, view: View) {
+    private fun notesListener(data: NoteDto, pos: Int, view: View) {
         if (data.isLocked) {
             startActivity(
                 Intent(this, LoginPinActivity::class.java)
@@ -291,6 +291,11 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 scaleY(if (isShown.not()) FULL_SCALE else HIDE_SCALE)
             }.duration = DEFAULT_ANIMATION_DURATION
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getData()
     }
 
 
