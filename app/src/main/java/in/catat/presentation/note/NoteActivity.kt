@@ -10,7 +10,7 @@ import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.util.DateUtil
 import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
-import `in`.catat.util.constants.AppConstants
+import `in`.catat.util.constants.appConstant
 import android.content.Intent
 import android.os.Handler
 import android.text.Editable
@@ -270,7 +270,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         val insertNoteDto = InsertNoteDto(
             title = note_edittext_title.text.toString(),
             content = note_richtext_form.text.toString(),
-            type = AppConstants.TYPE_NOTE,
+            type = appConstant.TYPE_NOTE,
             createdAt = currentDate
         )
         noteViewModel.doInsertNote(insertNoteDto)

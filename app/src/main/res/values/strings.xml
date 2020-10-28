@@ -81,6 +81,7 @@
     <string name="general_text_delete_note">Mungkin ini adalah catatan penting untukmu. Apakah kamu ingin menghapusnya ?</string>
 
     <string name="general_text_timer_minutes_seconds">%02d:%02d</string>
+    <string name="general_text_empty_notestitle">Judul Belum Ada</string>
     <!--    Note Screen Text-->
     <string name="note_title_add">Tambah Catatan</string>
     <string name="note_title_placeholder">Masukkan Judul Disini...</string>

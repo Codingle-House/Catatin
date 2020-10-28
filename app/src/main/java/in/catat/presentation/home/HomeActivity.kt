@@ -18,6 +18,7 @@ import `in`.catat.presentation.todo.TodoActivity
 import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
 import `in`.catat.util.AnimationConstant.FULL_SCALE
 import `in`.catat.util.AnimationConstant.HIDE_SCALE
+import `in`.catat.util.constants.AppUtils
 import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
@@ -218,8 +219,12 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun bindNotesAdapter(data: NoteDto, pos: Int, view: View) {
         view.note_textview_notes_datetime.text = data.createdAt
-        view.note_textview_notes_title.text = data.title
-        view.note_textview_notes_type.text = data.type
+        view.note_textview_notes_title.text = if (data.title.isNotEmpty()) {
+            data.title
+        } else {
+            getString(R.string.general_text_empty_notestitle)
+        }
+        view.note_textview_notes_type.text = AppUtils.getTranslationType(this, data.type)
         view.note_textview_notes_islocked.isGone = data.isLocked.not()
 
         with(view.note_imageview_notes_image) {
