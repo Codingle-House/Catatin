@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 /**
  * Created by pertadima on 27,October,2020
@@ -20,6 +21,9 @@ interface NoteDao {
 
     @Query("SELECT * FROM tbl_note WHERE id = :id")
     suspend fun getSingleNote(id: Long): NoteEntity
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateSingleNote(noteEntity: NoteEntity)
 
     @Query("DELETE FROM tbl_note WHERE id = :id")
     suspend fun deleteSingleNote(id: Long)

@@ -47,4 +47,8 @@ class NoteViewModel @ViewModelInject constructor(
     fun doDeleteSingleNote(id: Long) = viewModelScope.launch {
         appRepository.deleteSingleNote(id)
     }
+
+    fun doUpdateNote(insertNoteDto: InsertNoteDto) = viewModelScope.launch {
+        appRepository.updateSingleNote(insertNoteDto)
+    }
 }

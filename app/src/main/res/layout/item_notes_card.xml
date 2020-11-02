@@ -57,13 +57,14 @@
             android:maxLines="3"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_11ssp"
-            tools:text="Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit, Lorem ipsum dolor sit ame, onsctetur adipiscing elit." />
+            tools:text="Lorem ipsum dolor sit ame, " />
 
         <ImageView
             android:id="@+id/note_imageview_notes_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_80sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -76,6 +77,7 @@
             android:fontFamily="@font/roboto_medium"
             android:gravity="center_vertical"
             android:text="@string/general_text_notes_locked"
+            android:visibility="gone"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/_10ssp"
             app:drawableStartCompat="@drawable/note_layer_itemlocked" />

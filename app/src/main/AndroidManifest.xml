@@ -35,9 +35,9 @@
             android:name=".presentation.note.NoteActivity"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+        
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"

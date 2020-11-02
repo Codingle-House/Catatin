@@ -79,6 +79,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     private var scrollerAtEnd = false
     private var isFullScreen = false
 
+    private var createdAt = ""
+
     override fun onViewCreated() {
         getNoteData()
         initRichTextView()
@@ -105,6 +107,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             }
 
             observeSingleNote().onResult {
+                createdAt = it.createdAt
                 note_edittext_title.setText(it.title)
                 note_richtext_form.fromHtml(it.content)
             }
@@ -286,7 +289,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         val noteDto = InsertNoteDto(
             title = note_edittext_title.text.toString(),
             content = note_richtext_form.html.toString(),
-            type = appConstant.TYPE_NOTE
+            type = appConstant.TYPE_NOTE,
+            createdAt = createdAt
         )
 
         if (noteStatus == NoteStatusEnum.CREATE) {
@@ -295,7 +299,11 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             )
             noteViewModel.doInsertNote(insertNoteDto)
         } else {
-
+            val updateNoteDto = noteDto.copy(
+                id = noteId,
+                updatedAt = currentDate
+            )
+            noteViewModel.doUpdateNote(updateNoteDto)
         }
     }
 

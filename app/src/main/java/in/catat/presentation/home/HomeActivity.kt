@@ -35,6 +35,7 @@ import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import id.co.catatin.core.ext.setSpannableForegroundColor
+import id.co.catatin.core.ext.stripHtml
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_notes_card.view.*
 import java.util.*
@@ -233,7 +234,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
 
         with(view.note_textview_notes_value) {
-            text = data.content
+            text = data.content.stripHtml()
             isGone = data.isLocked
         }
     }

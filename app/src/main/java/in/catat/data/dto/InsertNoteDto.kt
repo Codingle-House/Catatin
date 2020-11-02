@@ -5,6 +5,7 @@ package `in`.catat.data.dto
  */
 
 data class InsertNoteDto(
+    val id: Long = 0,
     val title: String = "",
     val content: String = "",
     val type: String = "",
