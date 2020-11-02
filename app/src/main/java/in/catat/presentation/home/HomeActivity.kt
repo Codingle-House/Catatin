@@ -249,9 +249,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
         when (data.type) {
             UserNotesDto.NoteType.NOTE -> startActivity(
-                Intent(this, NoteActivity::class.java).putExtra(
-                    NoteActivity.NoteKey.STATUS, NoteStatusEnum.EDIT
-                )
+                Intent(this, NoteActivity::class.java).apply {
+                    putExtra(NoteActivity.NoteKey.STATUS, NoteStatusEnum.EDIT)
+                    putExtra(NoteActivity.NoteKey.ID, data.id)
+                }
             )
             UserNotesDto.NoteType.TODO -> startActivity(
                 Intent(this, TodoActivity::class.java).putExtra(

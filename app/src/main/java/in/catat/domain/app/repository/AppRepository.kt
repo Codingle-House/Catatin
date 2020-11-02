@@ -39,4 +39,16 @@ class AppRepository @Inject constructor(
             updatedAt = it.updatedAt
         )
     }
+
+    suspend fun getSingleNote(id: Long): NoteDto {
+        val singleNote = appLocalDataSource.getSingleNote(id)
+        return NoteDto(
+            id = singleNote.id,
+            title = singleNote.title,
+            content = singleNote.content,
+            type = singleNote.type,
+            createdAt = singleNote.createdAt,
+            updatedAt = singleNote.updatedAt
+        )
+    }
 }

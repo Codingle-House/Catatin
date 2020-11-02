@@ -42,6 +42,10 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         intent?.getSerializableExtra(NoteKey.STATUS) as NoteStatusEnum
     }
 
+    private val noteId by lazy {
+        intent?.getLongExtra(NoteKey.ID, 0L) ?: 0L
+    }
+
     private val handler by lazy {
         Handler()
     }
@@ -76,6 +80,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     private var isFullScreen = false
 
     override fun onViewCreated() {
+        getNoteData()
         initRichTextView()
         setupAppToolbar()
         setupView()
@@ -83,6 +88,11 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         setupAdMob()
     }
 
+    private fun getNoteData() {
+        if (noteStatus == NoteStatusEnum.EDIT) {
+            noteViewModel.getSingleNote(noteId)
+        }
+    }
 
     override fun onViewModelObserver() {
         with(noteViewModel) {
@@ -92,6 +102,11 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
 
             observeSettingsMenu().onResult {
                 settingsDialog.setData(it)
+            }
+
+            observeSingleNote().onResult {
+                note_edittext_title.setText(it.title)
+                note_richtext_form.fromHtml(it.content)
             }
         }
     }
@@ -267,13 +282,20 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
         val content = note_richtext_form.text.toString()
         if (title.isEmpty() && content.isEmpty()) return
 
-        val insertNoteDto = InsertNoteDto(
+        val noteDto = InsertNoteDto(
             title = note_edittext_title.text.toString(),
-            content = note_richtext_form.text.toString(),
-            type = appConstant.TYPE_NOTE,
-            createdAt = currentDate
+            content = note_richtext_form.html.toString(),
+            type = appConstant.TYPE_NOTE
         )
-        noteViewModel.doInsertNote(insertNoteDto)
+
+        if (noteStatus == NoteStatusEnum.CREATE) {
+            val insertNoteDto = noteDto.copy(
+                createdAt = currentDate
+            )
+            noteViewModel.doInsertNote(insertNoteDto)
+        } else {
+
+        }
     }
 
     override fun onDestroy() {
@@ -283,6 +305,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
 
     object NoteKey {
         const val STATUS = "NoteActivity.STATUS"
+        const val ID = "NoteActivity.ID"
     }
 
     companion object {

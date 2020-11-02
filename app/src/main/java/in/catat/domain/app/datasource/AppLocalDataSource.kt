@@ -75,4 +75,6 @@ class AppLocalDataSource @Inject constructor(
     suspend fun insertNote(note: NoteEntity) = appDatabase.noteDao().insertNote(note)
 
     suspend fun getAllNotes() = appDatabase.noteDao().getAllNotes()
+
+    suspend fun getSingleNote(id: Long) = appDatabase.noteDao().getSingleNote(id)
 }
