@@ -43,4 +43,8 @@ class NoteViewModel @ViewModelInject constructor(
         val singleNote = appRepository.getSingleNote(id)
         singleNoteLiveData.postValue(singleNote)
     }
+
+    fun doDeleteSingleNote(id: Long) = viewModelScope.launch {
+        appRepository.deleteSingleNote(id)
+    }
 }

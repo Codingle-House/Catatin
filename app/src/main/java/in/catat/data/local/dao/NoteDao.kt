@@ -20,4 +20,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM tbl_note WHERE id = :id")
     suspend fun getSingleNote(id: Long): NoteEntity
+
+    @Query("DELETE FROM tbl_note WHERE id = :id")
+    suspend fun deleteSingleNote(id: Long)
 }

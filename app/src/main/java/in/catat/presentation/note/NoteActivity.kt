@@ -231,7 +231,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             description = getString(R.string.general_text_delete_note),
             yesTextButton = getString(R.string.general_text_yes),
             yesClickListener = {
-
+                noteViewModel.doDeleteSingleNote(noteId)
+                finish()
             },
             noTextButton = getString(R.string.general_text_no)
         ).show()

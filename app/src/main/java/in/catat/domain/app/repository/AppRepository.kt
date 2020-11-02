@@ -51,4 +51,6 @@ class AppRepository @Inject constructor(
             updatedAt = singleNote.updatedAt
         )
     }
+
+    suspend fun deleteSingleNote(id: Long) = appLocalDataSource.deleteSingleNote(id)
 }
