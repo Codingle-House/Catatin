@@ -21,6 +21,7 @@ class AppRepository @Inject constructor(
 
     suspend fun insertNote(insertNoteDto: InsertNoteDto) = appLocalDataSource.insertNote(
         NoteEntity(
+            id = insertNoteDto.id,
             title = insertNoteDto.title,
             content = insertNoteDto.content,
             type = insertNoteDto.type,

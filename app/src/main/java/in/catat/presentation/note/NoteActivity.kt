@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_note.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
 import javax.inject.Inject
 
 
@@ -40,6 +41,10 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
 
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
+    }
+
+    private val currentNoteId by lazy {
+        Calendar.getInstance().timeInMillis
     }
 
     private val noteStatus by lazy {
@@ -315,6 +320,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
 
         if (noteStatus == NoteStatusEnum.CREATE) {
             val insertNoteDto = noteDto.copy(
+                id = currentNoteId,
                 createdAt = currentDate
             )
             noteViewModel.doInsertNote(insertNoteDto)
