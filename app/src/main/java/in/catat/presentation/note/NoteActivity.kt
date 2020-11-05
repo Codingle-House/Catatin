@@ -11,6 +11,7 @@ import `in`.catat.util.DateUtil
 import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
 import `in`.catat.util.constants.appConstant
+import android.Manifest
 import android.content.Intent
 import android.os.Handler
 import android.text.Editable
@@ -24,11 +25,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_note.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NoteActivity : BaseActivity(R.layout.activity_note) {
+class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.PermissionCallbacks {
     @Inject
     lateinit var diffCallback: DiffCallback
 
@@ -72,7 +76,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
             context = this@NoteActivity,
             title = getString(R.string.dialog_title_menu_attachment),
             diffCallback = diffCallback,
-            onMenuClick = ::handleMenuDialogClick
+            onMenuClick = ::handleMenuAttachmentDialogClick
         )
     }
 
@@ -184,6 +188,15 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
                 if (scrollerAtEnd) -Integer.MAX_VALUE else fullWidth,
                 0
             )
+        }
+    }
+
+    private fun handleMenuAttachmentDialogClick(post: Int, data: CatatinMenuDto) {
+        when (getString(data.title)) {
+            getString(R.string.dialog_title_menu_file) -> checkStoragePermission()
+            else -> {
+
+            }
         }
     }
 
@@ -310,6 +323,41 @@ class NoteActivity : BaseActivity(R.layout.activity_note) {
     override fun onDestroy() {
         handler.removeCallbacks(myRunnable)
         super.onDestroy()
+    }
+
+    @AfterPermissionGranted(Permission.STORAGE)
+    private fun checkStoragePermission() {
+        val perms = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            // Already have permission, do the thing
+            // ...
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(
+                this@NoteActivity,
+                "",
+                Permission.STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    object Permission {
+        const val STORAGE = 101
     }
 
     object NoteKey {
