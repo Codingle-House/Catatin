@@ -33,6 +33,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
+            android:layoutAnimation="@anim/layout_animation"
             android:padding="@dimen/_40sdp">
 
             <ImageView
