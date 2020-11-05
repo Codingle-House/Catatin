@@ -193,7 +193,14 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
 
     private fun handleMenuAttachmentDialogClick(post: Int, data: CatatinMenuDto) {
         when (getString(data.title)) {
-            getString(R.string.dialog_title_menu_file) -> checkStoragePermission()
+            getString(R.string.dialog_title_menu_file) -> checkStoragePermission {
+                val intent = Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT)
+
+                //TODO: CHANGE TO NEW API
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
+            }
             else -> {
 
             }
@@ -326,14 +333,13 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
     }
 
     @AfterPermissionGranted(Permission.STORAGE)
-    private fun checkStoragePermission() {
+    private fun checkStoragePermission(onHasPermission: () -> Unit) {
         val perms = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
         if (EasyPermissions.hasPermissions(this, *perms)) {
-            // Already have permission, do the thing
-            // ...
+            onHasPermission.invoke()
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(
