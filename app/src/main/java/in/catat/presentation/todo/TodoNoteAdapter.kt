@@ -29,6 +29,7 @@ class TodoNoteAdapter(
     private val context: Context,
     private val diffCallback: DiffCallback,
     private val itemListener: (TodoDto, pos: Int, View) -> Unit = { _, _, _ -> kotlin.run {} },
+    private val itemActionListener: (TodoDto, pos: Int, View, TodoAction) -> Unit = { _, _, _, _ -> kotlin.run {} }
 ) : RecyclerView.Adapter<TodoNoteAdapter.ItemViewHolder>() {
 
     private val dataSet: MutableList<TodoDto> = mutableListOf()
@@ -85,6 +86,12 @@ class TodoNoteAdapter(
             itemView.setOnClickListener {
                 itemListener.invoke(data, adapterPosition, itemView)
             }
+            itemView.todo_imageview_delete.setOnClickListener {
+                itemActionListener.invoke(data, adapterPosition, itemView, TodoAction.OnDeleteTodo)
+            }
+            itemView.todo_imageview_edit.setOnClickListener {
+                itemActionListener.invoke(data, adapterPosition, itemView, TodoAction.OnEditTodo)
+            }
         }
     }
 
@@ -108,5 +115,10 @@ class TodoNoteAdapter(
             }
         })
         startAnimation(animOut)
+    }
+
+    sealed class TodoAction {
+        object OnEditTodo : TodoAction()
+        object OnDeleteTodo : TodoAction()
     }
 }

@@ -52,7 +52,8 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         TodoNoteAdapter(
             context = this@TodoActivity,
             diffCallback = diffCallback,
-            itemListener = ::itemListenerTodo
+            itemListener = ::itemListenerTodo,
+            itemActionListener = ::itemActionListenerTodo
         )
     }
 
@@ -88,10 +89,15 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                     AVAILABLE_STATE
                 }
                 todoAdapter.setData(it)
+                todo_textview_description.text = getString(
+                    R.string.todo_text_description,
+                    currentDate, it.size.toString()
+                )
             }
 
             observeSingleNote().onResult {
                 createdAt = it.createdAt
+                todo_edittext_title.setText(it.title)
             }
         }
     }
@@ -235,6 +241,22 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             idNote = data.idNote
         )
         todoViewModel.updateSingleTodo(insertTodo)
+    }
+
+    private fun itemActionListenerTodo(
+        data: TodoDto,
+        pos: Int,
+        view: View,
+        todoAction: TodoNoteAdapter.TodoAction
+    ) {
+        when (todoAction) {
+            TodoNoteAdapter.TodoAction.OnEditTodo -> {
+
+            }
+            TodoNoteAdapter.TodoAction.OnDeleteTodo -> {
+
+            }
+        }
     }
 
     private fun actionSave() {
