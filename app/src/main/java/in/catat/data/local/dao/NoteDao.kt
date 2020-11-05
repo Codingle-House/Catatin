@@ -1,10 +1,12 @@
 package `in`.catat.data.local.dao
 
 import `in`.catat.data.local.entity.NoteEntity
+import `in`.catat.data.local.relation.NoteTodosRelationEntity
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 
 /**
@@ -27,4 +29,8 @@ interface NoteDao {
 
     @Query("DELETE FROM tbl_note WHERE id = :id")
     suspend fun deleteSingleNote(id: Long)
+
+    @Transaction
+    @Query("SELECT * FROM tbl_note")
+    suspend fun getAllNotesWithTodos(): List<NoteTodosRelationEntity>
 }

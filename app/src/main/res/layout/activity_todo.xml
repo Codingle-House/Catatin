@@ -68,12 +68,55 @@
                 android:textSize="@dimen/_10ssp"
                 tools:text="26 Agustus 2020 | 5 Karakter" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/todo_recyclerview_notes"
+            <ViewFlipper
+                android:id="@+id/todo_viewflipper_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layoutAnimation="@anim/layout_animation" />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:layoutAnimation="@anim/layout_animation"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_40sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/home_ic_empty_note" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:gravity="center_horizontal"
+                        android:text="@string/todo_title_empty_data"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="center_horizontal"
+                        android:text="@string/todo_text_empty_data"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/todo_recyclerview_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layoutAnimation="@anim/layout_animation" />
+            </ViewFlipper>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -93,6 +93,8 @@
     <string name="todo_text_description">%s | %s aktivitas</string>
     <string name="todo_text_alarm">Alarm pada : %s</string>
 
+    <string name="todo_title_empty_data">Belum Memiliki Daftar Pekerjaan</string>
+    <string name="todo_text_empty_data">Kamu belum memiliki daftar pekerjaan untuk catatan ini, silahkan buat daftar pekerjaan terlebih dahulu</string>
     <!--    Settings Screen Text-->
     <string name="settings_title_account">Akun</string>
     <string name="settings_title_security">Keamanan</string>

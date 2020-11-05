@@ -3,7 +3,6 @@ package `in`.catat.presentation.home
 import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.NoteDto
-import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.domain.app.repository.AppRepository
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -44,7 +43,7 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun getUserNotes() = viewModelScope.launch {
-        val userNotes = repository.getAllNotes()
+        val userNotes = repository.getAllNotesWithTodo()
         userNotesLiveData.postValue(userNotes)
     }
 }

@@ -2,13 +2,8 @@ package `in`.catat.presentation.todo
 
 import `in`.catat.R
 import `in`.catat.data.dto.TodoDto
-import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +11,13 @@ import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.getDrawableCompat
+import id.co.catatin.core.ext.reverseStrikeThroughAnimation
+import id.co.catatin.core.ext.startStrikeThroughAnimation
 import kotlinx.android.synthetic.main.item_notes_todo.view.*
 
 
@@ -86,7 +82,6 @@ class TodoNoteAdapter(
                 isGone = data.reminderDate.isEmpty()
                 text = context.getString(R.string.todo_text_alarm, data.reminderDate)
             }
-            itemView.todo_view_line.isGone = itemCount - 1 == adapterPosition
             itemView.setOnClickListener {
                 itemListener.invoke(data, adapterPosition, itemView)
             }
@@ -113,31 +108,5 @@ class TodoNoteAdapter(
             }
         })
         startAnimation(animOut)
-    }
-
-    private fun TextView.startStrikeThroughAnimation(): ValueAnimator {
-        val span = SpannableString(text)
-        val strikeSpan = StrikethroughSpan()
-        val animator = ValueAnimator.ofInt(text.length)
-        animator.addUpdateListener {
-            span.setSpan(strikeSpan, 0, it.animatedValue as Int, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            text = span
-            invalidate()
-        }
-        animator.start()
-        return animator
-    }
-
-    private fun TextView.reverseStrikeThroughAnimation(): ValueAnimator {
-        val span = SpannableString(text.toString())
-        val strikeSpan = StrikethroughSpan()
-        val animator = ValueAnimator.ofInt(text.length, 0)
-        animator.addUpdateListener {
-            span.setSpan(strikeSpan, 0, it.animatedValue as Int, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            text = span
-            invalidate()
-        }
-        animator.start()
-        return animator
     }
 }

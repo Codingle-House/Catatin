@@ -88,4 +88,6 @@ class AppLocalDataSource @Inject constructor(
     suspend fun getNoteTodos(idNotes: Long) = appDatabase.todoDao().getNoteTodos(idNotes)
 
     suspend fun updateSingleTodo(todo: TodoEntity) = appDatabase.todoDao().updateSingleTodo(todo)
+
+    suspend fun getAllNotesWithTodos() = appDatabase.noteDao().getAllNotesWithTodos()
 }

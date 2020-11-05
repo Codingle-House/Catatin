@@ -65,8 +65,10 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     }
 
     private var isFullScreen = false
+    private var createdAt = ""
 
     override fun onViewCreated() {
+        getNoteData()
         setupAppToolbar()
         setupView()
         setupListener()
@@ -80,7 +82,16 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             }
 
             observeTodoList().onResult {
+                todo_viewflipper_content.displayedChild = if (it.isEmpty()) {
+                    EMPTY_STATE
+                } else {
+                    AVAILABLE_STATE
+                }
                 todoAdapter.setData(it)
+            }
+
+            observeSingleNote().onResult {
+                createdAt = it.createdAt
             }
         }
     }
@@ -102,6 +113,12 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                 setHasStableIds(true)
             }
             layoutManager = LinearLayoutManager(this@TodoActivity)
+        }
+    }
+
+    private fun getNoteData() {
+        if (todoStatus == NoteStatusEnum.EDIT) {
+            todoViewModel.getSingleNote(noteId)
         }
     }
 
@@ -130,7 +147,11 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                         )
                         todoViewModel.doInsertNoteTodo(noteDto, todoDto)
                     } else {
-
+                        val todoDto = InsertTodoDto(
+                            idNote = noteId,
+                            name = it
+                        )
+                        todoViewModel.doInsertExistingNoteTodo(todoDto)
                     }
                 }
             ).show()
@@ -216,6 +237,22 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         todoViewModel.updateSingleTodo(insertTodo)
     }
 
+    private fun actionSave() {
+        val noteDto = InsertNoteDto(
+            title = todo_edittext_title.text.toString(),
+            type = appConstant.TYPE_TODO,
+            createdAt = createdAt
+        )
+
+        if (todoStatus == NoteStatusEnum.EDIT) {
+            val updateNoteDto = noteDto.copy(
+                id = noteId,
+                updatedAt = currentDate
+            )
+            todoViewModel.doUpdateNote(updateNoteDto)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         if (todoStatus == NoteStatusEnum.EDIT) {
@@ -223,8 +260,18 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        actionSave()
+    }
+
     object TodoKey {
         const val STATUS = "TodoActivity.STATUS"
         const val ID = "TodoActivity.ID"
+    }
+
+    companion object {
+        private const val EMPTY_STATE = 0
+        private const val AVAILABLE_STATE = 1
     }
 }

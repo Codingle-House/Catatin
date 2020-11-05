@@ -8,6 +8,7 @@ import `in`.catat.data.local.entity.NoteEntity
 import `in`.catat.data.local.entity.TodoEntity
 import `in`.catat.domain.app.datasource.AppLocalDataSource
 import `in`.catat.domain.app.datasource.AppRemoteDataSource
+import `in`.catat.util.constants.appConstant
 import javax.inject.Inject
 
 /**
@@ -99,4 +100,23 @@ class AppRepository @Inject constructor(
                 idNote = insertTodoDto.idNote
             )
         )
+
+    suspend fun getAllNotesWithTodo(): List<NoteDto> =
+        appLocalDataSource.getAllNotesWithTodos().map {
+            val content = when (it.noteEntity?.type) {
+                appConstant.TYPE_NOTE -> it.noteEntity?.content.orEmpty()
+                appConstant.TYPE_TODO -> it.todos.joinToString(separator = ",") { todo ->
+                    todo.name
+                }
+                else -> ""
+            }
+            NoteDto(
+                id = it.noteEntity?.id ?: 0,
+                title = it.noteEntity?.title.orEmpty(),
+                content = content,
+                type = it.noteEntity?.type.orEmpty(),
+                createdAt = it.noteEntity?.createdAt.orEmpty(),
+                updatedAt = it.noteEntity?.updatedAt.orEmpty()
+            )
+        }
 }

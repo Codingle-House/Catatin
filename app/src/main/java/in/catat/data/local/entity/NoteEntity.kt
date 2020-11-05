@@ -16,13 +16,13 @@ data class NoteEntity(
     @ColumnInfo(name = "id")
     val id: Long = 0,
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String = "",
     @ColumnInfo(name = "content")
-    val content: String,
+    val content: String = "",
     @ColumnInfo(name = "type")
-    val type: String,
+    val type: String = "",
     @ColumnInfo(name = "created_at")
-    val createdAt: String,
+    val createdAt: String = "",
     @ColumnInfo(name = "updatedAt")
-    val updatedAt: String
+    val updatedAt: String = ""
 )

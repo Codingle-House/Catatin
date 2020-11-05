@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginHorizontal="@dimen/_16sdp"
+    android:layout_marginTop="@dimen/_16sdp">
 
     <ImageView
         android:id="@+id/todo_imageview_delete"
@@ -20,8 +20,8 @@
         android:id="@+id/todo_imageview_edit"
         android:layout_width="@dimen/_14sdp"
         android:layout_height="@dimen/_14sdp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginRight="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
         app:layout_constraintRight_toLeftOf="@id/todo_imageview_delete"
         app:layout_constraintTop_toTopOf="@id/todo_textview_title"
@@ -53,18 +53,18 @@
         android:id="@+id/todo_textview_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@android:color/white"
-        android:textSize="12sp"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintTop_toBottomOf="@id/todo_textview_title"
         tools:text="Alarm pada : 20 Juni 2020 | 14:30" />
 
     <View
         android:id="@+id/todo_view_line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_14sdp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintTop_toBottomOf="@id/todo_textview_alarm" />
 </androidx.constraintlayout.widget.ConstraintLayout>
