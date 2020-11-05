@@ -4,6 +4,7 @@ import `in`.catat.R
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.local.AppDatabase
 import `in`.catat.data.local.entity.NoteEntity
+import `in`.catat.data.local.entity.TodoEntity
 import javax.inject.Inject
 
 /**
@@ -81,4 +82,10 @@ class AppLocalDataSource @Inject constructor(
     suspend fun deleteSingleNote(id: Long) = appDatabase.noteDao().deleteSingleNote(id)
 
     suspend fun updateSingleNote(note: NoteEntity) = appDatabase.noteDao().updateSingleNote(note)
+
+    suspend fun insertTodo(todo: TodoEntity) = appDatabase.todoDao().insertTodo(todo)
+
+    suspend fun getNoteTodos(idNotes: Long) = appDatabase.todoDao().getNoteTodos(idNotes)
+
+    suspend fun updateSingleTodo(todo: TodoEntity) = appDatabase.todoDao().updateSingleTodo(todo)
 }

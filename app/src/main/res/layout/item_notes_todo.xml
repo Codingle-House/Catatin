@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/todo_imageview_delete"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
         app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/todo_textview_title"
@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/todo_imageview_edit"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
@@ -29,9 +29,8 @@
 
     <ImageView
         android:id="@+id/todo_imageview_circle"
-        android:layout_width="7dp"
-        android:layout_height="7dp"
-        android:src="@drawable/general_ic_circle_fill"
+        android:layout_width="@dimen/_7sdp"
+        android:layout_height="@dimen/_7sdp"
         app:layout_constraintBottom_toBottomOf="@id/todo_textview_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/todo_textview_title" />
@@ -40,10 +39,11 @@
         android:id="@+id/todo_textview_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:fontFamily="@font/roboto_regular"
         android:maxLines="1"
         android:textColor="@android:color/white"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintLeft_toRightOf="@id/todo_imageview_circle"
         app:layout_constraintRight_toLeftOf="@id/todo_imageview_edit"
         app:layout_constraintTop_toTopOf="parent"

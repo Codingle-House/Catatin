@@ -1,13 +1,17 @@
 package `in`.catat.presentation.todo
 
 import `in`.catat.data.dto.CatatinMenuDto
-import `in`.catat.data.dto.NoteTodoDto
+import `in`.catat.data.dto.InsertNoteDto
+import `in`.catat.data.dto.InsertTodoDto
+import `in`.catat.data.dto.TodoDto
 import `in`.catat.domain.app.repository.AppRepository
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 /**
  * Created by pertadima on 17,October,2020
@@ -21,42 +25,31 @@ class TodoViewModel @ViewModelInject constructor(
     private val settingsMenuLiveData = MutableLiveData<List<CatatinMenuDto>>()
     fun observeSettingsMenu(): MutableLiveData<List<CatatinMenuDto>> = settingsMenuLiveData
 
-    private val todoListLiveData = MutableLiveData<List<NoteTodoDto>>()
-    fun observeTodoList(): MutableLiveData<List<NoteTodoDto>> = todoListLiveData
+    private val todoListLiveData = MutableLiveData<List<TodoDto>>()
+    fun observeTodoList(): MutableLiveData<List<TodoDto>> = todoListLiveData
 
     init {
         settingsMenuLiveData.postValue(repository.getSettingsMenu())
-        dummyTodoList()
     }
 
+    fun doInsertNoteTodo(
+        insertNoteDto: InsertNoteDto,
+        insertTodoDto: InsertTodoDto
+    ) = viewModelScope.launch {
+        val todos = repository.getNoteTodos(insertNoteDto.id)
+        with(repository) {
+            if (todos.isEmpty()) insertNote(insertNoteDto)
+            insertNoteTodo(insertTodoDto)
+        }
+    }
 
-    //TODO: IRFAN -  REMOVE DUMMY DATA
-    private fun dummyTodoList() {
-        val todos = listOf(
-            NoteTodoDto(
-                name = "Membeli Ikan",
-                isDone = false,
-                reminderDate = "20 Juni 2020 | 14:30"
-            ),
-            NoteTodoDto(
-                name = "Membeli Ikan",
-                isDone = true,
-                reminderDate = "20 Juni 2020 | 14:30"
-            ),
-            NoteTodoDto(
-                name = "Membeli Ikan",
-                isDone = true
-            ),
-            NoteTodoDto(
-                name = "Membeli Ikan",
-                isDone = false
-            ),
-            NoteTodoDto(
-                name = "Membeli Ikan",
-                isDone = false
-            )
-        )
-
+    fun getNoteTodos(idNote: Long) = viewModelScope.launch {
+        val todos = repository.getNoteTodos(idNote)
         todoListLiveData.postValue(todos)
+    }
+
+    fun updateSingleTodo(insertTodoDto: InsertTodoDto) = viewModelScope.launch {
+        repository.updateSingleTodo(insertTodoDto)
+        getNoteTodos(insertTodoDto.idNote)
     }
 }

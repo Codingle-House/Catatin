@@ -3,25 +3,25 @@ package `in`.catat.presentation.todo
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
-import `in`.catat.data.dto.NoteTodoDto
+import `in`.catat.data.dto.InsertNoteDto
+import `in`.catat.data.dto.InsertTodoDto
+import `in`.catat.data.dto.TodoDto
 import `in`.catat.data.enum.NoteStatusEnum
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
 import `in`.catat.util.DateUtil
-import android.graphics.Paint
+import `in`.catat.util.constants.appConstant
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
-import id.co.catatin.core.ext.getDrawableCompat
 import id.co.catatin.core.ext.showToast
 import kotlinx.android.synthetic.main.activity_todo.*
-import kotlinx.android.synthetic.main.item_notes_todo.view.*
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,6 +35,10 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         intent?.getSerializableExtra(TodoActivity.TodoKey.STATUS) as NoteStatusEnum
     }
 
+    private val noteId by lazy {
+        intent?.getLongExtra(TodoKey.ID, 0L) ?: 0L
+    }
+
     private val settingsDialog by lazy {
         GeneralCatatinMenuDialog(
             context = this@TodoActivity,
@@ -45,15 +49,19 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     }
 
     private val todoAdapter by lazy {
-        GenericRecyclerViewAdapter<NoteTodoDto>(
+        TodoNoteAdapter(
+            context = this@TodoActivity,
             diffCallback = diffCallback,
-            holderResId = R.layout.item_notes_todo,
-            onBind = ::bindTodoAdapter
+            itemListener = ::itemListenerTodo
         )
     }
 
     private val currentDate by lazy {
         DateUtil.getCurrentDate()
+    }
+
+    private val currentNoteId by lazy {
+        Calendar.getInstance().timeInMillis
     }
 
     private var isFullScreen = false
@@ -90,7 +98,9 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
 
     private fun setupRecyclerView() {
         with(todo_recyclerview_notes) {
-            adapter = todoAdapter
+            adapter = todoAdapter.apply {
+                setHasStableIds(true)
+            }
             layoutManager = LinearLayoutManager(this@TodoActivity)
         }
     }
@@ -107,7 +117,21 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                 title = getString(R.string.dialog_title_todo_add),
                 actionText = getString(R.string.general_text_add),
                 actionListener = {
+                    if (todoStatus == NoteStatusEnum.CREATE) {
+                        val noteDto = InsertNoteDto(
+                            id = currentNoteId,
+                            title = todo_edittext_title.text.toString(),
+                            type = appConstant.TYPE_TODO,
+                            createdAt = currentDate
+                        )
+                        val todoDto = InsertTodoDto(
+                            idNote = currentNoteId,
+                            name = it
+                        )
+                        todoViewModel.doInsertNoteTodo(noteDto, todoDto)
+                    } else {
 
+                    }
                 }
             ).show()
         }
@@ -181,30 +205,26 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
         }
     }
 
-    private fun bindTodoAdapter(data: NoteTodoDto, pos: Int, view: View) {
-        view.todo_imageview_circle.setImageDrawable(
-            getDrawableCompat(
-                if (data.isDone) {
-                    R.drawable.uikit_ic_circle_outline
-                } else {
-                    R.drawable.general_ic_circle_fill
-                }
-            )
+    private fun itemListenerTodo(data: TodoDto, pos: Int, view: View) {
+        val insertTodo = InsertTodoDto(
+            id = data.id,
+            name = data.name,
+            isDone = data.isDone.not(),
+            reminderDate = data.reminderDate,
+            idNote = data.idNote
         )
-        with(view.todo_textview_title) {
-            text = data.name
-            if (data.isDone) {
-                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            }
+        todoViewModel.updateSingleTodo(insertTodo)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (todoStatus == NoteStatusEnum.EDIT) {
+            todoViewModel.getNoteTodos(noteId)
         }
-        with(view.todo_textview_alarm) {
-            isGone = data.reminderDate.isEmpty()
-            text = getString(R.string.todo_text_alarm, data.reminderDate)
-        }
-        view.todo_view_line.isGone = todoAdapter.itemCount - 1 == pos
     }
 
     object TodoKey {
         const val STATUS = "TodoActivity.STATUS"
+        const val ID = "TodoActivity.ID"
     }
 }

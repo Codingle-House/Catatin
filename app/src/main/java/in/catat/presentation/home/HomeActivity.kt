@@ -256,9 +256,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 }
             )
             UserNotesDto.NoteType.TODO -> startActivity(
-                Intent(this, TodoActivity::class.java).putExtra(
-                    TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT
-                )
+                Intent(this, TodoActivity::class.java).apply {
+                    putExtra(TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT)
+                    putExtra(TodoActivity.TodoKey.ID, data.id)
+                }
             )
             UserNotesDto.NoteType.SKETCH -> startActivity(
                 Intent(this, SketchActivity::class.java).putExtra(
