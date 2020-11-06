@@ -18,26 +18,20 @@ import `in`.catat.presentation.todo.TodoActivity
 import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
 import `in`.catat.util.AnimationConstant.FULL_SCALE
 import `in`.catat.util.AnimationConstant.HIDE_SCALE
-import `in`.catat.util.constants.AppUtils
 import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import coil.api.load
 import dagger.hilt.android.AndroidEntryPoint
-import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import id.co.catatin.core.ext.setSpannableForegroundColor
-import id.co.catatin.core.ext.stripHtml
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_notes_card.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -68,10 +62,9 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private val notesAdapter by lazy {
-        GenericRecyclerViewAdapter<NoteDto>(
+        NoteAdapter(
+            context = this@HomeActivity,
             diffCallback = diffCallback,
-            holderResId = R.layout.item_notes_card,
-            onBind = ::bindNotesAdapter,
             itemListener = ::notesListener
         )
     }
@@ -122,9 +115,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun setupRecyclerView() {
         with(home_recyclerview_notes) {
-            adapter = notesAdapter
-            layoutManager =
-                StaggeredGridLayoutManager(GRID_SPAN_COUNT, LinearLayoutManager.VERTICAL)
+            adapter = notesAdapter.apply {
+                setHasStableIds(true)
+            }
+            layoutManager = StaggeredGridLayoutManager(GRID_SPAN_COUNT, LinearLayoutManager.VERTICAL)
             addItemDecoration(EqualSpaceItemDecoration())
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -217,27 +211,6 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                 else -> R.string.general_text_good_night
             }
         )
-    }
-
-    private fun bindNotesAdapter(data: NoteDto, pos: Int, view: View) {
-        view.note_textview_notes_datetime.text = data.createdAt
-        view.note_textview_notes_title.text = if (data.title.isNotEmpty()) {
-            data.title
-        } else {
-            getString(R.string.general_text_empty_notestitle)
-        }
-        view.note_textview_notes_type.text = AppUtils.getTranslationType(this, data.type)
-        view.note_textview_notes_islocked.isGone = data.isLocked.not()
-
-        with(view.note_imageview_notes_image) {
-            isGone = data.isLocked || data.image.isEmpty()
-            load(data.image)
-        }
-
-        with(view.note_textview_notes_value) {
-            text = data.content.stripHtml()
-            isGone = data.isLocked
-        }
     }
 
     private fun notesListener(data: NoteDto, pos: Int, view: View) {

@@ -12,7 +12,7 @@ object EntityToDtoMapper {
     fun noteTodoEntityToDto(notes: NoteTodosRelationEntity) : NoteDto {
         val content = when (notes.noteEntity?.type) {
             appConstant.TYPE_NOTE -> notes.noteEntity?.content.orEmpty()
-            appConstant.TYPE_TODO -> notes.todos.joinToString(separator = ",") { todo ->
+            appConstant.TYPE_TODO -> notes.todos.joinToString(separator = "\n") { todo ->
                 todo.name
             }
             else -> ""
