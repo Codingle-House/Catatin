@@ -21,19 +21,59 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_16sdp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/home_imageview_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_3sdp"
+                app:srcCompat="@drawable/general_ic_filter" />
+
+            <ImageView
+                android:id="@+id/home_imageview_filter_indicator"
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="@dimen/_6sdp"
+                android:layout_gravity="top|right"
+                app:srcCompat="@drawable/general_ic_circle_filter" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/home_textview_content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@android:color/white"
+            tools:text="Kamu memiliki 3 catatan" />
+    </LinearLayout>
+
 
     <ViewFlipper
         android:id="@+id/home_viewflipper_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_50sdp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical"
             android:layoutAnimation="@anim/layout_animation"
+            android:orientation="vertical"
             android:padding="@dimen/_40sdp">
 
             <ImageView
@@ -64,59 +104,16 @@
                 android:textSize="@dimen/_11ssp" />
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_recyclerview_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/_16sdp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/home_imageview_filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_3sdp"
-                        app:srcCompat="@drawable/general_ic_filter" />
-
-                    <ImageView
-                        android:id="@+id/home_imageview_filter_indicator"
-                        android:layout_width="@dimen/_6sdp"
-                        android:layout_height="@dimen/_6sdp"
-                        android:layout_gravity="top|right"
-                        app:srcCompat="@drawable/general_ic_circle_filter" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/home_textview_content_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@android:color/white"
-                    tools:text="Kamu memiliki 3 catatan" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_recyclerview_notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:clipToPadding="false"
-                android:layoutAnimation="@anim/layout_animation"
-                android:paddingTop="@dimen/_20sdp"
-                android:paddingBottom="@dimen/_16sdp" />
-        </LinearLayout>
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation"
+            android:paddingTop="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_16sdp" />
     </ViewFlipper>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
