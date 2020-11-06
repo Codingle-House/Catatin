@@ -212,7 +212,8 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             description = getString(R.string.general_text_delete_note),
             yesTextButton = getString(R.string.general_text_yes),
             yesClickListener = {
-
+                todoViewModel.doDeleteSingleNote(noteId)
+                finish()
             },
             noTextButton = getString(R.string.general_text_no)
         ).show()

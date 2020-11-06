@@ -71,4 +71,8 @@ class TodoViewModel @ViewModelInject constructor(
     fun doUpdateNote(insertNoteDto: InsertNoteDto) = viewModelScope.launch {
         repository.updateSingleNote(insertNoteDto)
     }
+
+    fun doDeleteSingleNote(id: Long) = viewModelScope.launch {
+        repository.deleteSingleNote(id)
+    }
 }
