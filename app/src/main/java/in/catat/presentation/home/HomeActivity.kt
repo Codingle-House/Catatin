@@ -102,6 +102,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
             observeNotesFilter().onResult {
                 filterTypeDialog.setData(it)
+                getData()
             }
         }
     }

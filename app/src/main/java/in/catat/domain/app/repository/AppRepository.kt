@@ -6,6 +6,7 @@ import `in`.catat.data.dto.NoteDto
 import `in`.catat.data.dto.TodoDto
 import `in`.catat.data.local.entity.NoteEntity
 import `in`.catat.data.local.entity.TodoEntity
+import `in`.catat.data.mapper.EntityToDtoMapper
 import `in`.catat.domain.app.datasource.AppLocalDataSource
 import `in`.catat.domain.app.datasource.AppRemoteDataSource
 import `in`.catat.util.constants.appConstant
@@ -33,17 +34,6 @@ class AppRepository @Inject constructor(
             updatedAt = insertNoteDto.updatedAt
         )
     )
-
-    suspend fun getAllNotes() = appLocalDataSource.getAllNotes().map {
-        NoteDto(
-            id = it.id,
-            title = it.title,
-            content = it.content,
-            type = it.type,
-            createdAt = it.createdAt,
-            updatedAt = it.updatedAt
-        )
-    }
 
     suspend fun getSingleNote(id: Long): NoteDto {
         val singleNote = appLocalDataSource.getSingleNote(id)
@@ -103,20 +93,11 @@ class AppRepository @Inject constructor(
 
     suspend fun getAllNotesWithTodo(): List<NoteDto> =
         appLocalDataSource.getAllNotesWithTodos().map {
-            val content = when (it.noteEntity?.type) {
-                appConstant.TYPE_NOTE -> it.noteEntity?.content.orEmpty()
-                appConstant.TYPE_TODO -> it.todos.joinToString(separator = ",") { todo ->
-                    todo.name
-                }
-                else -> ""
-            }
-            NoteDto(
-                id = it.noteEntity?.id ?: 0,
-                title = it.noteEntity?.title.orEmpty(),
-                content = content,
-                type = it.noteEntity?.type.orEmpty(),
-                createdAt = it.noteEntity?.createdAt.orEmpty(),
-                updatedAt = it.noteEntity?.updatedAt.orEmpty()
-            )
+            EntityToDtoMapper.noteTodoEntityToDto(it)
+        }
+
+    suspend fun searchAllNotesWithTodoByType(search: List<String>): List<NoteDto> =
+        appLocalDataSource.searchAllNotesByType(search).map {
+            EntityToDtoMapper.noteTodoEntityToDto(it)
         }
 }

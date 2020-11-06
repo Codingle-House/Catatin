@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 
+
 /**
  * Created by pertadima on 27,October,2020
  */
@@ -33,4 +34,8 @@ interface NoteDao {
     @Transaction
     @Query("SELECT * FROM tbl_note")
     suspend fun getAllNotesWithTodos(): List<NoteTodosRelationEntity>
+
+    @Transaction
+    @Query("SELECT * FROM tbl_note WHERE type IN (:search)")
+    suspend fun searchAllNotesByType(search: List<String>): List<NoteTodosRelationEntity>
 }

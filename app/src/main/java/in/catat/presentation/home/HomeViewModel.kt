@@ -1,8 +1,10 @@
 package `in`.catat.presentation.home
 
+import `in`.catat.R
 import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.NoteDto
+import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.domain.app.repository.AppRepository
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -43,7 +45,25 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun getUserNotes() = viewModelScope.launch {
-        val userNotes = repository.getAllNotesWithTodo()
+        val selectedFilter =
+            notesFilterLiveData.value?.filter { filter -> filter.isSelected }?.map { filter ->
+                return@map when (filter.title) {
+                    R.string.dialog_title_menu_notes -> UserNotesDto.NoteType.NOTE
+                    R.string.dialog_title_menu_todo -> UserNotesDto.NoteType.TODO
+                    else -> UserNotesDto.NoteType.SKETCH
+                }
+            }.orEmpty()
+
+        if (selectedFilter.isEmpty()) {
+            val userNotes = repository.getAllNotesWithTodo()
+            userNotesLiveData.postValue(userNotes)
+        } else {
+            searchAllNotes(selectedFilter)
+        }
+    }
+
+    private suspend fun searchAllNotes(search: List<String>) {
+        val userNotes = repository.searchAllNotesWithTodoByType(search)
         userNotesLiveData.postValue(userNotes)
     }
 }
