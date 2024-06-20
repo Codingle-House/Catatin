@@ -1,20 +1,19 @@
 package `in`.catat.presentation.onboarding
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.catat.data.dto.OnBoardingDataDto
 import `in`.catat.domain.onboarding.repository.OnBoardingRepository
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 
 /**
  * Created by pertadima on 17,October,2020
  */
 
-class OnBoardingViewModel @ViewModelInject constructor(
-    private val onBoardingRepository: OnBoardingRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class OnBoardingViewModel @Inject constructor(
+    private val onBoardingRepository: OnBoardingRepository
 ) : ViewModel() {
 
     private val onBoardingLiveData = MutableLiveData<List<OnBoardingDataDto>>()

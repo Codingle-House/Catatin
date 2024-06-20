@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.chinalwb.are.R;
 import com.chinalwb.are.adapters.AtListAdapter;
 import com.chinalwb.are.models.AtItem;
 import com.chinalwb.are.styles.ARE_At;
@@ -20,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
+
+import Catatin.R;
 
 public class Are_AtPickerActivity extends AppCompatActivity {
 

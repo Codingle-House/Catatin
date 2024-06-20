@@ -8,11 +8,12 @@ import android.widget.LinearLayout;
 
 import com.chinalwb.are.AREditText;
 import com.chinalwb.are.Constants;
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.spans.AreSuperscriptSpan;
 import com.chinalwb.are.styles.IARE_Style;
 import com.chinalwb.are.styles.toolitems.styles.ARE_Style_Superscript;
+
+import Catatin.R;
 
 /**
  * Created by wliu on 13/08/2018.
@@ -60,19 +61,19 @@ public class ARE_ToolItem_Superscript extends ARE_ToolItem_Abstract {
     @Override
     public void onSelectionChanged(int selStart, int selEnd) {
 
-		boolean superscriptExists = false;
+        boolean superscriptExists = false;
 
-		//
-		// Two cases:
-		// 1. Selection is just a pure cursor
-		// 2. Selection is a range
-		Editable editable = this.getEditText().getEditableText();
-		if (selStart > 0 && selStart == selEnd) {
-			AreSuperscriptSpan[] superscriptSpans = editable.getSpans(selStart - 1, selStart, AreSuperscriptSpan.class);
-			if (superscriptSpans != null && superscriptSpans.length > 0) {
-				superscriptExists = true;
-			}
-		} else {
+        //
+        // Two cases:
+        // 1. Selection is just a pure cursor
+        // 2. Selection is a range
+        Editable editable = this.getEditText().getEditableText();
+        if (selStart > 0 && selStart == selEnd) {
+            AreSuperscriptSpan[] superscriptSpans = editable.getSpans(selStart - 1, selStart, AreSuperscriptSpan.class);
+            if (superscriptSpans != null && superscriptSpans.length > 0) {
+                superscriptExists = true;
+            }
+        } else {
             AreSuperscriptSpan[] superscriptSpans = editable.getSpans(selStart, selEnd, AreSuperscriptSpan.class);
             if (superscriptSpans != null && superscriptSpans.length > 0) {
                 if (editable.getSpanStart(superscriptSpans[0]) <= selStart

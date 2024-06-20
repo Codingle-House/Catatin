@@ -1,11 +1,11 @@
 package `in`.catat.presentation.dialog
 
-import `in`.catat.R
 import android.content.Context
+import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import id.catat.uikit.dialog.BaseCatatanDialog
 import id.co.catatin.core.ext.getDrawableCompat
-import kotlinx.android.synthetic.main.dialog_catatin.*
+import `in`.catat.databinding.DialogCatatinBinding
 
 /**
  * Created by pertadima on 23,August,2020
@@ -20,22 +20,21 @@ class GeneralCatatinDialog(
     private val yesClickListener: () -> Unit,
     private val noTextButton: String,
     private val noClickListener: () -> Unit = {}
-) : BaseCatatanDialog(context) {
+) : BaseCatatanDialog<DialogCatatinBinding>(context) {
 
-    override fun setupLayout() {
-        setContentView(R.layout.dialog_catatin)
-    }
+    override val bindingInflater: (LayoutInflater) -> DialogCatatinBinding
+        get() = DialogCatatinBinding::inflate
 
     override fun onCreateDialog() {
         setupView()
     }
 
-    private fun setupView() {
-        dialog_imageview_icon.setImageDrawable(context.getDrawableCompat(image))
-        dialog_textview_title.text = title
-        dialog_textview_desc.text = description
+    private fun setupView() = with(binding) {
+        dialogImageviewIcon.setImageDrawable(context.getDrawableCompat(image))
+        dialogTextviewTitle.text = title
+        dialogTextviewDesc.text = description
 
-        with(dialog_textview_no) {
+        with(dialogTextviewNo) {
             text = noTextButton
             setOnClickListener {
                 noClickListener.invoke()
@@ -43,7 +42,7 @@ class GeneralCatatinDialog(
             }
         }
 
-        with(dialog_textview_yes) {
+        with(dialogTextviewYes) {
             text = yesTextButton
             setOnClickListener {
                 yesClickListener.invoke()

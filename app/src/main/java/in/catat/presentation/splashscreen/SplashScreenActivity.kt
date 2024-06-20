@@ -1,16 +1,19 @@
 package `in`.catat.presentation.splashscreen
 
+import android.content.Intent
+import android.os.Handler
+import android.view.LayoutInflater
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.databinding.ActivitySplashScreenBinding
 import `in`.catat.presentation.onboarding.OnBoardingActivity
-import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 
-class SplashScreenActivity : BaseActivity(R.layout.activity_splash_screen) {
+@AndroidEntryPoint
+class SplashScreenActivity : BaseActivity<ActivitySplashScreenBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivitySplashScreenBinding
+        get() = ActivitySplashScreenBinding::inflate
 
     private val handler by lazy {
         Handler()

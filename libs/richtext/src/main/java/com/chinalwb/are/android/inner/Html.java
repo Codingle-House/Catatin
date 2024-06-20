@@ -17,23 +17,8 @@
 package com.chinalwb.are.android.inner;
 
 //import com.android.internal.util.ArrayUtils;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.ccil.cowan.tagsoup.HTMLSchema;
-import org.ccil.cowan.tagsoup.Parser;
-import org.w3c.dom.Text;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
+import static com.chinalwb.are.android.inner.Html.sContext;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -44,7 +29,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -73,7 +57,6 @@ import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 
 import com.chinalwb.are.Constants;
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.models.AtItem;
 import com.chinalwb.are.spans.ARE_Span;
@@ -89,7 +72,24 @@ import com.chinalwb.are.spans.EmojiSpan;
 import com.chinalwb.are.spans.ListBulletSpan;
 import com.chinalwb.are.spans.ListNumberSpan;
 
-import static com.chinalwb.are.android.inner.Html.sContext;
+import org.ccil.cowan.tagsoup.HTMLSchema;
+import org.ccil.cowan.tagsoup.Parser;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import Catatin.R;
 
 /**
  * This class processes HTML strings into displayable styled text.
@@ -132,7 +132,7 @@ public class Html {
          * a tag that it does not know how to interpret.
          */
         public void handleTag(boolean opening, String tag,
-                                 Editable output, XMLReader xmlReader);
+                              Editable output, XMLReader xmlReader);
     }
 
     /**
@@ -205,18 +205,19 @@ public class Html {
      */
     public static final int FROM_HTML_MODE_COMPACT =
             FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
-            | FROM_HTML_SEPARATOR_LINE_BREAK_HEADING
-            | FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
-            | FROM_HTML_SEPARATOR_LINE_BREAK_LIST
-            | FROM_HTML_SEPARATOR_LINE_BREAK_DIV
-            | FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE;
+                    | FROM_HTML_SEPARATOR_LINE_BREAK_HEADING
+                    | FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+                    | FROM_HTML_SEPARATOR_LINE_BREAK_LIST
+                    | FROM_HTML_SEPARATOR_LINE_BREAK_DIV
+                    | FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE;
 
     /**
      * The bit which indicates if lines delimited by '\n' will be grouped into &lt;p&gt; elements.
      */
     private static final int TO_HTML_PARAGRAPH_FLAG = 0x00000001;
 
-    private Html() { }
+    private Html() {
+    }
 
     /**
      * Returns displayable styled text from the provided HTML string with the legacy flags
@@ -269,7 +270,7 @@ public class Html {
      * <p>This uses TagSoup to handle real HTML, including all of the brokenness found in the wild.
      */
     public static Spanned fromHtml(String source, int flags, ImageGetter imageGetter,
-            TagHandler tagHandler) {
+                                   TagHandler tagHandler) {
         Parser parser = new Parser();
         try {
             parser.setProperty(Parser.schemaProperty, HtmlParser.schema);
@@ -299,9 +300,9 @@ public class Html {
      * made to add HTML tags corresponding to spans. Also note that HTML metacharacters
      * (such as "&lt;" and "&amp;") within the input text are escaped.
      *
-     * @param text input text to convert
+     * @param text   input text to convert
      * @param option one of {@link #TO_HTML_PARAGRAPH_LINES_CONSECUTIVE} or
-     *     {@link #TO_HTML_PARAGRAPH_LINES_INDIVIDUAL}
+     *               {@link #TO_HTML_PARAGRAPH_LINES_INDIVIDUAL}
      * @return string containing input converted to HTML
      */
     public static String toHtml(Spanned text, int option) {
@@ -338,10 +339,10 @@ public class Html {
             String elements = " ";
             boolean needDiv = false;
 
-            for(int j = 0; j < style.length; j++) {
+            for (int j = 0; j < style.length; j++) {
                 if (style[j] instanceof AlignmentSpan) {
                     Layout.Alignment align =
-                        ((AlignmentSpan) style[j]).getAlignment();
+                            ((AlignmentSpan) style[j]).getAlignment();
                     needDiv = true;
                     if (align == Layout.Alignment.ALIGN_CENTER) {
                         elements = "align=\"center\" " + elements;
@@ -365,7 +366,7 @@ public class Html {
     }
 
     private static void withinDiv(StringBuilder out, Spanned text, int start, int end,
-            int option) {
+                                  int option) {
         int next;
         for (int i = start; i < end; i = next) {
             next = text.nextSpanTransition(i, end, QuoteSpan.class);
@@ -400,17 +401,17 @@ public class Html {
 //          default:
 //            return "<p>";
 //        }
-    	return "";
+        return "";
     }
 
     private static String getTextStyles(Spanned text, int start, int end,
-            boolean forceNoVerticalMargin, boolean includeTextAlign) {
+                                        boolean forceNoVerticalMargin, boolean includeTextAlign) {
         String margin = null;
         String textAlign = null;
 
         if (forceNoVerticalMargin) {
-        	// chinalwb:
-        	// Do not set margin for p tag for now.
+            // chinalwb:
+            // Do not set margin for p tag for now.
             // margin = "margin-top:0; margin-bottom:0;";
         }
         if (includeTextAlign) {
@@ -420,15 +421,15 @@ public class Html {
             for (int i = alignmentSpans.length - 1; i >= 0; i--) {
                 AlignmentSpan s = alignmentSpans[i];
                 //if ((text.getSpanFlags(s) & Spanned.SPAN_PARAGRAPH) == Spanned.SPAN_PARAGRAPH) {
-                    final Layout.Alignment alignment = s.getAlignment();
-                    if (alignment == Layout.Alignment.ALIGN_NORMAL) {
-                        textAlign = "text-align:start;";
-                    } else if (alignment == Layout.Alignment.ALIGN_CENTER) {
-                        textAlign = "text-align:center;";
-                    } else if (alignment == Layout.Alignment.ALIGN_OPPOSITE) {
-                        textAlign = "text-align:end;";
-                    }
-                    // break;
+                final Layout.Alignment alignment = s.getAlignment();
+                if (alignment == Layout.Alignment.ALIGN_NORMAL) {
+                    textAlign = "text-align:start;";
+                } else if (alignment == Layout.Alignment.ALIGN_CENTER) {
+                    textAlign = "text-align:center;";
+                } else if (alignment == Layout.Alignment.ALIGN_OPPOSITE) {
+                    textAlign = "text-align:end;";
+                }
+                // break;
                 // }
             }
         }
@@ -450,7 +451,7 @@ public class Html {
     }
 
     private static void withinBlockquote(StringBuilder out, Spanned text, int start, int end,
-            int option) {
+                                         int option) {
         if ((option & TO_HTML_PARAGRAPH_FLAG) == TO_HTML_PARAGRAPH_LINES_CONSECUTIVE) {
             withinBlockquoteConsecutive(out, text, start, end);
         } else {
@@ -459,7 +460,7 @@ public class Html {
     }
 
     private static void withinBlockquoteIndividual(StringBuilder out, Spanned text, int start,
-            int end) {
+                                                   int end) {
         boolean isInList = false;
         int next;
         String listType = "";
@@ -482,17 +483,16 @@ public class Html {
                 for (ParagraphStyle paragraphStyle : paragraphStyles) {
                     final int spanFlags = text.getSpanFlags(paragraphStyle);
                     if (
-                    		// (spanFlags & Spanned.SPAN_PARAGRAPH) == Spanned.SPAN_PARAGRAPH
-                            // && 
-                    		paragraphStyle instanceof AreListSpan) {
+                        // (spanFlags & Spanned.SPAN_PARAGRAPH) == Spanned.SPAN_PARAGRAPH
+                        // &&
+                            paragraphStyle instanceof AreListSpan) {
 
                         Util.log("paragraphStyle == " + paragraphStyle.toString());
                         boolean closed = false;
                         if (paragraphStyle instanceof ListNumberSpan) {
                             closed = checkToClosePreviousList(out, listType, OL);
                             listType = OL;
-                        }
-                        else {
+                        } else {
                             closed = checkToClosePreviousList(out, listType, UL);
                             listType = UL;
                         }
@@ -547,7 +547,7 @@ public class Html {
     }
 
     private static boolean checkToClosePreviousList(StringBuilder out, String srcListType, String targetListType) {
-         Util.log("src list type = " + srcListType + ", target list type == " + targetListType);
+        Util.log("src list type = " + srcListType + ", target list type == " + targetListType);
         if (!srcListType.equals(targetListType) && !TextUtils.isEmpty(srcListType)) {
             out.append("</" + srcListType + ">");
             return true;
@@ -556,7 +556,7 @@ public class Html {
     }
 
     private static void withinBlockquoteConsecutive(StringBuilder out, Spanned text, int start,
-            int end) {
+                                                    int end) {
         out.append("<p").append(getTextDirection(text, start, end)).append(">");
 
         int next;
@@ -651,8 +651,8 @@ public class Html {
                     float sizeDip = s.getSize();
                     if (!s.getDip()) {
                         // Application application = ActivityThread.currentApplication();
-                    	// float density = application.getResources().getDisplayMetrics().density;
-                    	float density = 1.5f;
+                        // float density = application.getResources().getDisplayMetrics().density;
+                        float density = 1.5f;
                         sizeDip /= density;
                     }
 
@@ -768,7 +768,7 @@ public class Html {
 class HtmlToSpannedConverter implements ContentHandler {
 
     private static final float[] HEADING_SIZES = {
-        1.5f, 1.4f, 1.3f, 1.2f, 1.1f, 1f,
+            1.5f, 1.4f, 1.3f, 1.2f, 1.1f, 1f,
     };
 
     private String mSource;
@@ -838,8 +838,8 @@ class HtmlToSpannedConverter implements ContentHandler {
         return sFontSizePattern;
     }
 
-    public HtmlToSpannedConverter( String source, Html.ImageGetter imageGetter,
-            Html.TagHandler tagHandler, Parser parser, int flags) {
+    public HtmlToSpannedConverter(String source, Html.ImageGetter imageGetter,
+                                  Html.TagHandler tagHandler, Parser parser, int flags) {
         mSource = source;
         mSpannableStringBuilder = new SpannableStringBuilder();
         mImageGetter = imageGetter;
@@ -870,7 +870,7 @@ class HtmlToSpannedConverter implements ContentHandler {
             // If the last line of the range is blank, back off by one.
             if (end - 2 >= 0) {
                 if (mSpannableStringBuilder.charAt(end - 1) == '\n' &&
-                    mSpannableStringBuilder.charAt(end - 2) == '\n') {
+                        mSpannableStringBuilder.charAt(end - 2) == '\n') {
                     end--;
                 }
             }
@@ -883,7 +883,7 @@ class HtmlToSpannedConverter implements ContentHandler {
                         mSpannableStringBuilder.insert(start, Constants.ZERO_WIDTH_SPACE_STR);
                     }
                     if (mSpannableStringBuilder.charAt(end - 1) == '\n') {
-                         end = end - 1;
+                        end = end - 1;
                     }
                     mSpannableStringBuilder.setSpan(obj[i], start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
                 } else {
@@ -975,10 +975,10 @@ class HtmlToSpannedConverter implements ContentHandler {
             endBlockElement(mSpannableStringBuilder);
         } else if (tag.equalsIgnoreCase("ol")) {
             endOL(mSpannableStringBuilder);
-             endBlockElement(mSpannableStringBuilder);
+            endBlockElement(mSpannableStringBuilder);
         } else if (tag.equalsIgnoreCase("ul")) {
             endUL(mSpannableStringBuilder);
-             endBlockElement(mSpannableStringBuilder);
+            endBlockElement(mSpannableStringBuilder);
         } else if (tag.equalsIgnoreCase("li")) {
             endLi(mSpannableStringBuilder);
         } else if (tag.equalsIgnoreCase("div")) {
@@ -1339,7 +1339,7 @@ class HtmlToSpannedConverter implements ContentHandler {
         text.append("\uFFFC");
 
         text.setSpan(imageSpan, len, text.length(),
-                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private static void startVideo(Editable text, Attributes attributes, Html.ImageGetter img) {
@@ -1546,18 +1546,41 @@ class HtmlToSpannedConverter implements ContentHandler {
         }
     }
 
-    private static class Bold { }
-    private static class Italic { }
-    private static class Underline { }
-    private static class Strikethrough { }
-    private static class Big { }
-    private static class Small { }
-    private static class Monospace { }
-    private static class Blockquote { }
-    private static class Super { }
-    private static class Sub { }
-    private static class Bullet { }
-    private static class Numeric { }
+    private static class Bold {
+    }
+
+    private static class Italic {
+    }
+
+    private static class Underline {
+    }
+
+    private static class Strikethrough {
+    }
+
+    private static class Big {
+    }
+
+    private static class Small {
+    }
+
+    private static class Monospace {
+    }
+
+    private static class Blockquote {
+    }
+
+    private static class Super {
+    }
+
+    private static class Sub {
+    }
+
+    private static class Bullet {
+    }
+
+    private static class Numeric {
+    }
 
     private static class Font {
         public String mFace;
@@ -1641,9 +1664,9 @@ class HtmlToSpannedConverter implements ContentHandler {
 
     private static Stack OL_UL_STACK = new Stack();
 
-    
+
     private static HashMap<String, Integer> COLORS = buildColorMap();
-    
+
     private static HashMap<String, Integer> buildColorMap() {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("aqua", 0x00FFFF);
@@ -1663,29 +1686,26 @@ class HtmlToSpannedConverter implements ContentHandler {
         map.put("white", 0xFFFFFF);
         map.put("yellow", 0xFFFF00);
         return map;
-      }
-    
+    }
+
     /**
      * Converts an HTML color (named or numeric) to an integer RGB value.
-     * 
-     * @param color
-     *          Non-null color string.
+     *
+     * @param color Non-null color string.
      * @return A color value, or {@code -1} if the color string could not be
-     *         interpreted.
+     * interpreted.
      */
     private static int getHtmlColor(String color) {
-      Integer i = COLORS.get(color.toLowerCase());
-      if (i != null) {
-        return i;
-      }
-      else {
-        try {
-          return XmlUtils.convertValueToInt(color, -1);
+        Integer i = COLORS.get(color.toLowerCase());
+        if (i != null) {
+            return i;
+        } else {
+            try {
+                return XmlUtils.convertValueToInt(color, -1);
+            } catch (NumberFormatException nfe) {
+                return -1;
+            }
         }
-        catch (NumberFormatException nfe) {
-          return -1;
-        }
-      }
     }
 
     /**
@@ -1703,5 +1723,5 @@ class HtmlToSpannedConverter implements ContentHandler {
             return 18;
         }
     }
-    
+
 }

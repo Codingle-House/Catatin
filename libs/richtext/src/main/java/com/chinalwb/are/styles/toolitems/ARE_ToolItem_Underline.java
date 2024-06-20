@@ -9,11 +9,12 @@ import android.widget.LinearLayout;
 
 import com.chinalwb.are.AREditText;
 import com.chinalwb.are.Constants;
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.spans.AreUnderlineSpan;
 import com.chinalwb.are.styles.IARE_Style;
 import com.chinalwb.are.styles.toolitems.styles.ARE_Style_Underline;
+
+import Catatin.R;
 
 /**
  * Created by wliu on 13/08/2018.
@@ -69,24 +70,24 @@ public class ARE_ToolItem_Underline extends ARE_ToolItem_Abstract {
 
             for (int i = 0; i < styleSpans.length; i++) {
                 if (styleSpans[i] instanceof AreUnderlineSpan) {
-					underlinedExists = true;
-				}
+                    underlinedExists = true;
+                }
             }
         } else {
-			//
-			// Selection is a range
-			CharacterStyle[] styleSpans = editable.getSpans(selStart, selEnd, CharacterStyle.class);
+            //
+            // Selection is a range
+            CharacterStyle[] styleSpans = editable.getSpans(selStart, selEnd, CharacterStyle.class);
 
-			for (int i = 0; i < styleSpans.length; i++) {
+            for (int i = 0; i < styleSpans.length; i++) {
 
-				if (styleSpans[i] instanceof AreUnderlineSpan) {
-					if (editable.getSpanStart(styleSpans[i]) <= selStart
-							&& editable.getSpanEnd(styleSpans[i]) >= selEnd) {
-						underlinedExists = true;
-					}
-				}
-			}
-		}
+                if (styleSpans[i] instanceof AreUnderlineSpan) {
+                    if (editable.getSpanStart(styleSpans[i]) <= selStart
+                            && editable.getSpanEnd(styleSpans[i]) >= selEnd) {
+                        underlinedExists = true;
+                    }
+                }
+            }
+        }
 
         toolItemUpdater.onCheckStatusUpdate(underlinedExists);
     }

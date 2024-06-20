@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.chinalwb.are.R;
+import Catatin.R;
 import com.chinalwb.are.Util;
 
 import static com.chinalwb.are.spans.AreImageSpan.ImageType;

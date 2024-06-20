@@ -1,24 +1,22 @@
 package `in`.catat.presentation.note
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.InsertNoteDto
 import `in`.catat.data.dto.NoteDto
 import `in`.catat.domain.app.repository.AppRepository
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by pertadima on 17,October,2020
  */
-
-class NoteViewModel @ViewModelInject constructor(
-    private val appRepository: AppRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class NoteViewModel @Inject constructor(
+    private val appRepository: AppRepository
 ) : ViewModel() {
 
     private val attachmentMenuLiveData = MutableLiveData<List<CatatinMenuDto>>()

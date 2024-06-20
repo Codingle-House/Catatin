@@ -1,26 +1,25 @@
 package `in`.catat.presentation.todo
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.InsertNoteDto
 import `in`.catat.data.dto.InsertTodoDto
 import `in`.catat.data.dto.NoteDto
 import `in`.catat.data.dto.TodoDto
 import `in`.catat.domain.app.repository.AppRepository
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by pertadima on 17,October,2020
  */
 
-class TodoViewModel @ViewModelInject constructor(
-    private val repository: AppRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class TodoViewModel @Inject constructor(
+    private val repository: AppRepository
 ) : ViewModel() {
 
     private val settingsMenuLiveData = MutableLiveData<List<CatatinMenuDto>>()

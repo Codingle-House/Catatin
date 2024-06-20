@@ -1,11 +1,11 @@
 package `in`.catat.presentation.dialog
 
-import `in`.catat.R
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import id.catat.uikit.dialog.BaseCatatanDialog
-import kotlinx.android.synthetic.main.dialog_add_todo_catatin.*
+import `in`.catat.databinding.DialogAddTodoCatatinBinding
 
 /**
  * Created by pertadima on 29,August,2020
@@ -16,27 +16,26 @@ class GeneralCatatinTodoDialog(
     private val title: String,
     private val actionText: String,
     private val actionListener: (String) -> Unit = {}
-) : BaseCatatanDialog(context) {
+) : BaseCatatanDialog<DialogAddTodoCatatinBinding>(context) {
 
-    override fun setupLayout() {
-        setContentView(R.layout.dialog_add_todo_catatin)
-    }
+    override val bindingInflater: (LayoutInflater) -> DialogAddTodoCatatinBinding
+        get() = DialogAddTodoCatatinBinding::inflate
 
     override fun onCreateDialog() {
         setupView()
     }
 
     private fun setupView() {
-        dialog_textview_todo_title.text = title
-        with(dialog_button_todo) {
+        binding.dialogTextviewTodoTitle.text = title
+        with(binding.dialogButtonTodo) {
             text = actionText
             setOnClickListener {
-                actionListener.invoke(dialog_edittext_todo.text.toString())
+                actionListener.invoke(binding.dialogEdittextTodo.text.toString())
                 dismiss()
             }
         }
 
-        dialog_edittext_todo.addTextChangedListener(object : TextWatcher {
+        binding.dialogEdittextTodo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -54,7 +53,7 @@ class GeneralCatatinTodoDialog(
             }
 
             override fun afterTextChanged(s: Editable) {
-                dialog_button_todo.isEnabled = s.isNotEmpty()
+                binding.dialogButtonTodo.isEnabled = s.isNotEmpty()
             }
         })
     }

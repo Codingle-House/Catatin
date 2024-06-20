@@ -9,10 +9,11 @@ import android.widget.LinearLayout;
 
 import com.chinalwb.are.AREditText;
 import com.chinalwb.are.Constants;
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.styles.IARE_Style;
 import com.chinalwb.are.styles.toolitems.styles.ARE_Style_BackgroundColor;
+
+import Catatin.R;
 
 public class ARE_ToolItem_BackgroundColor extends ARE_ToolItem_Abstract {
 

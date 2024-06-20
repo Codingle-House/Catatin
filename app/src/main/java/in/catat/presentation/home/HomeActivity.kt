@@ -1,43 +1,58 @@
 package `in`.catat.presentation.home
 
+import android.content.Intent
+import android.text.Spannable
+import android.text.SpannableString
+import android.view.LayoutInflater
+import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.commons.DiffCallback
+import id.co.catatin.core.commons.EqualSpaceItemDecoration
+import id.co.catatin.core.ext.setSpannableForegroundColor
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.NoteDto
 import `in`.catat.data.dto.UserNotesDto
+import `in`.catat.data.dto.UserNotesDto.NoteType
+import `in`.catat.data.dto.UserNotesDto.NoteType.NOTE
+import `in`.catat.data.dto.UserNotesDto.NoteType.SKETCH
+import `in`.catat.data.dto.UserNotesDto.NoteType.TODO
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.data.enum.NoteStatusEnum.CREATE
+import `in`.catat.data.enum.NoteStatusEnum.EDIT
+import `in`.catat.databinding.ActivityMainBinding
+import `in`.catat.databinding.ItemNotesCardBinding
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import `in`.catat.presentation.dialog.filter.GeneralCatatinFilterMenuDialog
 import `in`.catat.presentation.note.NoteActivity
+import `in`.catat.presentation.note.NoteActivity.NoteKey
 import `in`.catat.presentation.pin.LoginPinActivity
 import `in`.catat.presentation.search.SearchActivity
 import `in`.catat.presentation.settings.SettingsActivity
 import `in`.catat.presentation.sketch.SketchActivity
+import `in`.catat.presentation.sketch.SketchActivity.SketchKey
 import `in`.catat.presentation.todo.TodoActivity
+import `in`.catat.presentation.todo.TodoActivity.TodoKey
 import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
 import `in`.catat.util.AnimationConstant.FULL_SCALE
 import `in`.catat.util.AnimationConstant.HIDE_SCALE
-import android.content.Intent
-import android.text.Spannable
-import android.text.SpannableString
-import android.view.View
-import android.widget.TextView
-import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
-import id.co.catatin.core.commons.DiffCallback
-import id.co.catatin.core.commons.EqualSpaceItemDecoration
-import id.co.catatin.core.ext.setSpannableForegroundColor
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import java.util.Calendar
+import java.util.Calendar.HOUR_OF_DAY
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity(R.layout.activity_main) {
+class HomeActivity : BaseActivity<ActivityMainBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
+        get() = ActivityMainBinding::inflate
 
     @Inject
     lateinit var diffCallback: DiffCallback
@@ -81,18 +96,11 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         with(homeViewModel) {
             observeUserNotes().onResult {
                 notesAdapter.setData(it)
-                home_textview_content_title.styleContentTitle(it.size)
-                home_viewflipper_content.displayedChild = if (it.isEmpty()) {
-                    EMPTY_STATE
-                } else {
-                    AVAILABLE_STATE
-                }
+                binding.homeTextviewContentTitle.styleContentTitle(it.size)
+                binding.homeViewflipperContent.displayedChild = if (it.isEmpty()) EMPTY_STATE else AVAILABLE_STATE
             }
 
-            observeNotesTypes().onResult {
-                notesTypeDialog.setData(it)
-            }
-
+            observeNotesTypes().onResult { notesTypeDialog.setData(it) }
             observeNotesFilter().onResult {
                 filterTypeDialog.setData(it)
                 getData()
@@ -105,7 +113,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupDefaultFilter() {
-        with(home_imageview_filter_indicator) {
+        with(binding.homeImageviewFilterIndicator) {
             animate().apply {
                 scaleX(HIDE_SCALE)
                 scaleY(HIDE_SCALE)
@@ -114,23 +122,19 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupRecyclerView() {
-        with(home_recyclerview_notes) {
-            adapter = notesAdapter.apply {
-                setHasStableIds(true)
-            }
+        with(binding.homeRecyclerviewNotes) {
+            adapter = notesAdapter.apply { setHasStableIds(true) }
             layoutManager = StaggeredGridLayoutManager(GRID_SPAN_COUNT, LinearLayoutManager.VERTICAL)
             addItemDecoration(EqualSpaceItemDecoration())
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0 || dy < 0 && home_button_add.isShown) {
-                        home_button_add.hide();
+                    if (dy > 0 || dy < 0 && binding.homeButtonAdd.isShown) {
+                        binding.homeButtonAdd.hide()
                     }
                 }
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        home_button_add.show();
-                    }
+                    if (newState == SCROLL_STATE_IDLE) binding.homeButtonAdd.show()
                     super.onScrollStateChanged(recyclerView, newState)
                 }
             })
@@ -138,7 +142,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupToolbarView() {
-        with(home_toolbar) {
+        with(binding.homeToolbar) {
             title = getString(R.string.general_text_hallo, showWelcomeMessage())
             inflateMenu(R.menu.catatin_menu_home)
             setOnMenuItemClickListener {
@@ -148,11 +152,13 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
                         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
                         true
                     }
+
                     R.id.home_action_setting -> {
                         startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
                         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
                         true
                     }
+
                     else -> super.onOptionsItemSelected(it)
                 }
             }
@@ -160,15 +166,11 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun setupListener() {
-        home_button_add.setOnClickListener {
-            notesTypeDialog.show()
-        }
+        binding.homeButtonAdd.setOnClickListener { notesTypeDialog.show() }
     }
 
     private fun setupFilterListener() {
-        home_imageview_filter.setOnClickListener {
-            filterTypeDialog.show()
-        }
+        binding.homeImageviewFilter.setOnClickListener { filterTypeDialog.show() }
     }
 
 
@@ -177,21 +179,23 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
             getString(R.string.dialog_title_menu_notes) -> {
                 startActivity(
                     Intent(this, NoteActivity::class.java).putExtra(
-                        NoteActivity.NoteKey.STATUS, NoteStatusEnum.CREATE
+                        NoteKey.STATUS, CREATE
                     )
                 )
             }
+
             getString(R.string.dialog_title_menu_todo) -> {
                 startActivity(
                     Intent(this, TodoActivity::class.java).putExtra(
-                        TodoActivity.TodoKey.STATUS, NoteStatusEnum.CREATE
+                        TodoKey.STATUS, CREATE
                     )
                 )
             }
+
             else -> {
                 startActivity(
                     Intent(this, SketchActivity::class.java).putExtra(
-                        SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
+                        SketchKey.STATUS, CREATE
                     )
                 )
             }
@@ -201,7 +205,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
 
     private fun showWelcomeMessage(): String {
         val calendar = Calendar.getInstance()
-        val timeOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val timeOfDay = calendar.get(HOUR_OF_DAY)
 
         return getString(
             when (timeOfDay) {
@@ -213,7 +217,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         )
     }
 
-    private fun notesListener(data: NoteDto, pos: Int, view: View) {
+    private fun notesListener(data: NoteDto, pos: Int, view: ItemNotesCardBinding) {
         if (data.isLocked) {
             startActivity(
                 Intent(this, LoginPinActivity::class.java)
@@ -223,22 +227,22 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
         }
 
         when (data.type) {
-            UserNotesDto.NoteType.NOTE -> startActivity(
+            NOTE -> startActivity(
                 Intent(this, NoteActivity::class.java).apply {
-                    putExtra(NoteActivity.NoteKey.STATUS, NoteStatusEnum.EDIT)
-                    putExtra(NoteActivity.NoteKey.ID, data.id)
+                    putExtra(NoteKey.STATUS, EDIT)
+                    putExtra(NoteKey.ID, data.id)
                 }
             )
-            UserNotesDto.NoteType.TODO -> startActivity(
+
+            TODO -> startActivity(
                 Intent(this, TodoActivity::class.java).apply {
-                    putExtra(TodoActivity.TodoKey.STATUS, NoteStatusEnum.EDIT)
-                    putExtra(TodoActivity.TodoKey.ID, data.id)
+                    putExtra(TodoKey.STATUS, EDIT)
+                    putExtra(TodoKey.ID, data.id)
                 }
             )
-            UserNotesDto.NoteType.SKETCH -> startActivity(
-                Intent(this, SketchActivity::class.java).putExtra(
-                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.EDIT
-                )
+
+            SKETCH -> startActivity(
+                Intent(this, SketchActivity::class.java).putExtra(SketchKey.STATUS, EDIT)
             )
         }
         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
@@ -267,7 +271,7 @@ class HomeActivity : BaseActivity(R.layout.activity_main) {
     private fun handleFilterListener(filteredMenu: MutableList<CatatinFilterMenuDto>) {
         val isShown = filteredMenu.any { it.isSelected }.not()
         homeViewModel.setNotesFilter(filteredMenu)
-        with(home_imageview_filter_indicator) {
+        with(binding.homeImageviewFilterIndicator) {
             animate().apply {
                 scaleX(if (isShown.not()) FULL_SCALE else HIDE_SCALE)
                 scaleY(if (isShown.not()) FULL_SCALE else HIDE_SCALE)

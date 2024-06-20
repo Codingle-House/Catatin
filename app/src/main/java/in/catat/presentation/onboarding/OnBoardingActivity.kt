@@ -1,31 +1,32 @@
 package `in`.catat.presentation.onboarding
 
-import `in`.catat.R
-import `in`.catat.base.BaseActivity
-import `in`.catat.presentation.dialog.GeneralCatatinDialog
-import `in`.catat.presentation.home.HomeActivity
-import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
-import `in`.catat.util.ZoomOutPageTransformer
-import `in`.catat.util.tracking.trackingEvent
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_onboarding.*
+import `in`.catat.R
+import `in`.catat.base.BaseActivity
+import `in`.catat.databinding.ActivityOnboardingBinding
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
+import `in`.catat.presentation.home.HomeActivity
+import `in`.catat.presentation.onboarding.adapter.SliderPagerAdapter
+import `in`.catat.util.ZoomOutPageTransformer
 
 @AndroidEntryPoint
-class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
+class OnBoardingActivity : BaseActivity<ActivityOnboardingBinding>(),
     ViewPager.OnPageChangeListener {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityOnboardingBinding
+        get() = ActivityOnboardingBinding::inflate
 
     private val onBoardingViewModel: OnBoardingViewModel by viewModels()
 
-    private val sliderAdapter by lazy {
-        SliderPagerAdapter(supportFragmentManager)
-    }
+    private val sliderAdapter by lazy { SliderPagerAdapter(supportFragmentManager) }
 
     override fun onViewCreated() {
         setupAction()
@@ -42,9 +43,8 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     }
 
     private fun setupAction() {
-        onboarding_textview_skip.setOnClickListener {
-            trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CLICKED)
-            if (onboarding_viewpager_content.currentItem == sliderAdapter.count - 1) {
+        binding.onboardingTextviewSkip.setOnClickListener {
+            if (binding.onboardingViewpagerContent.currentItem == sliderAdapter.count - 1) {
                 goToMainActivity()
             } else {
                 GeneralCatatinDialog(
@@ -54,41 +54,39 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
                     description = getString(R.string.onboarding_text_dialogskip),
                     yesTextButton = getString(R.string.general_text_yes),
                     yesClickListener = {
-                        trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CONFIRMED)
                         goToMainActivity()
                     },
                     noTextButton = getString(R.string.general_text_no),
                     noClickListener = {
-                        trackingUtil.startTrackingEvent(trackingEvent.ON_BOARDING_SKIP_CANCELED)
                     }
                 ).show()
             }
         }
 
-        onboarding_button_understand.setOnClickListener {
+        binding.onboardingButtonUnderstand.setOnClickListener {
             goToMainActivity()
         }
 
-        onboarding_button_next.setOnClickListener {
-            with(onboarding_viewpager_content) {
+        binding.onboardingButtonNext.setOnClickListener {
+            with(binding.onboardingViewpagerContent) {
                 setCurrentItem(currentItem + 1, true)
             }
         }
 
-        onboarding_button_previous.setOnClickListener {
-            with(onboarding_viewpager_content) {
+        binding.onboardingButtonPrevious.setOnClickListener {
+            with(binding.onboardingViewpagerContent) {
                 setCurrentItem(currentItem - 1, true)
             }
         }
     }
 
     private fun setupViewPager() {
-        with(onboarding_viewpager_content) {
+        with(binding.onboardingViewpagerContent) {
             adapter = sliderAdapter
             addOnPageChangeListener(this@OnBoardingActivity)
             setPageTransformer(true, ZoomOutPageTransformer())
         }
-        onboarding_indicator_dot.setViewPager(onboarding_viewpager_content)
+        binding.onboardingIndicatorDot.setViewPager(binding.onboardingViewpagerContent)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -100,9 +98,9 @@ class OnBoardingActivity : BaseActivity(R.layout.activity_onboarding),
     }
 
     override fun onPageSelected(position: Int) {
-        onboarding_button_next.scaleAnimation(position == sliderAdapter.count - 1)
-        onboarding_button_previous.scaleAnimation(position == 0)
-        onboarding_button_understand.scaleAnimation(position != sliderAdapter.count - 1)
+        binding.onboardingButtonNext.scaleAnimation(position == sliderAdapter.count - 1)
+        binding.onboardingButtonPrevious.scaleAnimation(position == 0)
+        binding.onboardingButtonUnderstand.scaleAnimation(position != sliderAdapter.count - 1)
     }
 
     private fun goToMainActivity() {

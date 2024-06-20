@@ -1,5 +1,6 @@
 package id.catat.uikit.richtext_item
 
+import Catatin.R
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
@@ -7,7 +8,6 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import com.chinalwb.are.Util
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_AlignmentCenter
-import id.catat.uikit.R
 import id.co.catatin.core.ext.getDrawableCompat
 
 /**

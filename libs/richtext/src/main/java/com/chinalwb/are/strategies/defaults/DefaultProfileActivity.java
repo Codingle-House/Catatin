@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chinalwb.are.R;
+import Catatin.R;
 
 public class DefaultProfileActivity extends AppCompatActivity {
 

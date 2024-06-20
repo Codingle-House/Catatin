@@ -1,11 +1,6 @@
 package `in`.catat.presentation.sketch
 
-import `in`.catat.R
-import `in`.catat.base.BaseActivity
-import `in`.catat.data.dto.CatatinMenuDto
-import `in`.catat.data.enum.NoteStatusEnum
-import `in`.catat.presentation.dialog.GeneralCatatinDialog
-import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import android.view.LayoutInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isGone
@@ -13,11 +8,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.getColorCompat
 import id.co.catatin.core.ext.showToast
-import kotlinx.android.synthetic.main.activity_sketch.*
+import `in`.catat.R
+import `in`.catat.base.BaseActivity
+import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.databinding.ActivitySketchBinding
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SketchActivity : BaseActivity(R.layout.activity_sketch) {
+class SketchActivity : BaseActivity<ActivitySketchBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivitySketchBinding
+        get() = ActivitySketchBinding::inflate
+
     @Inject
     lateinit var diffCallback: DiffCallback
 
@@ -53,24 +58,18 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
         }
     }
 
-    private fun setupToolbar() {
-        with(sketch_toolbar) {
-            setNavigationOnClickListener {
-                finish()
-            }
-            inflateMenu(R.menu.catatin_menu_more)
-            menu.findItem(R.id.menu_main_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
-            setOnMenuItemClickListener { handleMenuClick(it) }
-        }
+    private fun setupToolbar() = with(binding.sketchToolbar) {
+        setNavigationOnClickListener { finish() }
+        inflateMenu(R.menu.catatin_menu_more)
+        menu.findItem(R.id.menu_main_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
+        setOnMenuItemClickListener { handleMenuClick(it) }
     }
 
-    private fun setupCanvass() {
-        draw_canvass_view.setCanvassBackground(
-            canvasColor = getColorCompat(android.R.color.white),
-            toolBackgroundColor = getColorCompat(R.color.colorRichTextEditor),
-            additionalToolBackgroundColor = getColorCompat(R.color.colorPrimary)
-        )
-    }
+    private fun setupCanvass() = binding.drawCanvassView.setCanvassBackground(
+        canvasColor = getColorCompat(android.R.color.white),
+        toolBackgroundColor = getColorCompat(R.color.colorRichTextEditor),
+        additionalToolBackgroundColor = getColorCompat(R.color.colorPrimary)
+    )
 
     private fun handleMenuDialogClick(data: CatatinMenuDto) {
         when (getString(data.title)) {
@@ -78,17 +77,22 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
             getString(R.string.dialog_title_menu_alarm) -> {
 
             }
+
             getString(R.string.dialog_title_menu_share) -> {
             }
+
             getString(R.string.dialog_title_menu_lock) -> {
 
             }
+
             getString(R.string.dialog_title_menu_copy) -> {
 
             }
+
             getString(R.string.dialog_title_menu_focus) -> {
 
             }
+
             else -> {
 
             }
@@ -101,10 +105,12 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
                 settingsDialog.show()
                 true
             }
+
             R.id.menu_main_delete -> {
                 showDeleteDialog()
                 true
             }
+
             else -> super.onOptionsItemSelected(menuItem)
         }
     }
@@ -124,15 +130,16 @@ class SketchActivity : BaseActivity(R.layout.activity_sketch) {
     }
 
     private fun handleFullScreen() {
-        sketch_appbar.isGone = true
+        binding.sketchAppbar.isGone = true
         isFullScreen = true
         showToast(R.string.general_text_fullscreen_close)
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         if (isFullScreen) {
             isFullScreen = false
-            sketch_appbar.isGone = false
+            binding.sketchAppbar.isGone = false
         } else {
             finish()
         }

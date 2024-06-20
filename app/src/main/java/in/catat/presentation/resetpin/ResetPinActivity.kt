@@ -1,17 +1,22 @@
 package `in`.catat.presentation.resetpin
 
+import android.content.Intent
+import android.view.LayoutInflater
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.databinding.ActivityResetPinBinding
 import `in`.catat.presentation.verification.SendVerificationActivity
-import android.content.Intent
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_reset_pin.*
 
 /**
  * Created by pertadima on 24,October,2020
  */
 @AndroidEntryPoint
-class ResetPinActivity : BaseActivity(R.layout.activity_reset_pin) {
+class ResetPinActivity : BaseActivity<ActivityResetPinBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityResetPinBinding
+        get() = ActivityResetPinBinding::inflate
+
     override fun onViewCreated() {
         setupToolbar()
         doLoginGoogle()
@@ -21,14 +26,12 @@ class ResetPinActivity : BaseActivity(R.layout.activity_reset_pin) {
 
     }
 
-    private fun setupToolbar() {
-        resetpin_toolbar.setNavigationOnClickListener {
-            finish()
-        }
+    private fun setupToolbar() = binding.resetpinToolbar.setNavigationOnClickListener {
+        finish()
     }
 
     private fun doLoginGoogle() {
-        resetpin_button_google.setOnClickListener {
+        binding.resetpinButtonGoogle.setOnClickListener {
             //TODO("IRFAN DO GOOGLE LOGIN)
             startActivity(Intent(this@ResetPinActivity, SendVerificationActivity::class.java))
             overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)

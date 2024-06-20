@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
-import com.chinalwb.are.R;
+import Catatin.R;
 
 /**
  * Created by wliu on 2018/3/19.

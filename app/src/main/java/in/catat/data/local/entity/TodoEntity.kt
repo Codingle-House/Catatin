@@ -23,7 +23,6 @@ import androidx.room.PrimaryKey
 )
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "id")
     val id: Long = 0,
     @ColumnInfo(name = "name")
@@ -32,6 +31,6 @@ data class TodoEntity(
     val isDone: Boolean,
     @ColumnInfo(name = "reminder_date")
     val reminderDate: String,
-    @ColumnInfo(name = "id_note")
+    @ColumnInfo(name = "id_note", index = true)
     val idNote: Long
 )

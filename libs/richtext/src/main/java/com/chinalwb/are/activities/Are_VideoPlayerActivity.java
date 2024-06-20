@@ -6,9 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -16,8 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
 
-import com.chinalwb.are.R;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chinalwb.are.strategies.VideoStrategy;
+
+import Catatin.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -223,6 +224,7 @@ public class Are_VideoPlayerActivity extends AppCompatActivity {
         Activity mActivity;
         VideoStrategy mVideoStrategy;
         ProgressDialog mDialog;
+
         private VideoUploadTask(
                 Activity activity,
                 UploadCallback callback,

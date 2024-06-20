@@ -4,48 +4,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import id.co.catatin.core.commons.DiffCallback
 
 /**
  * Created by pertadima on 23,August,2020
  */
 
-class GenericRecyclerViewAdapter<T : Any>(
+class GenericRecyclerViewAdapter<T : Any, VB : ViewBinding>(
     private val diffCallback: DiffCallback,
-    @LayoutRes val holderResId: Int,
-    @IdRes val specificResViewId: Int? = null,
+    private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> VB,
     private val fadeAnimation: Boolean = true,
-    private val onBind: (T, pos: Int, View) -> Unit,
-    private val itemListener: (T, pos: Int, View) -> Unit = { _, _, _ -> kotlin.run {} },
-    private val specificViewListener: (T, pos: Int, View) -> Unit = { _, _, _ -> kotlin.run {} }
-) : RecyclerView.Adapter<GenericRecyclerViewAdapter.ViewHolder<T>>() {
+    private val onBind: (T, pos: Int, VB) -> Unit,
+    private val itemListener: (T, pos: Int, VB) -> Unit = { _, _, _ -> run {} }
+) : RecyclerView.Adapter<GenericRecyclerViewAdapter.ViewHolder<T, VB>>() {
     private val listData = mutableListOf<T>()
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder<T> {
-        val itemView = LayoutInflater.from(p0.context).inflate(holderResId, p0, false)
-        var specificView: View? = null
-        specificResViewId?.let {
-            specificView = itemView?.findViewById(it)
-        }
-
-        return ViewHolder(itemView, specificView)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder<T, VB> {
+        val binding = bindingInflater.invoke(LayoutInflater.from(p0.context), p0, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(p0: ViewHolder<T>, p1: Int) {
-        if (fadeAnimation) {
-            setFadeAnimation(p0.itemView)
-        }
-
-        p0.bindView(
-            listData[p0.adapterPosition],
-            onBind,
-            itemListener,
-            specificViewListener
-        )
+    override fun onBindViewHolder(p0: ViewHolder<T, VB>, p1: Int) {
+        if (fadeAnimation) setFadeAnimation(p0.itemView)
+        p0.bindView(listData[p0.bindingAdapterPosition], onBind, itemListener)
     }
 
     override fun getItemCount(): Int = listData.size
@@ -92,26 +76,18 @@ class GenericRecyclerViewAdapter<T : Any>(
         result.dispatchUpdatesTo(this)
     }
 
-    class ViewHolder<T : Any>(
-        itemView: View,
-        private val specificView: View? = null
-    ) :
-        RecyclerView.ViewHolder(itemView) {
+    class ViewHolder<T : Any, VB : ViewBinding>(
+        private val binding: VB
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(
             item: T,
-            onBind: (T, pos: Int, View) -> Unit,
-            itemListener: (T, pos: Int, View) -> Unit,
-            specificViewListener: (T, pos: Int, View) -> Unit
+            onBind: (T, pos: Int, VB) -> Unit,
+            itemListener: (T, pos: Int, VB) -> Unit
         ) {
             with(itemView) {
-                onBind.invoke(item, adapterPosition, this)
-                setOnClickListener {
-                    itemListener.invoke(item, adapterPosition, this)
-                }
-            }
-            specificView?.setOnClickListener {
-                specificViewListener.invoke(item, adapterPosition, itemView)
+                onBind.invoke(item, adapterPosition, binding)
+                setOnClickListener { itemListener.invoke(item, adapterPosition, binding) }
             }
         }
 

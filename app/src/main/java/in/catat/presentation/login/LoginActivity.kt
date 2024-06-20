@@ -1,15 +1,20 @@
 package `in`.catat.presentation.login
 
-import `in`.catat.R
+import android.view.LayoutInflater
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.catat.base.BaseActivity
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_login.*
+import `in`.catat.databinding.ActivityLoginBinding
 
 /**
  * Created by pertadima on 15,October,2020
  */
 
-class LoginActivity : BaseActivity(R.layout.activity_login) {
+@AndroidEntryPoint
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding
+        get() = ActivityLoginBinding::inflate
+
     override fun onViewCreated() {
         setupToolbar()
         doGoogleLogin()
@@ -20,15 +25,11 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
     }
 
-    private fun doGoogleLogin() {
-        login_button_google.setOnClickListener {
-            googleSignIn()
-        }
+    private fun doGoogleLogin() = binding.loginButtonGoogle.setOnClickListener {
+        googleSignIn()
     }
 
-    private fun setupToolbar() {
-        login_toolbar.setNavigationOnClickListener {
-            finish()
-        }
+    private fun setupToolbar() = binding.loginToolbar.setNavigationOnClickListener {
+        finish()
     }
 }

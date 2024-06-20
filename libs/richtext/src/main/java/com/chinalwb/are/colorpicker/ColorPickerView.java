@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-import com.chinalwb.are.R;
+import Catatin.R;
 
 /**
  * Created by wliu on 2018/3/6.

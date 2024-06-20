@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.chinalwb.are.AREditText;
-import com.chinalwb.are.R;
+import Catatin.R;
 import com.chinalwb.are.spans.AreUrlSpan;
 import com.chinalwb.are.styles.ARE_ABS_FreeStyle;
 

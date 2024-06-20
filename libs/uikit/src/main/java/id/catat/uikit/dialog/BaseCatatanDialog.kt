@@ -1,21 +1,30 @@
 package id.catat.uikit.dialog
 
+import Catatin.R
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
-import id.catat.uikit.R
+import androidx.viewbinding.ViewBinding
 
 /**
  * Created by pertadima on 24,August,2020
  */
 
-abstract class BaseCatatanDialog(context: Context) : Dialog(context, R.style.DialogSlideAnim) {
+abstract class BaseCatatanDialog<VB : ViewBinding>(context: Context) : Dialog(context, R.style.DialogSlideAnim) {
+
+    private var _binding: VB? = null
+    protected val binding: VB get() = _binding!!
+
+    abstract val bindingInflater: (LayoutInflater) -> VB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _binding = bindingInflater(layoutInflater)
         setupDialog()
-        setupLayout()
+        setContentView(binding.root)
         onCreateDialog()
     }
 
@@ -28,6 +37,5 @@ abstract class BaseCatatanDialog(context: Context) : Dialog(context, R.style.Dia
         )
     }
 
-    abstract fun setupLayout()
     abstract fun onCreateDialog()
 }

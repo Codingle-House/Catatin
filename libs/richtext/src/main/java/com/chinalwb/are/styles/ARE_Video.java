@@ -28,12 +28,12 @@ import android.widget.ImageView;
 
 import com.chinalwb.are.AREditText;
 import com.chinalwb.are.Constants;
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.activities.Are_VideoPlayerActivity;
 import com.chinalwb.are.spans.AreVideoSpan;
 import com.chinalwb.are.strategies.VideoStrategy;
 import com.chinalwb.are.styles.toolbar.ARE_Toolbar;
+import Catatin.R;
 
 public class ARE_Video implements IARE_Style {
 

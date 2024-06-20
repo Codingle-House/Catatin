@@ -1,30 +1,28 @@
 package id.co.draw.views
 
-import android.annotation.TargetApi
+import Catatin.R
+import Catatin.databinding.CatatinItemColorsBinding
+import Catatin.databinding.CatatinLayoutCanvasBinding
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
+import android.graphics.Color.BLACK
+import android.graphics.Color.WHITE
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.SeekBar
-import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.colorpicker.ColorPickerDialog
 import id.co.catatin.core.commons.DiffCallback
-import id.co.catatin.core.commons.GeneralRecyclerView
 import id.co.catatin.core.ext.changeDrawableColorCompat
 import id.co.catatin.core.ext.getColorCompat
-import id.co.draw.R
-import id.co.draw.widget.CircleView
-import id.co.draw.widget.DrawView
-import kotlinx.android.synthetic.main.catatin_item_colors.view.*
-import kotlinx.android.synthetic.main.catatin_layout_canvas.view.*
+import id.co.draw.views.CatatinCanvas.COLORS.BACKGROUND
+import id.co.draw.views.CatatinCanvas.COLORS.PEN
+import id.co.draw.views.CatatinCanvas.PROGRESS.OPACITY
+import id.co.draw.views.CatatinCanvas.PROGRESS.STROKE
 
 /**
  * Created by pertadima on 08,September,2020
@@ -38,7 +36,6 @@ class CatatinCanvas : LinearLayout {
         defStyleAttr: Int = 0
     ) : super(context, attrs, defStyleAttr)
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(
         context: Context,
         attrs: AttributeSet?,
@@ -46,9 +43,12 @@ class CatatinCanvas : LinearLayout {
         defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    private val diffUtilCallback by lazy {
-        DiffCallback()
+
+    private val binding by lazy {
+        CatatinLayoutCanvasBinding.inflate(LayoutInflater.from(context), this, true)
     }
+
+    private val diffUtilCallback by lazy { DiffCallback() }
 
     private val colors by lazy {
         mutableListOf(
@@ -63,47 +63,28 @@ class CatatinCanvas : LinearLayout {
     }
 
     private val colorsAdapter by lazy {
-        GeneralRecyclerView<Int>(
+        GenericRecyclerViewAdapter<Int, CatatinItemColorsBinding>(
             diffCallback = diffUtilCallback,
-            holderResId = R.layout.catatin_item_colors,
-            onBind = { data, view ->
-                with(view.catatin_circleview_color) {
+            bindingInflater = { inflater, viewGroup, attachToParent ->
+                CatatinItemColorsBinding.inflate(inflater, viewGroup, attachToParent)
+            },
+            onBind = { data, _, view ->
+                with(view.catatinCircleviewColor) {
                     setColor(data)
                     setCircleRadius(80F)
                 }
             },
-            itemListener = { data, _, _ ->
-                handleColorClickListener(data)
-            }
+            itemListener = { data, _, _ -> handleColorClickListener(data) }
         )
     }
-
-    private lateinit var drawView: DrawView
-    private lateinit var toolPencil: ImageView
-    private lateinit var toolEraser: ImageView
-    private lateinit var toolPaint: ImageView
-    private lateinit var recyclerviewColor: RecyclerView
-    private lateinit var linearColor: LinearLayout
-    private lateinit var penColor: CircleView
-    private lateinit var redoTool: ImageView
-    private lateinit var undoTool: ImageView
-    private lateinit var strokeTool: ImageView
-    private lateinit var progressRelativeLayout: RelativeLayout
-    private lateinit var circleViewPreview: CircleView
-    private lateinit var strokeClose: ImageView
-    private lateinit var seekBarProgress: AppCompatSeekBar
-    private lateinit var scrollViewTool: HorizontalScrollView
-    private lateinit var opacityTool: ImageView
-    private lateinit var colorPicker: ImageView
 
     private var latestOpacity = 100
     private var latestStrokeWidth = 30
 
     private var isEraserActive = false
-    private var accentColor: Int = Color.BLACK
-
-    private var selectedProgress = PROGRESS.STROKE
-    private var selectedColorTools = COLORS.PEN
+    private var accentColor: Int = BLACK
+    private var selectedProgress = STROKE
+    private var selectedColorTools = PEN
 
     enum class PROGRESS {
         STROKE,
@@ -116,45 +97,20 @@ class CatatinCanvas : LinearLayout {
     }
 
     init {
-        LayoutInflater.from(context)
-            .inflate(R.layout.catatin_layout_canvas, this, true)
-        inflateDrawView()
         setupInitialDrawingCanvas()
         setupCanvasTooling()
     }
 
-    private fun inflateDrawView() {
-        drawView = findViewById(R.id.catatin_draw_view)
-        toolPencil = findViewById(R.id.catatin_imageview_pencil)
-        toolEraser = findViewById(R.id.catatin_imageview_eraser)
-        toolPaint = findViewById(R.id.catatin_imageview_paint)
-        recyclerviewColor = findViewById(R.id.catatin_recyclerview_colors)
-        linearColor = findViewById(R.id.catatin_linearlayout_colors)
-        penColor = findViewById(R.id.catatin_circleview_pencolor)
-        undoTool = findViewById(R.id.catatin_imagaview_undo)
-        redoTool = findViewById(R.id.catatin_imagaview_redo)
-        strokeTool = findViewById(R.id.catatin_imageview_stroke)
-        progressRelativeLayout = findViewById(R.id.catatin_relativelayout_spinner)
-        circleViewPreview = findViewById(R.id.catatin_circleview_preview)
-        strokeClose = findViewById(R.id.catatin_imageview_close)
-        seekBarProgress = findViewById(R.id.catatin_seekbar_progress)
-        scrollViewTool = findViewById(R.id.catatin_scrollview_tooling)
-        opacityTool = findViewById(R.id.catatin_imageview_opacity)
-        colorPicker = findViewById(R.id.catatin_imageviw_colorpicker)
-    }
-
-    private fun setupInitialDrawingCanvas() {
-        toolPencil.apply {
+    private fun setupInitialDrawingCanvas() = with(binding) {
+        catatinImageviewPencil.apply {
             setBackgroundResource(R.drawable.draw_bg_tool_active)
             changeDrawableColorCompat(accentColor)
         }
-
-        with(penColor) {
+        with(catatinCircleviewPencolor) {
             setColor(accentColor)
             setCircleRadius(DEFAULT_COLOR_RADIUS)
         }
-
-        circleViewPreview.setColor(accentColor)
+        catatinCircleviewPreview.setColor(accentColor)
     }
 
     private fun setupCanvasTooling() {
@@ -169,61 +125,56 @@ class CatatinCanvas : LinearLayout {
     }
 
     private fun setupRecyclerviewColors() {
-        recyclerviewColor.run {
-            adapter = colorsAdapter.apply {
-                setData(colors)
-            }
+        binding.catatinRecyclerviewColors.run {
+            adapter = colorsAdapter.apply { setData(colors) }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
-    private fun setupEraserActionListener() {
-        toolEraser.apply {
+    private fun setupEraserActionListener() = with(binding) {
+        catatinImageviewEraser.apply {
             setOnClickListener {
                 isEraserActive = isEraserActive.not()
                 toggleEraserAction(isEraserActive)
-                toolPencil.toggleEraserAction(isEraserActive.not())
-                drawView.toggleEraser()
+                catatinImageviewPencil.toggleEraserAction(isEraserActive.not())
+                catatinDrawView.toggleEraser()
             }
 
             setOnLongClickListener {
-                drawView.clearCanvas()
+                catatinDrawView.clearCanvas()
                 true
             }
         }
     }
 
-    private fun setupPencilActionListener() {
-        toolPencil.apply {
+    private fun setupPencilActionListener() = with(binding) {
+        catatinImageviewPencil.apply {
             setOnClickListener {
                 isEraserActive = false
                 toggleEraserAction(isEraserActive.not())
-                toolEraser.toggleEraserAction(isEraserActive)
-                drawView.drawingActive()
+                catatinImageviewEraser.toggleEraserAction(isEraserActive)
+                catatinDrawView.drawingActive()
             }
         }
     }
 
     private fun setupPaintActionListener() {
-        with(toolPaint) {
+        with(binding.catatinImageviewPaint) {
             setOnClickListener {
-                linearColor.isGone = false
-
+                binding.catatinLinearlayoutColors.isGone = false
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
                 changeDrawableColorCompat(accentColor)
+                selectedColorTools = BACKGROUND
+                binding.catatinRelativelayoutSpinner.isGone = true
 
-                selectedColorTools = COLORS.BACKGROUND
-
-                progressRelativeLayout.isGone = true
-
-                with(strokeTool) {
+                with(binding.catatinImageviewStroke) {
                     setBackgroundResource(R.drawable.draw_bg_tool_default)
-                    changeDrawableColorCompat(Color.WHITE)
+                    changeDrawableColorCompat(WHITE)
                 }
 
-                with(opacityTool) {
+                with(binding.catatinImageviewOpacity) {
                     setBackgroundResource(R.drawable.draw_bg_tool_default)
-                    changeDrawableColorCompat(Color.WHITE)
+                    changeDrawableColorCompat(WHITE)
                 }
 
             }
@@ -231,25 +182,24 @@ class CatatinCanvas : LinearLayout {
     }
 
     private fun setupPenColorActionListener() {
-        penColor.setOnClickListener {
-            selectedColorTools = COLORS.PEN
-            linearColor.isGone = false
+        binding.catatinCircleviewPencolor.setOnClickListener {
+            selectedColorTools = PEN
+            binding.catatinLinearlayoutColors.isGone = false
+            binding.catatinRelativelayoutSpinner.isGone = true
 
-            progressRelativeLayout.isGone = true
-
-            with(strokeTool) {
+            with(binding.catatinImageviewStroke) {
                 setBackgroundResource(R.drawable.draw_bg_tool_default)
-                changeDrawableColorCompat(Color.WHITE)
+                changeDrawableColorCompat(WHITE)
             }
 
-            with(opacityTool) {
+            with(binding.catatinImageviewOpacity) {
                 setBackgroundResource(R.drawable.draw_bg_tool_default)
-                changeDrawableColorCompat(Color.WHITE)
+                changeDrawableColorCompat(WHITE)
             }
 
-            with(toolPaint) {
+            with(binding.catatinImageviewPaint) {
                 setBackgroundResource(R.drawable.draw_bg_tool_default)
-                changeDrawableColorCompat(Color.WHITE)
+                changeDrawableColorCompat(WHITE)
             }
         }
     }
@@ -259,74 +209,70 @@ class CatatinCanvas : LinearLayout {
             if (isActive) R.drawable.draw_bg_tool_active
             else R.drawable.draw_bg_tool_default
         )
-        changeDrawableColorCompat(if (isActive) accentColor else Color.WHITE)
+        changeDrawableColorCompat(if (isActive) accentColor else WHITE)
     }
 
-    private fun setupUndoAndRedoToolActionListener() {
-        undoTool.setOnClickListener {
-            drawView.undo()
-        }
-
-        redoTool.setOnClickListener {
-            drawView.redo()
-        }
+    private fun setupUndoAndRedoToolActionListener() = with(binding) {
+        catatinImagaviewUndo.setOnClickListener { catatinDrawView.undo() }
+        catatinImagaviewRedo.setOnClickListener { catatinDrawView.redo() }
     }
 
     private fun setupStrokeOpacityToolActionListener() {
-        with(strokeTool) {
+        with(binding.catatinImageviewStroke) {
             setOnClickListener {
-                selectedProgress = PROGRESS.STROKE
-                seekBarProgress.progress = latestStrokeWidth
-                progressRelativeLayout.isGone = false
+                selectedProgress = STROKE
+                binding.catatinSeekbarProgress.progress = latestStrokeWidth
+                binding.catatinRelativelayoutSpinner.isGone = false
 
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
                 changeDrawableColorCompat(accentColor)
 
-                opacityTool.setBackgroundResource(R.drawable.draw_bg_tool_default)
-                opacityTool.changeDrawableColorCompat(Color.WHITE)
+                binding.catatinImageviewOpacity.setBackgroundResource(R.drawable.draw_bg_tool_default)
+                binding.catatinImageviewOpacity.changeDrawableColorCompat(WHITE)
             }
         }
 
-        with(opacityTool) {
+        with(binding.catatinImageviewOpacity) {
             setOnClickListener {
-                selectedProgress = PROGRESS.OPACITY
-                seekBarProgress.progress = latestOpacity
-                progressRelativeLayout.isGone = false
+                selectedProgress = OPACITY
+                binding.catatinSeekbarProgress.progress = latestOpacity
+                binding.catatinRelativelayoutSpinner.isGone = false
 
                 setBackgroundResource(R.drawable.draw_bg_tool_active)
                 changeDrawableColorCompat(accentColor)
 
-                strokeTool.setBackgroundResource(R.drawable.draw_bg_tool_default)
-                strokeTool.changeDrawableColorCompat(Color.WHITE)
+                binding.catatinImageviewStroke.setBackgroundResource(R.drawable.draw_bg_tool_default)
+                binding.catatinImageviewStroke.changeDrawableColorCompat(WHITE)
             }
         }
 
-        strokeClose.setOnClickListener {
-            progressRelativeLayout.isGone = true
+        binding.catatinImageviewStroke.setOnClickListener {
+            binding.catatinRelativelayoutSpinner.isGone = true
 
-            with(strokeTool) {
+            with(binding.catatinImageviewStroke) {
                 setBackgroundResource(R.drawable.draw_bg_tool_default)
-                changeDrawableColorCompat(Color.WHITE)
+                changeDrawableColorCompat(WHITE)
             }
 
-            with(opacityTool) {
+            with(binding.catatinImageviewOpacity) {
                 setBackgroundResource(R.drawable.draw_bg_tool_default)
-                changeDrawableColorCompat(Color.WHITE)
+                changeDrawableColorCompat(WHITE)
             }
         }
 
-        seekBarProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.catatinSeekbarProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 when (selectedProgress) {
-                    PROGRESS.STROKE -> {
+                    STROKE -> {
                         latestStrokeWidth = progress
-                        drawView.setStrokeWidth(progress.toFloat())
-                        circleViewPreview.setCircleRadius(progress.toFloat())
+                        binding.catatinDrawView.setStrokeWidth(progress.toFloat())
+                        binding.catatinCircleviewPreview.setCircleRadius(progress.toFloat())
                     }
+
                     else -> {
                         latestOpacity = progress
-                        drawView.setAlpha(progress)
-                        circleViewPreview.setAlpha(progress)
+                        binding.catatinDrawView.setAlpha(progress)
+                        binding.catatinCircleviewPreview.setAlpha(progress)
                     }
                 }
             }
@@ -338,18 +284,19 @@ class CatatinCanvas : LinearLayout {
     }
 
     private fun setupColorPickerActionListener() {
-        colorPicker.setOnClickListener {
+        binding.catatinImageviwColorpicker.setOnClickListener {
             ColorPickerDialog(context, accentColor) { color ->
                 color?.let { data ->
                     when (selectedColorTools) {
-                        COLORS.PEN -> {
-                            drawView.setColor(data)
-                            penColor.setColor(data)
-                            circleViewPreview.setColor(data)
+                        PEN -> {
+                            binding.catatinDrawView.setColor(data)
+                            binding.catatinCircleviewPencolor.setColor(data)
+                            binding.catatinCircleviewPreview.setColor(data)
                         }
-                        COLORS.BACKGROUND -> drawView.setCanvassBackground(data)
+
+                        BACKGROUND -> binding.catatinDrawView.setCanvassBackground(data)
                     }
-                    linearColor.isGone = true
+                    binding.catatinLinearlayoutColors.isGone = true
                 }
             }.show()
         }
@@ -357,36 +304,37 @@ class CatatinCanvas : LinearLayout {
 
     private fun handleColorClickListener(color: Int) {
         when (selectedColorTools) {
-            COLORS.PEN -> {
-                drawView.setColor(color)
-                penColor.setColor(color)
-                circleViewPreview.setColor(color)
+            PEN -> {
+                binding.catatinDrawView.setColor(color)
+                binding.catatinCircleviewPencolor.setColor(color)
+                binding.catatinCircleviewPreview.setColor(color)
             }
-            COLORS.BACKGROUND -> {
-                with(toolPaint) {
+
+            BACKGROUND -> {
+                with(binding.catatinImageviewPaint) {
                     setBackgroundResource(R.drawable.draw_bg_tool_default)
                     changeDrawableColorCompat(Color.WHITE)
                 }
-                drawView.setCanvassBackground(color)
+                binding.catatinDrawView.setCanvassBackground(color)
             }
         }
-        linearColor.isGone = true
+        binding.catatinLinearlayoutColors.isGone = true
     }
 
     fun setCanvassBackground(
-        canvasColor: Int = Color.BLACK,
-        toolBackgroundColor: Int = Color.BLACK,
-        additionalToolBackgroundColor: Int = Color.BLACK
+        canvasColor: Int = BLACK,
+        toolBackgroundColor: Int = BLACK,
+        additionalToolBackgroundColor: Int = BLACK
     ) {
         accentColor = additionalToolBackgroundColor
 
-        penColor.setColor(additionalToolBackgroundColor)
-        linearColor.setBackgroundColor(additionalToolBackgroundColor)
-        scrollViewTool.setBackgroundColor(toolBackgroundColor)
-        catatin_linearlayout.setBackgroundColor(toolBackgroundColor)
-        progressRelativeLayout.setBackgroundColor(additionalToolBackgroundColor)
+        binding.catatinCircleviewPencolor.setColor(additionalToolBackgroundColor)
+        binding.catatinLinearlayoutColors.setBackgroundColor(additionalToolBackgroundColor)
+        binding.catatinScrollviewTooling.setBackgroundColor(toolBackgroundColor)
+        binding.catatinLinearlayout.setBackgroundColor(toolBackgroundColor)
+        binding.catatinRelativelayoutSpinner.setBackgroundColor(additionalToolBackgroundColor)
 
-        with(drawView) {
+        with(binding.catatinDrawView) {
             setCanvassBackground(canvasColor)
             setColor(additionalToolBackgroundColor)
         }

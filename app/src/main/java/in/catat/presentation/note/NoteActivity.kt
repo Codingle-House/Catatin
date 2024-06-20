@@ -1,71 +1,65 @@
 package `in`.catat.presentation.note
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Intent
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
+import androidx.core.view.isGone
+import dagger.hilt.android.AndroidEntryPoint
+import id.co.catatin.core.commons.DiffCallback
+import id.co.catatin.core.ext.showToast
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.InsertNoteDto
 import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.data.enum.NoteStatusEnum.EDIT
+import `in`.catat.databinding.ActivityNoteBinding
 import `in`.catat.presentation.dialog.GeneralCatatinDialog
 import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
-import `in`.catat.util.DateUtil
+import `in`.catat.presentation.note.NoteActivity.NoteKey.ID
+import `in`.catat.presentation.note.NoteActivity.NoteKey.STATUS
+import `in`.catat.presentation.note.NoteActivity.Permission.STORAGE
+import `in`.catat.util.DateUtil.getCurrentDate
 import `in`.catat.util.RichTextItem
 import `in`.catat.util.ShareUtil
 import `in`.catat.util.constants.appConstant
-import android.Manifest
-import android.content.Intent
-import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.MenuItem
-import android.view.View
-import androidx.activity.viewModels
-import androidx.core.view.isGone
-import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
-import dagger.hilt.android.AndroidEntryPoint
-import id.co.catatin.core.commons.DiffCallback
-import id.co.catatin.core.ext.showToast
-import kotlinx.android.synthetic.main.activity_note.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import java.util.*
+import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
+import java.util.Calendar.getInstance
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.PermissionCallbacks {
+class NoteActivity : BaseActivity<ActivityNoteBinding>(), PermissionCallbacks {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityNoteBinding
+        get() = ActivityNoteBinding::inflate
+
     @Inject
     lateinit var diffCallback: DiffCallback
 
     private val noteViewModel: NoteViewModel by viewModels()
 
-    private val currentDate by lazy {
-        DateUtil.getCurrentDate()
-    }
+    private val currentDate by lazy { getCurrentDate() }
 
-    private val currentNoteId by lazy {
-        Calendar.getInstance().timeInMillis
-    }
+    private val currentNoteId by lazy { getInstance().timeInMillis }
 
-    private val noteStatus by lazy {
-        intent?.getSerializableExtra(NoteKey.STATUS) as NoteStatusEnum
-    }
+    private val noteStatus by lazy { intent?.getSerializableExtra(STATUS) as NoteStatusEnum }
 
     private val noteId by lazy {
-        intent?.getLongExtra(NoteKey.ID, 0L) ?: 0L
+        intent?.getLongExtra(ID, 0L) ?: 0L
     }
 
-    private val handler by lazy {
-        Handler()
-    }
-
-    private val myRunnable = Runnable {
-        note_adview_banner?.run {
-            initializeAdMob()
-            bringToFront()
-            isGone = false
-        }
-    }
+    private val handler by lazy { Handler() }
 
     private val settingsDialog by lazy {
         GeneralCatatinMenuDialog(
@@ -96,57 +90,40 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
         setupAppToolbar()
         setupView()
         setupToolbarArrow()
-        setupAdMob()
     }
 
     private fun getNoteData() {
-        if (noteStatus == NoteStatusEnum.EDIT) {
-            noteViewModel.getSingleNote(noteId)
-        }
+        if (noteStatus == EDIT) noteViewModel.getSingleNote(noteId)
     }
 
-    override fun onViewModelObserver() {
-        with(noteViewModel) {
-            observeAttachmentMenu().onResult {
-                attachmentDialog.setData(it)
-            }
+    override fun onViewModelObserver() = with(noteViewModel) {
+        observeAttachmentMenu().onResult { attachmentDialog.setData(it) }
+        observeSettingsMenu().onResult { settingsDialog.setData(it) }
 
-            observeSettingsMenu().onResult {
-                settingsDialog.setData(it)
-            }
-
-            observeSingleNote().onResult {
-                createdAt = it.createdAt
-                note_edittext_title.setText(it.title)
-                note_richtext_form.fromHtml(it.content)
-            }
+        observeSingleNote().onResult {
+            createdAt = it.createdAt
+            binding.noteEdittextTitle.setText(it.title)
+            binding.noteRichtextForm.fromHtml(it.content)
         }
-    }
-
-    private fun setupAdMob() {
-        handler.postDelayed(myRunnable, ADMOB_DELAY)
     }
 
     private fun setupAppToolbar() {
-        with(note_toolbar) {
-            setNavigationOnClickListener {
-                finish()
-            }
+        with(binding.noteToolbar) {
+            setNavigationOnClickListener { finish() }
             inflateMenu(R.menu.catatin_menu_note)
-            menu.findItem(R.id.note_menu_delete).isVisible = noteStatus == NoteStatusEnum.EDIT
+            menu.findItem(R.id.note_menu_delete).isVisible = noteStatus == EDIT
             setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
 
-    private fun setupView() {
-        note_textview_description.text =
-            getString(
-                R.string.note_text_description,
-                currentDate,
-                note_richtext_form.length().toString()
-            )
+    private fun setupView() = with(binding) {
+        noteTextviewDescription.text = getString(
+            R.string.note_text_description,
+            currentDate,
+            noteRichtextForm.length().toString()
+        )
 
-        note_richtext_form.addTextChangedListener(object : TextWatcher {
+        noteRichtextForm.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -164,35 +141,29 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
             }
 
             override fun afterTextChanged(s: Editable) {
-                note_textview_description.text =
+                noteTextviewDescription.text =
                     getString(R.string.note_text_description, currentDate, s.length.toString())
             }
         })
     }
 
-    private fun initRichTextView() {
-        val toolItems = RichTextItem.richTextDefaultItem(this)
-        note_richtext_toolbar.addToolbarItems(toolItems)
-        note_richtext_form.setToolbar(note_richtext_toolbar)
+    private fun initRichTextView() = with(binding) {
+        val toolItems = RichTextItem.richTextDefaultItem(this@NoteActivity)
+        noteRichtextToolbar.addToolbarItems(toolItems)
+        noteRichtextForm.setToolbar(noteRichtextToolbar)
     }
 
-    private fun setupToolbarArrow() {
-        if (note_richtext_toolbar is ARE_ToolbarDefault) {
-            note_richtext_toolbar.viewTreeObserver.addOnScrollChangedListener {
-                val scrollX = note_richtext_toolbar.scrollX
-                val scrollWidth = note_richtext_toolbar.width
-                val fullWidth = note_richtext_toolbar.getChildAt(0).width
+    private fun setupToolbarArrow() = with(binding) {
+        noteRichtextToolbar.viewTreeObserver.addOnScrollChangedListener {
+            val scrollX = noteRichtextToolbar.scrollX
+            val scrollWidth = noteRichtextToolbar.width
+            val fullWidth = noteRichtextToolbar.getChildAt(0).width
 
-                note_imageview_arrow.rotateAnimation(scrollX + scrollWidth < fullWidth)
-            }
+            noteImageviewArrow.rotateAnimation(scrollX + scrollWidth < fullWidth)
         }
-        note_imageview_arrow.setOnClickListener {
-            val fullWidth = note_richtext_toolbar.getChildAt(0).width
-
-            note_richtext_toolbar.smoothScrollBy(
-                if (scrollerAtEnd) -Integer.MAX_VALUE else fullWidth,
-                0
-            )
+        noteImageviewArrow.setOnClickListener {
+            val fullWidth = noteRichtextToolbar.getChildAt(0).width
+            noteRichtextToolbar.smoothScrollBy(if (scrollerAtEnd) -Integer.MAX_VALUE else fullWidth, 0)
         }
     }
 
@@ -206,6 +177,7 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
                 //TODO: CHANGE TO NEW API
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
             }
+
             else -> {
 
             }
@@ -218,16 +190,20 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
             getString(R.string.dialog_title_menu_alarm) -> {
 
             }
+
             getString(R.string.dialog_title_menu_share) -> shareActionSetting()
             getString(R.string.dialog_title_menu_lock) -> {
 
             }
+
             getString(R.string.dialog_title_menu_copy) -> {
 
             }
+
             getString(R.string.dialog_title_menu_focus) -> {
 
             }
+
             else -> {
 
             }
@@ -235,17 +211,19 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
     }
 
     private fun handleFullScreen() {
-        note_appbar.isGone = true
-        note_edittext_title.isGone = true
+        binding.noteAppbar.isGone = true
+        binding.noteEdittextTitle.isGone = true
         isFullScreen = true
         showToast(R.string.general_text_fullscreen_close)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        super.onBackPressed()
         if (isFullScreen) {
             isFullScreen = false
-            note_appbar.isGone = false
-            note_edittext_title.isGone = false
+            binding.noteAppbar.isGone = false
+            binding.noteEdittextTitle.isGone = false
         } else {
             finish()
         }
@@ -274,8 +252,8 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
     private fun shareActionSetting() {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = ShareUtil.PLAIN_TYPE
-            intent.putExtra(Intent.EXTRA_SUBJECT, note_edittext_title.text.toString())
-            intent.putExtra(Intent.EXTRA_TEXT, note_richtext_form.text.toString())
+            intent.putExtra(Intent.EXTRA_SUBJECT, binding.noteEdittextTitle.text.toString())
+            intent.putExtra(Intent.EXTRA_TEXT, binding.noteRichtextForm.text.toString())
         }
 
         startActivity(Intent.createChooser(intent, ShareUtil.CHOOSER))
@@ -294,26 +272,29 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
                 settingsDialog.show()
                 true
             }
+
             R.id.note_menu_attachment -> {
                 attachmentDialog.show()
                 true
             }
+
             R.id.note_menu_delete -> {
                 showDeleteDialog()
                 true
             }
+
             else -> super.onOptionsItemSelected(menuItem)
         }
     }
 
     private fun actionSave() {
-        val title = note_edittext_title.text.toString()
-        val content = note_richtext_form.text.toString()
+        val title = binding.noteEdittextTitle.text.toString()
+        val content = binding.noteRichtextForm.text.toString()
         if (title.isEmpty() && content.isEmpty()) return
 
         val noteDto = InsertNoteDto(
-            title = note_edittext_title.text.toString(),
-            content = note_richtext_form.html.toString(),
+            title = binding.noteEdittextTitle.text.toString(),
+            content = binding.noteRichtextForm.html.toString(),
             type = appConstant.TYPE_NOTE,
             createdAt = createdAt
         )
@@ -333,17 +314,9 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
         }
     }
 
-    override fun onDestroy() {
-        handler.removeCallbacks(myRunnable)
-        super.onDestroy()
-    }
-
-    @AfterPermissionGranted(Permission.STORAGE)
+    @AfterPermissionGranted(STORAGE)
     private fun checkStoragePermission(onHasPermission: () -> Unit) {
-        val perms = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        val perms = arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             onHasPermission.invoke()
         } else {
@@ -351,9 +324,9 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
             EasyPermissions.requestPermissions(
                 this@NoteActivity,
                 "",
-                Permission.STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                STORAGE,
+                WRITE_EXTERNAL_STORAGE,
+                READ_EXTERNAL_STORAGE
             )
         }
     }
@@ -381,6 +354,5 @@ class NoteActivity : BaseActivity(R.layout.activity_note), EasyPermissions.Permi
         private const val DEFAULT_ROTATION = 0F
         private const val LINEAR_ROTATION = 180F
         private const val ANIMATION_DURATION = 300L
-        private const val ADMOB_DELAY = 5000L
     }
 }

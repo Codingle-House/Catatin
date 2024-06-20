@@ -1,12 +1,19 @@
 package `in`.catat.presentation.settings
 
+import android.content.Intent
+import android.view.LayoutInflater
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.catat.R
 import `in`.catat.base.BaseActivity
+import `in`.catat.databinding.ActivitySettingsBinding
 import `in`.catat.presentation.createpin.CreatePinActivity
-import android.content.Intent
-import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsActivity : BaseActivity(R.layout.activity_settings) {
+@AndroidEntryPoint
+class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivitySettingsBinding
+        get() = ActivitySettingsBinding::inflate
+
     override fun onViewCreated() {
         setupAppToolbar()
         setupMenuActionListener()
@@ -16,22 +23,18 @@ class SettingsActivity : BaseActivity(R.layout.activity_settings) {
 
     }
 
-    private fun setupAppToolbar() {
-        with(settings_toolbar) {
-            setNavigationOnClickListener {
-                finish()
-            }
-        }
+    private fun setupAppToolbar() = with(binding.settingsToolbar) {
+        setNavigationOnClickListener { finish() }
     }
 
-    private fun setupMenuActionListener() {
-        settings_relativelayout_menu_createpin.setOnClickListener {
+    private fun setupMenuActionListener() = with(binding) {
+        settingsRelativelayoutMenuCreatepin.setOnClickListener {
             //TODO("CHECK USER IS LOGGED IN")
             startActivity(Intent(this@SettingsActivity, CreatePinActivity::class.java))
             overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
         }
 
-        settings_textview_menu_resetpin.setOnClickListener {
+        settingsTextviewMenuResetpin.setOnClickListener {
             checkIsUserLoggedIn {
 
             }

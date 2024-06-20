@@ -1,22 +1,30 @@
 package `in`.catat.presentation.search
 
-import `in`.catat.R
-import `in`.catat.base.BaseActivity
-import `in`.catat.data.dto.CatatinMenuDto
-import `in`.catat.data.enum.NoteStatusEnum
-import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
-import `in`.catat.presentation.note.NoteActivity
-import `in`.catat.presentation.sketch.SketchActivity
-import `in`.catat.presentation.todo.TodoActivity
 import android.content.Intent
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
-import kotlinx.android.synthetic.main.activity_search.*
+import `in`.catat.R
+import `in`.catat.base.BaseActivity
+import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.enum.NoteStatusEnum.CREATE
+import `in`.catat.databinding.ActivitySearchBinding
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import `in`.catat.presentation.note.NoteActivity
+import `in`.catat.presentation.note.NoteActivity.NoteKey
+import `in`.catat.presentation.sketch.SketchActivity
+import `in`.catat.presentation.sketch.SketchActivity.SketchKey
+import `in`.catat.presentation.todo.TodoActivity
+import `in`.catat.presentation.todo.TodoActivity.TodoKey
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : BaseActivity(R.layout.activity_search) {
+class SearchActivity : BaseActivity<ActivitySearchBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivitySearchBinding
+        get() = ActivitySearchBinding::inflate
+
     @Inject
     lateinit var diffCallback: DiffCallback
 
@@ -46,39 +54,32 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
         }
     }
 
-    private fun setupToolbar() {
-        search_toolbar.setNavigationOnClickListener {
-            finish()
-        }
-
+    private fun setupToolbar() = binding.searchToolbar.setNavigationOnClickListener {
+        finish()
     }
 
-    private fun setupListener() {
-        search_button_add.setOnClickListener {
-            notesTypeDialog.show()
-        }
+    private fun setupListener() = binding.searchButtonAdd.setOnClickListener {
+        notesTypeDialog.show()
     }
 
     private fun handleMenuDialogClick(data: CatatinMenuDto) {
         when (getString(data.title)) {
             getString(R.string.dialog_title_menu_notes) -> {
                 startActivity(
-                    Intent(this, NoteActivity::class.java).putExtra(
-                        NoteActivity.NoteKey.STATUS, NoteStatusEnum.CREATE
-                    )
+                    Intent(this, NoteActivity::class.java).putExtra(NoteKey.STATUS, CREATE)
                 )
             }
+
             getString(R.string.dialog_title_menu_todo) -> {
                 startActivity(
-                    Intent(this, TodoActivity::class.java).putExtra(
-                        TodoActivity.TodoKey.STATUS, NoteStatusEnum.CREATE
-                    )
+                    Intent(this, TodoActivity::class.java).putExtra(TodoKey.STATUS, CREATE)
                 )
             }
+
             else -> {
-                startActivity(Intent(this, SketchActivity::class.java).putExtra(
-                    SketchActivity.SketchKey.STATUS, NoteStatusEnum.CREATE
-                ))
+                startActivity(
+                    Intent(this, SketchActivity::class.java).putExtra(SketchKey.STATUS, CREATE)
+                )
             }
         }
     }

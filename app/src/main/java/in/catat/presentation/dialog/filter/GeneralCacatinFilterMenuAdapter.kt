@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import id.co.catatin.core.commons.DiffCallback
-import kotlinx.android.synthetic.main.item_notes_filter.view.*
+import `in`.catat.databinding.ItemNotesFilterBinding
 
 /**
  * Created by pertadima on 27,October,2020
@@ -26,10 +26,10 @@ class GeneralCacatinFilterMenuAdapter(
     private val dataSet: MutableList<CatatinFilterMenuDto> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val itemView =
-            inflater.inflate(R.layout.item_notes_filter, parent, false)
-        return ItemViewHolder(itemView)
+        val itemBinding = ItemNotesFilterBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ItemViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -54,18 +54,17 @@ class GeneralCacatinFilterMenuAdapter(
         result.dispatchUpdatesTo(this)
     }
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ItemViewHolder(private val binding: ItemNotesFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(data: CatatinFilterMenuDto) {
-            itemView.dialog_textview_menufilter_item_title.text = context.getString(data.title)
-            with(itemView.dialog_imageview_menufilter_check) {
+            binding.dialogTextviewMenufilterItemTitle.text = context.getString(data.title)
+            with(binding.dialogImageviewMenufilterCheck) {
                 animate().apply {
                     scaleX(if (data.isSelected) AnimationConstant.FULL_SCALE else 0F)
                     scaleY(if (data.isSelected) 1F else 0F)
                 }.duration = AnimationConstant.DEFAULT_ANIMATION_DURATION
             }
-            itemView.dialog_view_menufilter_line.isVisible = adapterPosition != dataSet.size - 1
-
-            itemView.setOnClickListener {
+            binding.dialogViewMenufilterLine.isVisible = adapterPosition != dataSet.size - 1
+            binding.root.setOnClickListener {
                 itemListener.invoke(data, adapterPosition, itemView)
             }
         }

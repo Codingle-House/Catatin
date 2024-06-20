@@ -1,5 +1,6 @@
 package com.chinalwb.are.adapters
 
+import Catatin.R
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.chinalwb.are.R
 import com.chinalwb.are.models.AtItem
-import java.util.*
 
 /**
  * Created by wliu on 2018/2/4.

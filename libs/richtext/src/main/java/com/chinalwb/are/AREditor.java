@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import androidx.core.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import androidx.core.widget.NestedScrollView;
 
 import com.chinalwb.are.android.inner.Html;
 import com.chinalwb.are.render.AreImageGetter;
@@ -19,6 +20,8 @@ import com.chinalwb.are.strategies.AtStrategy;
 import com.chinalwb.are.strategies.ImageStrategy;
 import com.chinalwb.are.strategies.VideoStrategy;
 import com.chinalwb.are.styles.toolbar.ARE_Toolbar;
+
+import Catatin.R;
 
 /**
  * All Rights Reserved.
@@ -57,11 +60,11 @@ public class AREditor extends RelativeLayout {
         MIN,
     }
 
-	/*
+    /*
      * --------------------------------------------
-	 * Instance Fields Area
-	 * --------------------------------------------
-	 */
+     * Instance Fields Area
+     * --------------------------------------------
+     */
 
     /**
      * Context.
@@ -103,11 +106,11 @@ public class AREditor extends RelativeLayout {
      */
     private boolean mUseEmoji = false;
 
-	/*
-	 * --------------------------------------------
-	 * Constructors Area
-	 * --------------------------------------------
-	 */
+    /*
+     * --------------------------------------------
+     * Constructors Area
+     * --------------------------------------------
+     */
 
     /**
      * Constructor.
@@ -141,11 +144,11 @@ public class AREditor extends RelativeLayout {
         this.init(attrs);
     }
 
-	/*
-	 * --------------------------------------------
-	 *  Business Methods Area
-	 * --------------------------------------------
-	 */
+    /*
+     * --------------------------------------------
+     *  Business Methods Area
+     * --------------------------------------------
+     */
 
     /**
      * Initialization.
@@ -163,8 +166,8 @@ public class AREditor extends RelativeLayout {
         this.mToolbar.setUseEmoji(mUseEmoji);
 
         this.mAreScrollView = new NestedScrollView(mContext);
-	    //修复点击空白处无法拉起键盘的BUG：设置下面的属性后,EditText会充满整个NestedScrollView。
-	    mAreScrollView.setFillViewport(true);
+        //修复点击空白处无法拉起键盘的BUG：设置下面的属性后,EditText会充满整个NestedScrollView。
+        mAreScrollView.setFillViewport(true);
         mAreScrollView.setFitsSystemWindows(true);
         this.mAreScrollView.setId(R.id.are_scrollview);
     }
@@ -314,9 +317,9 @@ public class AREditor extends RelativeLayout {
         this.mToolbar.onActivityResult(requestCode, resultCode, data);
     } // #End of onActivityResult(..)
 
-	/* ----------------------
-	 * Customization part
-	 * ---------------------- */
+    /* ----------------------
+     * Customization part
+     * ---------------------- */
 
     public void setToolbarAlignment(ToolbarAlignment alignment) {
         mToolbarAlignment = alignment;

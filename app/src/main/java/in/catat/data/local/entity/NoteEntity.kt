@@ -12,7 +12,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tbl_note")
 data class NoteEntity(
     @PrimaryKey(autoGenerate = false)
-    @NonNull
     @ColumnInfo(name = "id")
     val id: Long = 0,
     @ColumnInfo(name = "title")

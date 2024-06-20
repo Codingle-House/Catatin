@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.chinalwb.are.R;
+import Catatin.R;
 
 
 /**

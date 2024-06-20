@@ -10,7 +10,7 @@ import com.chinalwb.are.Util
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Strikethrough
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_UpdaterDefault
 import com.chinalwb.are.styles.toolitems.IARE_ToolItem_Updater
-import id.catat.uikit.R
+import Catatin.R;
 import id.co.catatin.core.ext.getDrawableCompat
 
 /**

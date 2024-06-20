@@ -9,7 +9,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.chinalwb.are.R;
+import Catatin.R;
 import com.chinalwb.are.Util;
 
 public class FontsizePickerWindow extends PopupWindow {

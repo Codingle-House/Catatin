@@ -12,12 +12,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chinalwb.are.R;
 import com.chinalwb.are.Util;
 import com.chinalwb.are.spans.AreImageSpan;
-import com.chinalwb.are.styles.ARE_Image;
 import com.chinalwb.are.styles.IARE_Image;
-import com.chinalwb.are.styles.toolbar.ARE_Toolbar;
+
+import Catatin.R;
 
 public class ImageSelectDialog {
 
@@ -75,17 +74,17 @@ public class ImageSelectDialog {
 
     private void openImagePicker() {
         Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		((Activity) this.mContext).startActivityForResult(intent, mRequestCode);
-		mDialog.dismiss();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        ((Activity) this.mContext).startActivityForResult(intent, mRequestCode);
+        mDialog.dismiss();
     }
 
     private void insertInternetImage() {
         EditText editText = mRootView.findViewById(R.id.are_image_select_internet_image_url);
         String imageUrl = editText.getText().toString();
         if (imageUrl.startsWith("http")
-                &&  (imageUrl.endsWith("png") || imageUrl.endsWith("jpg") || imageUrl.endsWith("jpeg"))) {
+                && (imageUrl.endsWith("png") || imageUrl.endsWith("jpg") || imageUrl.endsWith("jpeg"))) {
             mAreImage.insertImage(imageUrl, AreImageSpan.ImageType.URL);
             mDialog.dismiss();
         } else {

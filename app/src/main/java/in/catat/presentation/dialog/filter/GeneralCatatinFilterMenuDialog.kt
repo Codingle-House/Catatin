@@ -1,17 +1,13 @@
 package `in`.catat.presentation.dialog.filter
 
-import `in`.catat.R
-import `in`.catat.data.dto.CatatinFilterMenuDto
-import `in`.catat.util.AnimationConstant.DEFAULT_ANIMATION_DURATION
-import `in`.catat.util.AnimationConstant.FULL_SCALE
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.catat.uikit.dialog.BaseCatatanDialog
 import id.co.catatin.core.commons.DiffCallback
-import kotlinx.android.synthetic.main.dialog_filter_catatin.*
-import kotlinx.android.synthetic.main.item_notes_filter.view.*
+import `in`.catat.data.dto.CatatinFilterMenuDto
+import `in`.catat.databinding.DialogFilterCatatinBinding
 
 
 /**
@@ -22,7 +18,10 @@ class GeneralCatatinFilterMenuDialog(
     context: Context,
     private val diffCallback: DiffCallback,
     private val onFilterSelected: (MutableList<CatatinFilterMenuDto>) -> Unit
-) : BaseCatatanDialog(context) {
+) : BaseCatatanDialog<DialogFilterCatatinBinding>(context) {
+
+    override val bindingInflater: (LayoutInflater) -> DialogFilterCatatinBinding
+        get() = DialogFilterCatatinBinding::inflate
 
     private var dataMenu: MutableList<CatatinFilterMenuDto> = mutableListOf()
 
@@ -34,29 +33,21 @@ class GeneralCatatinFilterMenuDialog(
         )
     }
 
-    override fun setupLayout() {
-        setContentView(R.layout.dialog_filter_catatin)
-    }
-
     override fun onCreateDialog() {
         setupRecyclerView()
         setupListener()
     }
 
-    private fun setupListener() {
-        dialog_button_filter.setOnClickListener {
-            dismiss()
-        }
+    private fun setupListener() = binding.dialogButtonFilter.setOnClickListener {
+        dismiss()
     }
 
-    private fun setupRecyclerView() {
-        with(dialog_recyclerview_menufilter) {
-            adapter = filterAdapter.apply {
-                setData(dataMenu)
-                setHasStableIds(true)
-            }
-            layoutManager = LinearLayoutManager(context)
+    private fun setupRecyclerView() = with(binding.dialogRecyclerviewMenufilter) {
+        adapter = filterAdapter.apply {
+            setData(dataMenu)
+            setHasStableIds(true)
         }
+        layoutManager = LinearLayoutManager(context)
     }
 
 

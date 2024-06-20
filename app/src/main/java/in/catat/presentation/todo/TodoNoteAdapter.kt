@@ -1,7 +1,5 @@
 package `in`.catat.presentation.todo
 
-import `in`.catat.R
-import `in`.catat.data.dto.TodoDto
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -18,7 +16,9 @@ import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.getDrawableCompat
 import id.co.catatin.core.ext.reverseStrikeThroughAnimation
 import id.co.catatin.core.ext.startStrikeThroughAnimation
-import kotlinx.android.synthetic.main.item_notes_todo.view.*
+import `in`.catat.R
+import `in`.catat.data.dto.TodoDto
+import `in`.catat.databinding.ItemNotesTodoBinding
 
 
 /**
@@ -35,10 +35,10 @@ class TodoNoteAdapter(
     private val dataSet: MutableList<TodoDto> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val itemView =
-            inflater.inflate(R.layout.item_notes_todo, parent, false)
-        return ItemViewHolder(itemView)
+        val itemBinding = ItemNotesTodoBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ItemViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -63,10 +63,9 @@ class TodoNoteAdapter(
         result.dispatchUpdatesTo(this)
     }
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ItemViewHolder(private val binding: ItemNotesTodoBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(data: TodoDto) {
-
-            itemView.todo_imageview_circle.changeImageResourceWithAnimation(
+            binding.todoImageviewCircle.changeImageResourceWithAnimation(
                 context, context.getDrawableCompat(
                     if (data.isDone) {
                         R.drawable.uikit_ic_circle_outline
@@ -75,21 +74,21 @@ class TodoNoteAdapter(
                     }
                 )
             )
-            with(itemView.todo_textview_title) {
+            with(binding.todoTextviewTitle) {
                 text = data.name
                 if (data.isDone) startStrikeThroughAnimation() else reverseStrikeThroughAnimation()
             }
-            with(itemView.todo_textview_alarm) {
+            with(binding.todoTextviewAlarm) {
                 isGone = data.reminderDate.isEmpty()
                 text = context.getString(R.string.todo_text_alarm, data.reminderDate)
             }
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 itemListener.invoke(data, adapterPosition, itemView)
             }
-            itemView.todo_imageview_delete.setOnClickListener {
+            binding.todoImageviewDelete.setOnClickListener {
                 itemActionListener.invoke(data, adapterPosition, itemView, TodoAction.OnDeleteTodo)
             }
-            itemView.todo_imageview_edit.setOnClickListener {
+            binding.todoImageviewEdit.setOnClickListener {
                 itemActionListener.invoke(data, adapterPosition, itemView, TodoAction.OnEditTodo)
             }
         }

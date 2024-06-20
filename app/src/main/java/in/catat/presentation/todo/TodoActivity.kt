@@ -1,17 +1,6 @@
 package `in`.catat.presentation.todo
 
-import `in`.catat.R
-import `in`.catat.base.BaseActivity
-import `in`.catat.data.dto.CatatinMenuDto
-import `in`.catat.data.dto.InsertNoteDto
-import `in`.catat.data.dto.InsertTodoDto
-import `in`.catat.data.dto.TodoDto
-import `in`.catat.data.enum.NoteStatusEnum
-import `in`.catat.presentation.dialog.GeneralCatatinDialog
-import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
-import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
-import `in`.catat.util.DateUtil
-import `in`.catat.util.constants.appConstant
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -20,19 +9,38 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.ext.showToast
-import kotlinx.android.synthetic.main.activity_todo.*
-import java.util.*
+import `in`.catat.R
+import `in`.catat.base.BaseActivity
+import `in`.catat.data.dto.CatatinMenuDto
+import `in`.catat.data.dto.InsertNoteDto
+import `in`.catat.data.dto.InsertTodoDto
+import `in`.catat.data.dto.TodoDto
+import `in`.catat.data.enum.NoteStatusEnum
+import `in`.catat.data.enum.NoteStatusEnum.CREATE
+import `in`.catat.data.enum.NoteStatusEnum.EDIT
+import `in`.catat.databinding.ActivityTodoBinding
+import `in`.catat.presentation.dialog.GeneralCatatinDialog
+import `in`.catat.presentation.dialog.GeneralCatatinMenuDialog
+import `in`.catat.presentation.dialog.GeneralCatatinTodoDialog
+import `in`.catat.presentation.todo.TodoActivity.TodoKey.STATUS
+import `in`.catat.util.DateUtil
+import `in`.catat.util.constants.appConstant
+import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TodoActivity : BaseActivity(R.layout.activity_todo) {
+class TodoActivity : BaseActivity<ActivityTodoBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityTodoBinding
+        get() = ActivityTodoBinding::inflate
+
     @Inject
     lateinit var diffCallback: DiffCallback
 
     private val todoViewModel: TodoViewModel by viewModels()
 
     private val todoStatus by lazy {
-        intent?.getSerializableExtra(TodoActivity.TodoKey.STATUS) as NoteStatusEnum
+        intent?.getSerializableExtra(STATUS) as NoteStatusEnum
     }
 
     private val noteId by lazy {
@@ -83,13 +91,9 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             }
 
             observeTodoList().onResult {
-                todo_viewflipper_content.displayedChild = if (it.isEmpty()) {
-                    EMPTY_STATE
-                } else {
-                    AVAILABLE_STATE
-                }
+                binding.todoViewflipperContent.displayedChild = if (it.isEmpty()) EMPTY_STATE else AVAILABLE_STATE
                 todoAdapter.setData(it)
-                todo_textview_description.text = getString(
+                binding.todoTextviewDescription.text = getString(
                     R.string.todo_text_description,
                     currentDate, it.size.toString()
                 )
@@ -97,53 +101,49 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
 
             observeSingleNote().onResult {
                 createdAt = it.createdAt
-                todo_edittext_title.setText(it.title)
+                binding.todoEdittextTitle.setText(it.title)
             }
         }
     }
 
     private fun setupAppToolbar() {
-        with(todo_toolbar) {
-            setNavigationOnClickListener {
-                finish()
-            }
+        with(binding.todoToolbar) {
+            setNavigationOnClickListener { finish() }
             inflateMenu(R.menu.catatin_menu_more)
-            menu.findItem(R.id.menu_main_delete).isVisible = todoStatus == NoteStatusEnum.EDIT
+            menu.findItem(R.id.menu_main_delete).isVisible = todoStatus == EDIT
             setOnMenuItemClickListener { handleMenuClick(it) }
         }
     }
 
     private fun setupRecyclerView() {
-        with(todo_recyclerview_notes) {
-            adapter = todoAdapter.apply {
-                setHasStableIds(true)
-            }
+        with(binding.todoRecyclerviewNotes) {
+            adapter = todoAdapter.apply { setHasStableIds(true) }
             layoutManager = LinearLayoutManager(this@TodoActivity)
         }
     }
 
     private fun getNoteData() {
-        if (todoStatus == NoteStatusEnum.EDIT) {
+        if (todoStatus == EDIT) {
             todoViewModel.getSingleNote(noteId)
         }
     }
 
     private fun setupView() {
-        todo_textview_description.text =
+        binding.todoTextviewDescription.text =
             getString(R.string.todo_text_description, currentDate, "0")
     }
 
     private fun setupListener() {
-        todo_button_add.setOnClickListener {
+        binding.todoButtonAdd.setOnClickListener {
             GeneralCatatinTodoDialog(
                 context = this@TodoActivity,
                 title = getString(R.string.dialog_title_todo_add),
                 actionText = getString(R.string.general_text_add),
                 actionListener = {
-                    if (todoStatus == NoteStatusEnum.CREATE) {
+                    if (todoStatus == CREATE) {
                         val noteDto = InsertNoteDto(
                             id = currentNoteId,
-                            title = todo_edittext_title.text.toString(),
+                            title = binding.todoEdittextTitle.text.toString(),
                             type = appConstant.TYPE_TODO,
                             createdAt = currentDate
                         )
@@ -170,17 +170,22 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             getString(R.string.dialog_title_menu_alarm) -> {
 
             }
+
             getString(R.string.dialog_title_menu_share) -> {
             }
+
             getString(R.string.dialog_title_menu_lock) -> {
 
             }
+
             getString(R.string.dialog_title_menu_copy) -> {
 
             }
+
             getString(R.string.dialog_title_menu_focus) -> {
 
             }
+
             else -> {
 
             }
@@ -188,17 +193,18 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
     }
 
     private fun handleFullScreen() {
-        todo_appbar.isGone = true
-        todo_edittext_title.isGone = true
+        binding.todoAppbar.isGone = true
+        binding.todoEdittextTitle.isGone = true
         isFullScreen = true
         showToast(R.string.general_text_fullscreen_close)
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         if (isFullScreen) {
             isFullScreen = false
-            todo_appbar.isGone = false
-            todo_edittext_title.isGone = false
+            binding.todoAppbar.isGone = false
+            binding.todoEdittextTitle.isGone = false
         } else {
             finish()
         }
@@ -225,10 +231,12 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
                 settingsDialog.show()
                 true
             }
+
             R.id.menu_main_delete -> {
                 showDeleteDialog()
                 true
             }
+
             else -> super.onOptionsItemSelected(menuItem)
         }
     }
@@ -254,6 +262,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
             TodoNoteAdapter.TodoAction.OnEditTodo -> {
 
             }
+
             TodoNoteAdapter.TodoAction.OnDeleteTodo -> {
 
             }
@@ -262,12 +271,12 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
 
     private fun actionSave() {
         val noteDto = InsertNoteDto(
-            title = todo_edittext_title.text.toString(),
+            title = binding.todoEdittextTitle.text.toString(),
             type = appConstant.TYPE_TODO,
             createdAt = createdAt
         )
 
-        if (todoStatus == NoteStatusEnum.EDIT) {
+        if (todoStatus == EDIT) {
             val updateNoteDto = noteDto.copy(
                 id = noteId,
                 updatedAt = currentDate
@@ -278,7 +287,7 @@ class TodoActivity : BaseActivity(R.layout.activity_todo) {
 
     override fun onResume() {
         super.onResume()
-        if (todoStatus == NoteStatusEnum.EDIT) {
+        if (todoStatus == EDIT) {
             todoViewModel.getNoteTodos(noteId)
         }
     }

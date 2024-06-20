@@ -15,30 +15,23 @@
  */
 package id.co.catatin.colorpicker
 
+import Catatin.databinding.DialogColorPickerBinding
 import android.content.Context
-import android.graphics.Color
-import android.widget.Button
-import android.widget.TextView
+import android.graphics.Color.BLACK
+import android.view.LayoutInflater
 import id.catat.uikit.dialog.BaseCatatanDialog
-import java.lang.String
 
 class ColorPickerDialog(
     context: Context,
     private val initialColor: Int,
     private val onColorChange: (Int?) -> Unit
-) : BaseCatatanDialog(context), ColorPickerView.OnColorChangedListener {
+) : BaseCatatanDialog<DialogColorPickerBinding>(context), ColorPickerView.OnColorChangedListener {
 
-    private var colorPicker: ColorPickerView? = null
-    private var newColor: ColorPickerPanelView? = null
-    private var hexCode: TextView? = null
-    private var pickColor: Button? = null
+    override val bindingInflater: (LayoutInflater) -> DialogColorPickerBinding
+        get() = DialogColorPickerBinding::inflate
 
     val color: Int?
-        get() = colorPicker?.color
-
-    override fun setupLayout() {
-        setContentView(R.layout.dialog_color_picker)
-    }
+        get() = binding.catatinColorpickerColor.color
 
     override fun onCreateDialog() {
         init(initialColor)
@@ -47,34 +40,29 @@ class ColorPickerDialog(
 
     private fun init(color: Int) {
         setUp(color)
-        newColor?.borderColor = Color.BLACK
+        binding.catatinColorpanelNewcolor.borderColor = BLACK
     }
 
-    private fun setUp(color: Int) {
-        colorPicker = findViewById(R.id.catatin_colorpicker_color)
-        newColor = findViewById(R.id.catatin_colorpanel_newcolor)
-        hexCode = findViewById(R.id.catatin_textview_hexcolor)
-        pickColor = findViewById(R.id.catatin_button_pick)
-
-        colorPicker?.setOnColorChangedListener(this)
-        newColor?.color = color
-        hexCode?.text = newColor?.color?.convertColorToHex().toString()
-        colorPicker?.setColor(color, true)
+    private fun setUp(color: Int) = with(binding) {
+        catatinColorpickerColor.setOnColorChangedListener(this@ColorPickerDialog)
+        catatinColorpanelNewcolor.color = color
+        catatinTextviewHexcolor.text = catatinColorpanelNewcolor.color.convertColorToHex()
+        catatinColorpickerColor.setColor(color, true)
     }
 
-    private fun setupNewColorActionListener() {
-        pickColor?.setOnClickListener {
-            onColorChange.invoke(newColor?.color)
+    private fun setupNewColorActionListener() = with(binding) {
+        catatinColorpickerColor.setOnClickListener {
+            onColorChange.invoke(catatinColorpanelNewcolor.color)
             dismiss()
         }
     }
 
-    override fun onColorChanged(color: Int) {
-        newColor?.color = color
-        hexCode?.text = newColor?.color?.convertColorToHex().toString()
+    override fun onColorChanged(color: Int) = with(binding) {
+        catatinColorpanelNewcolor.color = color
+        catatinTextviewHexcolor.text = catatinColorpanelNewcolor.color.convertColorToHex()
     }
 
-    private fun Int.convertColorToHex(): kotlin.String {
+    private fun Int.convertColorToHex(): String {
         return String.format("#%06X", 0xFFFFFF and this)
     }
 }

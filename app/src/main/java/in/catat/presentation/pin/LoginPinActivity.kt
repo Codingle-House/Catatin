@@ -1,53 +1,53 @@
 package `in`.catat.presentation.pin
 
-import `in`.catat.R
-import `in`.catat.base.BaseActivity
-import `in`.catat.presentation.resetpin.ResetPinActivity
 import android.content.Intent
+import android.view.LayoutInflater
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
 import id.catat.uikit.pinview.CatatinPinView
+import id.catat.uikit.pinview.CatatinPinView.PinAction.OnPinDone
 import id.co.catatin.core.ext.checkDeviceDensity
-import kotlinx.android.synthetic.main.activity_pin.*
-
+import `in`.catat.R
+import `in`.catat.base.BaseActivity
+import `in`.catat.databinding.ActivityPinBinding
+import `in`.catat.presentation.resetpin.ResetPinActivity
 
 /**
  * Created by pertadima on 18,October,2020
  */
 
 @AndroidEntryPoint
-class LoginPinActivity : BaseActivity(R.layout.activity_pin) {
+class LoginPinActivity : BaseActivity<ActivityPinBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityPinBinding
+        get() = ActivityPinBinding::inflate
+
     override fun onViewCreated() {
         setupToolbar()
         setupPinView()
-        checkDeviceDensity {
-            pin_appbar.isGone = true
-        }
+        checkDeviceDensity { binding.pinAppbar.isGone = true }
     }
 
     override fun onViewModelObserver() {
 
     }
 
-    private fun setupToolbar() {
-        with(pin_toolbar) {
-            setNavigationOnClickListener {
-                finish()
-            }
-        }
+    private fun setupToolbar() = with(binding.pinToolbar) {
+        setNavigationOnClickListener { finish() }
     }
 
     private fun setupPinView() {
-        with(pin_pinview) {
+        with(binding.pinPinview) {
             bindView(
                 title = getString(R.string.pin_text_login_title),
                 description = getString(R.string.pin_text_login_description)
             )
             setListener {
                 when (it) {
-                    is CatatinPinView.PinAction.OnPinDone -> {
+                    is OnPinDone -> {
                         showErrorMessage("hahaha ahha ahhaa ahha")
                     }
+
                     is CatatinPinView.PinAction.OnForgotPassword -> {
                         startActivity(
                             Intent(

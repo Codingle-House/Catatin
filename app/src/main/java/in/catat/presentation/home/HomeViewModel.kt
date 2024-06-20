@@ -1,26 +1,24 @@
 package `in`.catat.presentation.home
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.catat.R
 import `in`.catat.data.dto.CatatinFilterMenuDto
 import `in`.catat.data.dto.CatatinMenuDto
 import `in`.catat.data.dto.NoteDto
 import `in`.catat.data.dto.UserNotesDto
 import `in`.catat.domain.app.repository.AppRepository
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by pertadima on 13,October,2020
  */
-
-class HomeViewModel @ViewModelInject constructor(
-    private val repository: AppRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: AppRepository
 ) : ViewModel() {
 
     private val userNotesLiveData = MutableLiveData<List<NoteDto>>()

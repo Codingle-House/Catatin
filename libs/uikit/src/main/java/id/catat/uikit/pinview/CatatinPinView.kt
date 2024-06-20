@@ -1,23 +1,22 @@
 package id.catat.uikit.pinview
 
+import Catatin.R
+import Catatin.databinding.ItemPinIndicatorBinding
+import Catatin.databinding.ItemPinNumpadBinding
+import Catatin.databinding.ViewPinviewBinding
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.catat.uikit.R
 import id.catat.uikit.adapter.GenericRecyclerViewAdapter
 import id.co.catatin.core.commons.DiffCallback
 import id.co.catatin.core.commons.EqualSpaceItemDecoration
 import id.co.catatin.core.ext.getDrawableCompat
 import id.co.catatin.core.ext.toDp
-import kotlinx.android.synthetic.main.item_pin_indicator.view.*
-import kotlinx.android.synthetic.main.item_pin_numpad.view.*
-import kotlinx.android.synthetic.main.view_pinview.view.*
 
 /**
  * Created by pertadima on 18,October,2020
@@ -29,27 +28,33 @@ class CatatinPinView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RelativeLayout(context, attrs, defStyle) {
 
+    private val binding by lazy {
+        ViewPinviewBinding.inflate(LayoutInflater.from(context), this, true)
+    }
+
     private val maximalIndicator: Int = 6
     private var currentIndicator: Int = -1
 
-    private val diffCallback by lazy {
-        DiffCallback()
-    }
+    private val diffCallback by lazy { DiffCallback() }
 
     private var onPinDone: (PinAction) -> Unit = { _ -> kotlin.run { } }
 
     private val indicatorAdapter by lazy {
-        GenericRecyclerViewAdapter<NumpadIndicatorDto>(
+        GenericRecyclerViewAdapter<NumpadIndicatorDto, ItemPinIndicatorBinding>(
             diffCallback = diffCallback,
-            holderResId = R.layout.item_pin_indicator,
+            bindingInflater = { inflater, viewGroup, attachToParent ->
+                ItemPinIndicatorBinding.inflate(inflater, viewGroup, attachToParent)
+            },
             onBind = ::bindNumpadIndicator
         )
     }
 
     private val numpadAdapter by lazy {
-        GenericRecyclerViewAdapter<NumpadDto>(
+        GenericRecyclerViewAdapter(
             diffCallback = diffCallback,
-            holderResId = R.layout.item_pin_numpad,
+            bindingInflater = { inflater, viewGroup, attachToParent ->
+                ItemPinNumpadBinding.inflate(inflater, viewGroup, attachToParent)
+            },
             onBind = ::bindNumpadAdapter,
             fadeAnimation = false,
             itemListener = ::itemListenerNumpadAdapter
@@ -58,9 +63,7 @@ class CatatinPinView @JvmOverloads constructor(
 
     private val indicatorList by lazy {
         val indicators = mutableListOf<NumpadIndicatorDto>()
-        for (x in 0 until maximalIndicator) {
-            indicators.add(NumpadIndicatorDto())
-        }
+        for (x in 0 until maximalIndicator) indicators.add(NumpadIndicatorDto())
         indicators
     }
 
@@ -73,15 +76,14 @@ class CatatinPinView @JvmOverloads constructor(
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_pinview, this, true)
         setupRecyclerView()
-        pin_textview_forgotpassword.setOnClickListener {
+        binding.pinTextviewForgotpassword.setOnClickListener {
             onPinDone.invoke(PinAction.OnForgotPassword)
         }
     }
 
     private fun setupRecyclerView() {
-        with(pin_recyclerview_number) {
+        with(binding.pinRecyclerviewNumber) {
             adapter = numpadAdapter.apply {
                 setData(numpadList)
             }
@@ -89,7 +91,7 @@ class CatatinPinView @JvmOverloads constructor(
             addItemDecoration(EqualSpaceItemDecoration(spaceHeight = context.toDp(5F)))
         }
 
-        with(pin_recyclerview_indicator) {
+        with(binding.pinRecyclerviewIndicator) {
             adapter = indicatorAdapter.apply {
                 setData(indicatorList)
             }
@@ -104,26 +106,22 @@ class CatatinPinView @JvmOverloads constructor(
     }
 
 
-    private fun bindNumpadAdapter(data: NumpadDto, pos: Int, view: View) {
-        with(view.numpad_textview_number) {
+    private fun bindNumpadAdapter(data: NumpadDto, pos: Int, view: ItemPinNumpadBinding) {
+        with(view.numpadTextviewNumber) {
             text = data.text
             isGone = data.isDelete
         }
 
-        with(view.numpad_imageview_delete) {
+        with(view.numpadImageviewDelete) {
             isGone = data.isDelete.not()
         }
     }
 
-    private fun bindNumpadIndicator(data: NumpadIndicatorDto, pos: Int, view: View) {
-        with(view.pin_imageview_indicator) {
+    private fun bindNumpadIndicator(data: NumpadIndicatorDto, pos: Int, view: ItemPinIndicatorBinding) {
+        with(view.pinImageviewIndicator) {
             setImageDrawable(
                 context.getDrawableCompat(
-                    if (data.isSelected) {
-                        R.drawable.uikit_ic_selected
-                    } else {
-                        R.drawable.uikit_ic_circle_outline
-                    }
+                    if (data.isSelected) R.drawable.uikit_ic_selected else R.drawable.uikit_ic_circle_outline
                 )
             )
             animate().apply {
@@ -133,7 +131,7 @@ class CatatinPinView @JvmOverloads constructor(
         }
     }
 
-    private fun itemListenerNumpadAdapter(data: NumpadDto, pos: Int, view: View) {
+    private fun itemListenerNumpadAdapter(data: NumpadDto, pos: Int, view: ItemPinNumpadBinding) {
         if (data.isDelete) {
             if (currentIndicator == -1) {
                 return
@@ -144,7 +142,7 @@ class CatatinPinView @JvmOverloads constructor(
                 }
             indicatorAdapter.setNotifyItemChanged(newIndicatorList, currentIndicator)
             currentIndicator = currentIndicator.dec()
-            with(pin_cardview_error) {
+            with(binding.pinCardviewError) {
                 if (isGone.not()) isGone = true
             }
         } else {
@@ -167,17 +165,17 @@ class CatatinPinView @JvmOverloads constructor(
     }
 
     fun showErrorMessage(error: String) {
-        pin_textview_error.text = error
+        binding.pinTextviewError.text = error
         val shakeAnim = AnimationUtils.loadAnimation(context, R.anim.shake_animation)
-        with(pin_cardview_error) {
+        with(binding.pinCardviewError) {
             isGone = false
             startAnimation(shakeAnim)
         }
     }
 
     fun bindView(title: String, description: String) {
-        pin_textview_title.text = title
-        pin_textview_description.text = description
+        binding.pinTextviewTitle.text = title
+        binding.pinTextviewDescription.text = description
     }
 
     fun setListener(onPinDone: (PinAction) -> Unit) {
@@ -185,7 +183,7 @@ class CatatinPinView @JvmOverloads constructor(
     }
 
     fun hideForgotPinView() {
-        pin_textview_forgotpassword.isGone = true
+        binding.pinTextviewForgotpassword.isGone = true
     }
 
     internal data class NumpadIndicatorDto(
